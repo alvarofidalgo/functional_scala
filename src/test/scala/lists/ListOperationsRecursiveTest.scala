@@ -183,7 +183,7 @@ class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
     list.reverse shouldBe expected
   }
 
-  "We want to flat list and result " should " be empty List if list is empty " in new Empty {
+  "We want to flatten list and result " should " be empty List if list is empty " in new Empty {
     val expected = Nil
     list.flatten shouldBe expected
   }

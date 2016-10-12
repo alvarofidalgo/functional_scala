@@ -80,4 +80,19 @@ class ListOperationsFoldLeftTest extends FlatSpec with ShouldMatchers {
     val expected = Nil
     list.append(otherList) shouldBe expected
   }
+
+  "We want to flatten list with foldLef and result " should " be empty List if list is empty " in new Empty {
+    val expected = Nil
+    list.flatten shouldBe expected
+  }
+
+  it should " be plain list  " in new ListOfLists {
+    val expected = MyList(1,2,3)
+    list.flatten shouldBe expected
+  }
+
+  it should "be plain list if list is plain " in new ListNotEmpty{
+    val expected = MyList(1,2,3)
+    list.flatten shouldBe expected
+  }
 }

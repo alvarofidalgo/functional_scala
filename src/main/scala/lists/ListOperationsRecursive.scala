@@ -5,7 +5,7 @@ import scala.annotation.tailrec
 import conversions.List.recursive
 import implicits.Defaults._
 
-final class ListOperationsRecursive[A](list: MyList[A]) {
+final class ListOperationsRecursive[A](list: MyList[A]) extends Transforms[A]{
 
   @tailrec
   def append(otherList: MyList[A]): MyList[A] = otherList match {
@@ -82,11 +82,6 @@ final class ListOperationsRecursive[A](list: MyList[A]) {
     case Nil => result
     case Init(head, tail) =>
       tail.flatten(result.append(headList(head)))
-  }
-
-  private def headList(head:A):MyList[A] = head match  {
-    case Init(he,tail) => head.asInstanceOf[MyList[A]]
-    case _ => MyList[A](head)
   }
 
 }

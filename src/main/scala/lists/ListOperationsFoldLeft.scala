@@ -4,7 +4,7 @@ import conversions.List.recursive
 import implicits.Defaults._
 import simple.Partial._
 
-final class ListOperationsFoldLeft[A](list: MyList[A]) {
+final class ListOperationsFoldLeft[A](list: MyList[A]) extends Transforms[A]{
 
   def length: Int =
     list.foldLeft(acc = 0)((a, b) => a + 1)
@@ -23,5 +23,10 @@ final class ListOperationsFoldLeft[A](list: MyList[A]) {
 
   def append(otherList:MyList[A]):MyList[A] =
     otherList.foldLeft[MyList[A]](acc = list)((newList,head)=>newList.add(head))
+
+  def flatten:MyList[A] =
+    list.foldLeft[MyList[A]](acc = MyList[A]())((newList,list) =>
+      newList.append(headList(list))
+    )
 
 }

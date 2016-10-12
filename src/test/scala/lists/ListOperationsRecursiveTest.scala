@@ -129,4 +129,42 @@ class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
     val expected = MyList()
     list.init shouldBe expected
   }
+
+
+  "We want to implement foldRight with multiply higher-order function  and result " should " be zero if empty list " +
+    "" in new Empty {
+
+    import implicits.Accumulators.initMultiplyAcc
+
+    val expected = 0
+    val multiply: (Int, Int) => Int = (a, b) => a * b
+    list.foldRight[Int](0)(multiply) shouldBe expected
+  }
+
+  it should " multiply all elements if no empty list " in new ListNotEmpty {
+
+    import implicits.Accumulators.initMultiplyAcc
+
+    val expected = 6
+    val multiply: (Int, Int) => Int = (a, b) => a * b
+    list.foldRight[Int](0)(multiply) shouldBe expected
+  }
+
+  "We want to implement sum with foldRight and result " should " be zero if no elements " in new Empty {
+
+    import implicits.Accumulators.initSumAcc
+
+    val expected = 0
+    val multiply: (Int, Int) => Int = (a, b) => a + b
+    list.foldRight[Int](0)(multiply) shouldBe expected
+  }
+
+  it should " sum of all elements if we have elements " in new ListNotEmpty {
+
+    import implicits.Accumulators.initSumAcc
+
+    val expected = 6
+    val multiply: (Int, Int) => Int = (a, b) => a + b
+    list.foldRight[Int](0)(multiply) shouldBe expected
+  }
 }

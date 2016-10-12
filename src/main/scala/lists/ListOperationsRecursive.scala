@@ -2,6 +2,7 @@ package lists
 
 import scala.annotation.tailrec
 import conversions.List.recursive
+import implicits.Defaults._
 
 
 final class ListOperationsRecursive[A](list: MyList[A]) {
@@ -77,5 +78,11 @@ final class ListOperationsRecursive[A](list: MyList[A]) {
     case Init(head,tail) =>
       val result = f(acc,head)
       tail.foldLeft(result)(f)(result)
+  }
+
+  def flatMap: MyList[A] = {
+     list.foldLeft(acc = MyList[A]())((newList,list) =>
+       newList.append(list.asInstanceOf[MyList[A]])
+      )
   }
 }

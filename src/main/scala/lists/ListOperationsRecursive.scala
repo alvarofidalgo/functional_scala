@@ -90,4 +90,12 @@ final class ListOperationsRecursive[A](list: MyList[A]) extends Transforms[A]{
     case Init(head,tail) => tail.map[B](f)(result.add(f(head)))
   }
 
+  @tailrec
+  def filter(f:(A)=>Boolean)(implicit result:MyList[A]=MyList[A]()):MyList[A] = list match {
+    case Nil => result
+    case Init(head,tail) =>
+      val newList = if (!f(head)) result.add(head) else result
+      tail.filter(f)(newList)
+  }
+
 }

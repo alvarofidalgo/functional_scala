@@ -33,4 +33,9 @@ final class ListOperationsFoldLeft[A](list: MyList[A]) extends Transforms[A]{
   def map[B](f:(A)=>B):MyList[B] =
      list.foldLeft[MyList[B]](acc = MyList[B]())((newList,head) =>newList.add(f(head)))
 
+  def filter(f:(A)=>Boolean):MyList[A] =
+    list.foldLeft[MyList[A]](acc = MyList[A]())((newList,head) =>
+      if (!f(head))  newList.add(head) else newList
+    )
+
 }

@@ -106,4 +106,11 @@ class ListOperationsFoldLeftTest extends FlatSpec with ShouldMatchers {
     list.map[String]((a)=> a.toString) shouldBe expected
   }
 
+  " We want to implement function filter with foldLeft and result " should " be list without elements that match with" +
+    " function " in new ListNotEmpty {
+    val expected = MyList(1, 3)
+    val function: (Int) => Boolean = (a) => a == 2
+    list.filter(function) shouldBe expected
+  }
+
 }

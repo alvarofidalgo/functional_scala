@@ -207,4 +207,10 @@ class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
     val expected = MyList[String]("1", "2", "3")
     list.map[String]((a)=> a.toString) shouldBe expected
   }
+
+  " We want to implement function filter and result " should " be list without elements that match with function " in new ListNotEmpty {
+    val expected = MyList(1, 3)
+    val function: (Int) => Boolean = (a) => a == 2
+    list.filter(function) shouldBe expected
+  }
 }

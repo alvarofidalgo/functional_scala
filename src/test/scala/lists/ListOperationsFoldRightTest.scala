@@ -49,4 +49,24 @@ class ListOperationsFoldRightTest extends FlatSpec with ShouldMatchers{
     list.reverse shouldBe expected
   }
 
+  "We want to append two list with foldRight and result " should " be list with two elements when two lists hac " +
+    "elements " in new
+      ListNotEmpty {
+    val otherList = MyList[Int](4, 5, 6)
+    val expected = MyList[Int](1, 2, 3, 4, 5, 6)
+    list.append(otherList) shouldBe expected
+  }
+
+  it should " be second List when first list is empty " in new Empty {
+    val otherList = MyList[Int](4, 5, 6)
+    val expected = MyList[Int](4, 5, 6)
+    list.append(otherList) shouldBe expected
+  }
+
+  it should " be Nil when two list are empty " in new Empty {
+
+    val otherList = Nil
+    val expected = Nil
+    list.append(otherList) shouldBe expected
+  }
 }

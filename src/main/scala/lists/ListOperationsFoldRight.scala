@@ -23,4 +23,7 @@ final class ListOperationsFoldRight[A](list:MyList[A]) {
   def reverse:MyList[A] =
     list.foldRight[MyList[A]](acc = Nil)((head,reverseList) => MyList[A](head).append(reverseList))
 
+  def append(otherList:MyList[A]):MyList[A] =
+    otherList.foldRight[MyList[A]](acc = list)((head,newList)=>newList.add(head))
+
 }

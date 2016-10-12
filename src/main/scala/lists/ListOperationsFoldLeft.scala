@@ -20,4 +20,8 @@ final class ListOperationsFoldLeft[A](list: MyList[A]) {
 
   def foldRight[B](acc: B)(f: (A, B) => B)(implicit default: B): B =
     list.foldLeft[B](acc)(unCurrying((a) => (b) => f(b, a)))
+
+  def append(otherList:MyList[A]):MyList[A] =
+    otherList.foldLeft[MyList[A]](acc = list)((newList,head)=>newList.add(head))
+
 }

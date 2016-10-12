@@ -1,4 +1,4 @@
-package simple
+package functions
 
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers

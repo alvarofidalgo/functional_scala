@@ -1,4 +1,4 @@
-package simple
+package functions
 
 object Partial {
 

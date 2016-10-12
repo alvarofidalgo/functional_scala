@@ -1,8 +1,9 @@
 package lists
 
 import conversions.List.recursive
+import functions.Partial
 import implicits.Defaults._
-import simple.Partial._
+import Partial._
 
 final class ListOperationsFoldLeft[A](list: MyList[A]) extends Transforms[A]{
 
@@ -25,8 +26,11 @@ final class ListOperationsFoldLeft[A](list: MyList[A]) extends Transforms[A]{
     otherList.foldLeft[MyList[A]](acc = list)((newList,head)=>newList.add(head))
 
   def flatten:MyList[A] =
-    list.foldLeft[MyList[A]](acc = MyList[A]())((newList,list) =>
-      newList.append(headList(list))
+    list.foldLeft[MyList[A]](acc = MyList[A]())((newList,head) =>
+      newList.append(headList(head))
     )
+
+  def map[B](f:(A)=>B):MyList[B] =
+     list.foldLeft[MyList[B]](acc = MyList[B]())((newList,head) =>newList.add(f(head)))
 
 }

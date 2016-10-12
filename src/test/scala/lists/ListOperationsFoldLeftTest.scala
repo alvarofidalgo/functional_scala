@@ -95,4 +95,15 @@ class ListOperationsFoldLeftTest extends FlatSpec with ShouldMatchers {
     val expected = MyList(1,2,3)
     list.flatten shouldBe expected
   }
+  " We want to implement map function with foldLeft and result " should " be new list with sum each element " in new
+      ListNotEmpty {
+    val expected = MyList[Int](2, 3, 4)
+    list.map((a)=> a +1) shouldBe expected
+  }
+
+  it should " be new list with string value " in new ListNotEmpty {
+    val expected = MyList[String]("1", "2", "3")
+    list.map[String]((a)=> a.toString) shouldBe expected
+  }
+
 }

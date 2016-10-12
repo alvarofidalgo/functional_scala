@@ -18,13 +18,13 @@ class PartialTest extends FlatSpec with ShouldMatchers {
   " We want to implement partial function and result " should " be function that transform wheel and bodyWork in " +
     "function that build car " in new Scenerio{
 
-    val workShop = Partial.curryn[wheel, bodyWork, car]((wheel, bodyWork) => wheel.concat(bodyWork))
+    val workShop = Partial.currying[wheel, bodyWork, car]((wheel, bodyWork) => wheel.concat(bodyWork))
     workShop(wheel)(bodyWork) shouldBe car
   }
 
 
   it should " be function that unbuild workshop " in new Scenerio{
-    val workShop = Partial.unCurryng[wheel, bodyWork, car]((wheel) => (bodyWork) => wheel.concat(bodyWork))
+    val workShop = Partial.unCurrying[wheel, bodyWork, car]((wheel) => (bodyWork) => wheel.concat(bodyWork))
     workShop(wheel, bodyWork) shouldBe car
   }
 

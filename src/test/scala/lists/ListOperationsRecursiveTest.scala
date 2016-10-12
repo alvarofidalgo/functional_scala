@@ -7,9 +7,6 @@ import implicits.Defaults._
 
 class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
 
-  trait ListOfLists {
-    val list:MyList[MyList[Int]] = MyList(MyList(1,2),MyList(3))
-  }
 
   " We want to calculate length and result " should " be List length " in new ListNotEmpty {
     val expected = 3
@@ -188,11 +185,16 @@ class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
 
   "We want to flat list and result " should " be empty List if list is empty " in new Empty {
     val expected = Nil
-    list.flatMap shouldBe expected
+    list.flatten shouldBe expected
   }
 
   it should " be plain list  " in new ListOfLists {
     val expected = MyList(1,2,3)
-    list.flatMap shouldBe expected
+    list.flatten shouldBe expected
+  }
+
+  it should "be plain list if list is plain " in new ListNotEmpty{
+    val expected = MyList(1,2,3)
+    list.flatten shouldBe expected
   }
 }

@@ -1,26 +1,24 @@
 package lists
 
 import scala.annotation.tailrec
+
 import conversions.List.recursive
 import implicits.Defaults._
 
-
 final class ListOperationsRecursive[A](list: MyList[A]) {
 
-
   @tailrec
-  def append (otherList: MyList[A]): MyList[A] =otherList match {
+  def append(otherList: MyList[A]): MyList[A] = otherList match {
     case Nil => list
-    case Init(head,tail) => list.add(head).append(tail)
+    case Init(head, tail) => list.add(head).append(tail)
   }
 
-
-  def add(element:A) :MyList[A] = Init(element, list.reverse).reverse
+  def add(element: A): MyList[A] = Init(element, list.reverse).reverse
 
   @tailrec
   def reverse(implicit result: MyList[A] = Nil): MyList[A] = list match {
     case Nil => result
-    case Init(head,tail) => tail.reverse(Init(head,result))
+    case Init(head, tail) => tail.reverse(Init(head, result))
   }
 
   @tailrec
@@ -46,9 +44,9 @@ final class ListOperationsRecursive[A](list: MyList[A]) {
   }
 
   @tailrec
-  def length(implicit counter:Int = 0): Int = list match {
+  def length(implicit counter: Int = 0): Int = list match {
     case Nil => counter
-    case Init(head, tail) => tail.length(1+counter)
+    case Init(head, tail) => tail.length(1 + counter)
   }
 
   def modify(head: A): MyList[A] = list match {
@@ -61,28 +59,34 @@ final class ListOperationsRecursive[A](list: MyList[A]) {
     case Init(head, tail) => tail
   }
 
-  def init : MyList[A] = list.reverse().tail.reverse()
-
+  def init: MyList[A] = list.reverse().tail.reverse()
 
   @tailrec
-  def foldRight[B](acc: B)(f: (A, B) => B)(implicit default:B): B = list match {
-    case Nil =>default
+  def foldRight[B](acc: B)(f: (A, B) => B)(implicit default: B): B = list match {
+    case Nil => default
     case Init(head, tail) =>
-      val result = f(head,acc)
+      val result = f(head, acc)
       tail.foldRight(result)(f)(result)
   }
 
   @tailrec
-  def foldLeft[B](acc : B)(f:(B,A)=>B)(implicit default:B) : B = list match {
-    case Nil=>default
-    case Init(head,tail) =>
-      val result = f(acc,head)
+  def foldLeft[B](acc: B)(f: (B, A) => B)(implicit default: B): B = list match {
+    case Nil => default
+    case Init(head, tail) =>
+      val result = f(acc, head)
       tail.foldLeft(result)(f)(result)
   }
 
-  def flatMap: MyList[A] = {
-     list.foldLeft(acc = MyList[A]())((newList,list) =>
-       newList.append(list.asInstanceOf[MyList[A]])
-      )
+  @tailrec
+  def flatten(implicit result: MyList[A]): MyList[A] = list match {
+    case Nil => result
+    case Init(head, tail) =>
+      tail.flatten(result.append(headList(head)))
   }
+
+  private def headList(head:A):MyList[A] = head match  {
+    case Init(he,tail) => head.asInstanceOf[MyList[A]]
+    case _ => MyList[A](head)
+  }
+
 }

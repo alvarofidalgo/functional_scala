@@ -10,3 +10,7 @@ trait Empty {
 
   val list = MyList[Int]()
 }
+
+trait ListOfLists {
+  val list:MyList[MyList[Int]] = MyList(MyList(1,2),MyList(3))
+}

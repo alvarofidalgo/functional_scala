@@ -98,4 +98,10 @@ final class ListOperationsRecursive[A](list: MyList[A]) extends Transforms[A]{
       tail.filter(f)(newList)
   }
 
+  @tailrec
+  def flatMap(f:(A)=>MyList[A])(implicit result:MyList[A] = MyList[A]()):MyList[A] = list match {
+    case Nil => result
+    case Init(head,tail)=> tail.flatMap(f)(result.append(f(head)))
+  }
+
 }

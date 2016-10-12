@@ -113,4 +113,16 @@ class ListOperationsFoldLeftTest extends FlatSpec with ShouldMatchers {
     list.filter(function) shouldBe expected
   }
 
+  it should " be empty list if match all elements " in  new ListNotEmpty {
+    val expected = MyList()
+    list.filter((a) => a < 4) shouldBe expected
+  }
+
+  "We want to implement flatMap with fodLeft and result " should " be flatten list transformed by function " in new
+      ListNotEmpty {
+    val expected = MyList(1,1,2,2,3,3)
+    val func:(Int) => MyList[Int] = (a) => MyList(a,a)
+    list.flatMap(func) shouldBe expected
+  }
+
 }

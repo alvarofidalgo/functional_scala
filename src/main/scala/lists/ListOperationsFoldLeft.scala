@@ -38,4 +38,8 @@ final class ListOperationsFoldLeft[A](list: MyList[A]) extends Transforms[A]{
       if (!f(head))  newList.add(head) else newList
     )
 
+
+  def flatMap(f:(A)=>MyList[A]):MyList[A] =
+    list.foldLeft[MyList[A]](acc = MyList[A]())((newList,head)=> newList.append(f(head)))
+
 }

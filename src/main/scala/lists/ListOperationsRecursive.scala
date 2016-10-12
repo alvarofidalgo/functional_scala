@@ -1,7 +1,7 @@
 package lists
 
 import scala.annotation.tailrec
-import conversions.List._
+import conversions.List.recursive
 
 
 class ListOperationsRecursive[A](list: MyList[A]) {
@@ -48,12 +48,6 @@ class ListOperationsRecursive[A](list: MyList[A]) {
   final def length(implicit counter:Int = 0): Int = list match {
     case Nil => counter
     case Init(head, tail) => tail.length(1+counter)
-  }
-
-  def lengthWithFoldRight : Int = {
-    import implicits.Accumulators.initSumAcc
-    val counter:(A,Int)=>(Int) = (a,b) => b +1
-    list.foldRight[Int](0)(counter)
   }
 
   def modify(head: A): MyList[A] = list match {

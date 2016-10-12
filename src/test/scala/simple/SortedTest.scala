@@ -3,7 +3,6 @@ package simple
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
 
-//TODO : Refactor this test DRY
 class SortedTest extends FlatSpec with ShouldMatchers{
 
 

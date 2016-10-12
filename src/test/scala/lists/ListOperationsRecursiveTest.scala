@@ -3,6 +3,7 @@ package lists
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
 import conversions.List.recursive
+import implicits.Defaults._
 
 class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
 
@@ -134,37 +135,50 @@ class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
   "We want to implement foldRight with multiply higher-order function  and result " should " be zero if empty list " +
     "" in new Empty {
 
-    import implicits.Accumulators.initMultiplyAcc
-
     val expected = 0
     val multiply: (Int, Int) => Int = (a, b) => a * b
-    list.foldRight[Int](0)(multiply) shouldBe expected
+    list.foldRight[Int](acc = 0)(multiply) shouldBe expected
   }
 
   it should " multiply all elements if no empty list " in new ListNotEmpty {
 
-    import implicits.Accumulators.initMultiplyAcc
-
     val expected = 6
     val multiply: (Int, Int) => Int = (a, b) => a * b
-    list.foldRight[Int](0)(multiply) shouldBe expected
+    list.foldRight[Int](acc = 1)(multiply) shouldBe expected
   }
 
   "We want to implement sum with foldRight and result " should " be zero if no elements " in new Empty {
 
-    import implicits.Accumulators.initSumAcc
 
     val expected = 0
-    val multiply: (Int, Int) => Int = (a, b) => a + b
-    list.foldRight[Int](0)(multiply) shouldBe expected
+    list.foldRight[Int](acc =0)((a, b) => a + b) shouldBe expected
   }
 
   it should " sum of all elements if we have elements " in new ListNotEmpty {
 
-    import implicits.Accumulators.initSumAcc
+    val expected = 6
+    list.foldRight[Int](acc = 0)((a, b) => a + b) shouldBe expected
+  }
+
+  " We want multiply elements with foldLeft and result " should " be zero if list is empty " in new Empty {
+
+    val expected = 0
+    list.foldLeft[Int](acc = 0)((a, b) => a * b) shouldBe expected
+  }
+
+  it should " be multiply all elements list contain elements " in new ListNotEmpty{
 
     val expected = 6
-    val multiply: (Int, Int) => Int = (a, b) => a + b
-    list.foldRight[Int](0)(multiply) shouldBe expected
+    list.foldLeft[Int](acc = 1)((a, b) => a * b) shouldBe expected
+  }
+
+  "We want to reverse list and result " should " be empty list if is empty " in new Empty {
+    val expected = MyList()
+    list.reverse shouldBe expected
+  }
+
+  it should "reverse list if not empty " in new ListNotEmpty{
+    val expected = MyList(3,2,1)
+    list.reverse shouldBe expected
   }
 }

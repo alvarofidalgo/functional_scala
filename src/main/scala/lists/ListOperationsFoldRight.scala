@@ -1,27 +1,26 @@
 package lists
 
 
-import implicits.Accumulators
+import implicits.Defaults._
 import conversions.List.recursive
 
 
-class ListOperationsFoldRight(list:MyList[Int]) {
+final class ListOperationsFoldRight[A](list:MyList[A]) {
 
 
-  def length:Int = {
-    import Accumulators.initSumAcc
-    list.foldRight[Int](default = 0)((a,b)=>b+1)
-  }
+  def length:Int =
+    list.foldRight[Int](acc = 0)((a,b)=>b+1)
 
-  def multiply:Int = {
-    import Accumulators.initMultiplyAcc
-    list.foldRight[Int](default = 0)((a, b) => b * a)
-  }
 
-  def sum:Int = {
-    import Accumulators.initSumAcc
-    list.foldRight[Int](default = 0)((a,b)=>a+b)
-  }
+  def product:Int =
+    list.asInstanceOf[MyList[Int]].foldRight[Int](acc = 1)((a, b) => b * a)
 
+
+  def sum:Int =
+    list.asInstanceOf[MyList[Int]].foldRight[Int](acc = 0)((a,b)=>a+b)
+
+
+  def reverse:MyList[A] =
+    list.foldRight[MyList[A]](acc = Nil)((head,reverseList) => MyList[A](head).append(reverseList))
 
 }

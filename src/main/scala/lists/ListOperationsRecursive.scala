@@ -4,32 +4,32 @@ import scala.annotation.tailrec
 import conversions.List.recursive
 
 
-class ListOperationsRecursive[A](list: MyList[A]) {
+final class ListOperationsRecursive[A](list: MyList[A]) {
 
 
   @tailrec
-  final def append (otherList: MyList[A]): MyList[A] =otherList match {
+  def append (otherList: MyList[A]): MyList[A] =otherList match {
     case Nil => list
     case Init(head,tail) => list.add(head).append(tail)
   }
 
 
-  final def add(element:A) :MyList[A] = Init(element, list.reverse).reverse
+  def add(element:A) :MyList[A] = Init(element, list.reverse).reverse
 
   @tailrec
-  final def reverse(implicit result: MyList[A] = Nil): MyList[A] = list match {
+  def reverse(implicit result: MyList[A] = Nil): MyList[A] = list match {
     case Nil => result
     case Init(head,tail) => tail.reverse(Init(head,result))
   }
 
   @tailrec
-  final def drop(elements: Int): MyList[A] = elements match {
+  def drop(elements: Int): MyList[A] = elements match {
     case 0 => list
     case _ => list.tail.drop(elements - 1)
   }
 
   @tailrec
-  final def dropWhile(predicate: (A) => Boolean): MyList[A] = newPredicate(predicate, list.head) match {
+  def dropWhile(predicate: (A) => Boolean): MyList[A] = newPredicate(predicate, list.head) match {
     case false => list
     case true => list.tail.dropWhile(predicate)
   }
@@ -45,7 +45,7 @@ class ListOperationsRecursive[A](list: MyList[A]) {
   }
 
   @tailrec
-  final def length(implicit counter:Int = 0): Int = list match {
+  def length(implicit counter:Int = 0): Int = list match {
     case Nil => counter
     case Init(head, tail) => tail.length(1+counter)
   }
@@ -64,10 +64,18 @@ class ListOperationsRecursive[A](list: MyList[A]) {
 
 
   @tailrec
-  final def foldRight[B](default: B)(f: (A, B) => B)(implicit acc:B): B = list match {
+  def foldRight[B](acc: B)(f: (A, B) => B)(implicit default:B): B = list match {
     case Nil =>default
     case Init(head, tail) =>
       val result = f(head,acc)
       tail.foldRight(result)(f)(result)
+  }
+
+  @tailrec
+  def foldLeft[B](acc : B)(f:(B,A)=>B)(implicit default:B) : B = list match {
+    case Nil=>default
+    case Init(head,tail) =>
+      val result = f(acc,head)
+      tail.foldLeft(result)(f)(result)
   }
 }

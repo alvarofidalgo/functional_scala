@@ -63,17 +63,13 @@ final class ListOperationsRecursive[A](list: MyList[A]) extends Transforms[A] {
   @tailrec
   def foldRight[B](acc: B)(f: (A, B) => B): B = list match {
     case Nil => acc
-    case Init(head, tail) =>
-      val result = f(head, acc)
-      tail.foldRight(result)(f)
+    case Init(head, tail) => tail.foldRight(f(head, acc))(f)
   }
 
   @tailrec
   def foldLeft[B](acc: B)(f: (B, A) => B): B = list match {
     case Nil => acc
-    case Init(head, tail) =>
-      val result = f(acc, head)
-      tail.foldLeft(result)(f)
+    case Init(head, tail) => tail.foldLeft(f(acc, head))(f)
   }
 
   @tailrec

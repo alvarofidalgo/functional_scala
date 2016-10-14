@@ -1,9 +1,6 @@
 package conversions
 
-import lists.ListOperationsFoldLeft
-import lists.ListOperationsFoldRight
-import lists.ListOperationsRecursive
-import lists.MyList
+import lists._
 
 object List {
 
@@ -12,4 +9,6 @@ object List {
   implicit def withFoldRight[A](list: MyList[A]): ListOperationsFoldRight[A] = new ListOperationsFoldRight[A](list)
 
   implicit def withFoldLeft[A](list: MyList[A]):ListOperationsFoldLeft[A] = new ListOperationsFoldLeft(list)
+
+  implicit def withFlatMap[A](list:MyList[A]):ListOperationsFlatMap[A] = new ListOperationsFlatMap(list)
 }

@@ -211,4 +211,16 @@ class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
     val expected = MyList(1, 1, 2, 2, 3, 3)
     list.flatMap((a) => MyList(a, a)) shouldBe expected
   }
+
+  "We want to implement zipWith function and result " should " be sum of index elements" in new ListNotEmpty {
+    val other = MyList[Int](4,5,6)
+    val expected = MyList[Int](5,7,9)
+    list.zipWith[Int,Int](other,(a,b)=> a + b ) shouldBe expected
+  }
+
+  it should "be concatenate elements " in new  ListNotEmpty {
+    val other = MyList[String]("a","b","c")
+    val expected = MyList[String]("1a","2b","3c")
+    list.zipWith[String,String](other,(a,b)=> a.toString.concat(b)  ) shouldBe expected
+  }
 }

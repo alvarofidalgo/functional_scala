@@ -98,4 +98,9 @@ final class ListOperationsRecursive[A](list: MyList[A]) extends Transforms[A] {
     case Nil => result
     case Init(head, tail) => tail.flatMap(f)(result.append(f(head)))
   }
+
+  def zipWith[B,C](other : MyList[B],f:(A,B)=>C)(implicit result:MyList[C] = MyList[C]()) : MyList[C] = list match {
+    case Nil => result
+    case Init(head,tail)=> tail.zipWith(other.tail,f)(result.add(f(head,other.head.get)))
+  }
 }

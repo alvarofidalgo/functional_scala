@@ -1,11 +1,14 @@
 package functions
 
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
+import org.scalatest.junit.JUnitRunner
 import simple.WorkShopTypes._
 import simple.WorkShopTypes.bodyWork
 import simple.WorkShopTypes.wheel
 
+@RunWith(classOf[JUnitRunner])
 class PartialTest extends FlatSpec with ShouldMatchers {
 
 

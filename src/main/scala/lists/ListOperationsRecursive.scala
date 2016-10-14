@@ -3,9 +3,8 @@ package lists
 import scala.annotation.tailrec
 
 import conversions.List.recursive
-import implicits.Defaults._
 
-final class ListOperationsRecursive[A](list: MyList[A]) extends Transforms[A]{
+final class ListOperationsRecursive[A](list: MyList[A]) extends Transforms[A] {
 
   @tailrec
   def append(otherList: MyList[A]): MyList[A] = otherList match {
@@ -62,46 +61,45 @@ final class ListOperationsRecursive[A](list: MyList[A]) extends Transforms[A]{
   def init: MyList[A] = list.reverse().tail.reverse()
 
   @tailrec
-  def foldRight[B](acc: B)(f: (A, B) => B)(implicit default: B): B = list match {
-    case Nil => default
+  def foldRight[B](acc: B)(f: (A, B) => B): B = list match {
+    case Nil => acc
     case Init(head, tail) =>
       val result = f(head, acc)
-      tail.foldRight(result)(f)(result)
+      tail.foldRight(result)(f)
   }
 
   @tailrec
-  def foldLeft[B](acc: B)(f: (B, A) => B)(implicit default: B): B = list match {
-    case Nil => default
+  def foldLeft[B](acc: B)(f: (B, A) => B): B = list match {
+    case Nil => acc
     case Init(head, tail) =>
       val result = f(acc, head)
-      tail.foldLeft(result)(f)(result)
+      tail.foldLeft(result)(f)
   }
 
   @tailrec
-  def flatten(implicit result: MyList[A]): MyList[A] = list match {
+  def flatten(implicit result: MyList[A] = MyList[A]()): MyList[A] = list match {
     case Nil => result
     case Init(head, tail) =>
       tail.flatten(result.append(headList(head)))
   }
 
   @tailrec
-  def map[B](f:(A)=>B)(implicit result:MyList[B] = MyList[B]()):MyList[B] = list match {
+  def map[B](f: (A) => B)(implicit result: MyList[B] = MyList[B]()): MyList[B] = list match {
     case Nil => result
-    case Init(head,tail) => tail.map[B](f)(result.add(f(head)))
+    case Init(head, tail) => tail.map[B](f)(result.add(f(head)))
   }
 
   @tailrec
-  def filter(f:(A)=>Boolean)(implicit result:MyList[A]=MyList[A]()):MyList[A] = list match {
+  def filter(f: (A) => Boolean)(implicit result: MyList[A] = MyList[A]()): MyList[A] = list match {
     case Nil => result
-    case Init(head,tail) =>
+    case Init(head, tail) =>
       val newList = if (!f(head)) result.add(head) else result
       tail.filter(f)(newList)
   }
 
   @tailrec
-  def flatMap(f:(A)=>MyList[A])(implicit result:MyList[A] = MyList[A]()):MyList[A] = list match {
+  def flatMap(f: (A) => MyList[A])(implicit result: MyList[A] = MyList[A]()): MyList[A] = list match {
     case Nil => result
-    case Init(head,tail)=> tail.flatMap(f)(result.append(f(head)))
+    case Init(head, tail) => tail.flatMap(f)(result.append(f(head)))
   }
-
 }

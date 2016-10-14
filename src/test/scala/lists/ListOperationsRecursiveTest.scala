@@ -1,12 +1,13 @@
 package lists
 
+import conversions.List.recursive
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
-import conversions.List.recursive
-import implicits.Defaults._
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
-
 
   " We want to calculate length and result " should " be List length " in new ListNotEmpty {
     val expected = 3
@@ -133,41 +134,29 @@ class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
   }
 
 
-  "We want to implement foldRight with multiply higher-order function  and result " should " be zero if empty list " +
-    "" in new Empty {
-
+  " We want to implement foldright and result " should " acc value if list is empty " in new Empty {
     val expected = 0
     val multiply: (Int, Int) => Int = (a, b) => a * b
     list.foldRight[Int](acc = 0)(multiply) shouldBe expected
   }
 
-  it should " multiply all elements if no empty list " in new ListNotEmpty {
+
+  it should " result of function over all elements if list not empty  " in new ListNotEmpty {
 
     val expected = 6
     val multiply: (Int, Int) => Int = (a, b) => a * b
     list.foldRight[Int](acc = 1)(multiply) shouldBe expected
   }
 
-  "We want to implement sum with foldRight and result " should " be zero if no elements " in new Empty {
 
 
-    val expected = 0
-    list.foldRight[Int](acc =0)((a, b) => a + b) shouldBe expected
-  }
-
-  it should " sum of all elements if we have elements " in new ListNotEmpty {
-
-    val expected = 6
-    list.foldRight[Int](acc = 0)((a, b) => a + b) shouldBe expected
-  }
-
-  " We want multiply elements with foldLeft and result " should " be zero if list is empty " in new Empty {
+  " We want to implement foldLeft and result  " should " be acc value if list is empty " in new Empty {
 
     val expected = 0
     list.foldLeft[Int](acc = 0)((a, b) => a * b) shouldBe expected
   }
 
-  it should " be multiply all elements list contain elements " in new ListNotEmpty{
+  it should " be result of function over all elements  " in new ListNotEmpty {
 
     val expected = 6
     list.foldLeft[Int](acc = 1)((a, b) => a * b) shouldBe expected
@@ -178,8 +167,8 @@ class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
     list.reverse shouldBe expected
   }
 
-  it should "reverse list if not empty " in new ListNotEmpty{
-    val expected = MyList(3,2,1)
+  it should "reverse list if not empty " in new ListNotEmpty {
+    val expected = MyList(3, 2, 1)
     list.reverse shouldBe expected
   }
 
@@ -189,23 +178,23 @@ class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
   }
 
   it should " be plain list  " in new ListOfLists {
-    val expected = MyList(1,2,3)
+    val expected = MyList(1, 2, 3)
     list.flatten shouldBe expected
   }
 
-  it should "be plain list if list is plain " in new ListNotEmpty{
-    val expected = MyList(1,2,3)
+  it should "be plain list if list is plain " in new ListNotEmpty {
+    val expected = MyList(1, 2, 3)
     list.flatten shouldBe expected
   }
 
   " We want to implement map function and result " should " be new list with sum each element " in new ListNotEmpty {
     val expected = MyList[Int](2, 3, 4)
-    list.map((a)=> a +1) shouldBe expected
+    list.map((a) => a + 1) shouldBe expected
   }
 
   it should " be new list with string value " in new ListNotEmpty {
     val expected = MyList[String]("1", "2", "3")
-    list.map[String]((a)=> a.toString) shouldBe expected
+    list.map[String]((a) => a.toString) shouldBe expected
   }
 
   " We want to implement function filter and result " should " be list without elements that match with function " in new ListNotEmpty {
@@ -213,13 +202,13 @@ class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
     list.filter((a) => a == 2) shouldBe expected
   }
 
-  it should " be empty list if match all elements " in  new ListNotEmpty {
+  it should " be empty list if match all elements " in new ListNotEmpty {
     val expected = MyList()
     list.filter((a) => a < 4) shouldBe expected
   }
 
   "We want to implement flatMap and reult " should " be flatten list transformed by function " in new ListNotEmpty {
-    val expected = MyList(1,1,2,2,3,3)
-    list.flatMap((a) => MyList(a,a)) shouldBe expected
+    val expected = MyList(1, 1, 2, 2, 3, 3)
+    list.flatMap((a) => MyList(a, a)) shouldBe expected
   }
 }

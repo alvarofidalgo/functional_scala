@@ -1,7 +1,5 @@
 package lists
 
-
-import implicits.Defaults._
 import conversions.List.recursive
 
 
@@ -12,8 +10,10 @@ final class ListOperationsFoldRight[A](list:MyList[A]) {
     list.foldRight[Int](acc = 0)((a,b)=>b+1)
 
 
-  def product:Int =
-    list.asInstanceOf[MyList[Int]].foldRight[Int](acc = 1)((a, b) => b * a)
+  def product:Int = list match {
+    case Nil => 0
+    case _ => list.asInstanceOf[MyList[Int]].foldRight[Int] (acc = 1) ((a, b) => b * a)
+  }
 
 
   def sum:Int =

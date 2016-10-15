@@ -4,6 +4,7 @@ import scala.annotation.tailrec
 
 import conversions.List.recursive
 
+// TODO : make isContain function
 final class ListOperationsRecursive[A](list: MyList[A]) extends Transforms[A] {
 
   @tailrec

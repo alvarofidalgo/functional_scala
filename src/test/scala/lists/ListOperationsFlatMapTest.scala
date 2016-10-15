@@ -1,10 +1,13 @@
 package lists
 
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
 
 import conversions.List.withFlatMap
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class ListOperationsFlatMapTest extends FlatSpec with ShouldMatchers{
 
 

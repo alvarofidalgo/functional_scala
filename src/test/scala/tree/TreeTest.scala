@@ -16,15 +16,15 @@ class TreeTest extends FlatSpec with ShouldMatchers{
     private val leafRight = Leaf[Int](3)
     private  val leafLeft = Leaf[Int](2)
 
-    val tree:Tree[Int] = Branch(leafRight,leafLeft)
+    val tree:Tree[Int] = Branch(1,leafRight,leafLeft)
   }
 
   trait ThreeChild {
     private val leafRight = Leaf[Int](3)
     private  val leafLeft = Leaf[Int](2)
-    val first = Branch(leafRight,leafLeft)
-    val second = Branch(leafRight,leafLeft)
-    val tree:Tree[Int] = Branch(first,second)
+    val first = Branch(10,leafRight,leafLeft)
+    val second = Branch(9,leafRight,leafLeft)
+    val tree:Tree[Int] = Branch(8,first,second)
   }
 
 
@@ -43,9 +43,14 @@ class TreeTest extends FlatSpec with ShouldMatchers{
     tree.size shouldBe expected
   }
 
+  "We wan to calculate maximun of Int tree and result " should " be head if only one element " in new SimpleTree{
+    val expected = 3
+    tree.maximum shouldBe expected
+  }
 
- /*"We want to retrieve child of branch and result " should " be NilTree if no child "  in new SimpleTree{
-    val expeted = NilTree
-    tree.childs shoudlBe expeted
-  }*/
+  it should " be maximum of all  nodes when have more nodes " in new ThreeChild{
+    val expected = 10
+    tree.maximum shouldBe expected
+  }
+
 }

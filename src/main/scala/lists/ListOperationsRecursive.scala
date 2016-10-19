@@ -59,6 +59,7 @@ final class ListOperationsRecursive[A](list: MyList[A]) extends Transforms[A] {
     case Init(head, tail) => tail
   }
 
+  //TODO : USE PATTERN MATCHIN
   def init: MyList[A] = list.reverse().tail.reverse()
 
   @tailrec

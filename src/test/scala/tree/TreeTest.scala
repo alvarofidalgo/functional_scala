@@ -87,7 +87,7 @@ class TreeTest extends FlatSpec with ShouldMatchers{
     tree.depth shouldBe expected
   }
 
-  it should " be maximum deph when exist more " in new LongDifferentDeph {
+  it should " be maximum depth when exist more " in new LongDifferentDeph {
     val expected = 5
     tree.depth shouldBe expected
   }

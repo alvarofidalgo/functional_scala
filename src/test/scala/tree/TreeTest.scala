@@ -74,22 +74,25 @@ class TreeTest extends FlatSpec with ShouldMatchers{
 
   "We want to calculate depth and result " should " be one when only have one node " in  new SimpleTree{
     val expected = 1
-    tree.depth shouldBe expected
+    tree.depth[Int](0,(acc,value) => acc + 1) shouldBe expected
   }
 
   it should " be two when have two children" in new TwoChild{
     val expected = 2
-    tree.depth shouldBe expected
+    val f:(Int,Int)=>Int = (acc,value) => acc + 1
+    tree.depth[Int](0,(acc,value) => acc + 1) shouldBe expected
   }
 
   it should " be three when have three child " in new ThreeChild{
     val expected = 3
-    tree.depth shouldBe expected
+    val f:(Int,Int)=>Int = (acc,value) => acc + 1
+    tree.depth[Int](0,(acc,value) => acc + 1) shouldBe expected
   }
 
   it should " be maximum depth when exist more " in new LongDifferentDeph {
     val expected = 5
-    tree.depth shouldBe expected
+    val f:(Int,Int)=>Int = (acc,value) => acc + 1
+    tree.depth[Int](0,(acc,value) => acc + 1) shouldBe expected
   }
 
 }

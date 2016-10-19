@@ -11,17 +11,15 @@ final class TreeOperations[A](tree: Tree[A]) {
   def maximum: Int =
     walkTree[Int](initialValue = 0)((max, value) => max.max(value.asInstanceOf[Int]))
 
-
   @tailrec
-  def depth(implicit maxNodes: Int = 0,
-            parentNodes: Seq[Int] = Seq(0),
-            trees: Seq[Tree[A]] = Seq(tree)): Int = trees match {
-    case Nil => maxNodes
+  def depth[B](acc: B , f: (B, A) => B)
+           (implicit parentNodes: Seq[B] = Seq(acc),trees: Seq[Tree[A]] = Seq(tree)): B = trees match {
+    case Nil => acc
     case Leaf(value) :: tail =>
-      depth(parentNodes.head +1, parentNodes.tail, tail)
+      depth(f(parentNodes.head,value),f)(parentNodes.tail, tail)
     case Branch(value, left, right) :: tail =>
-      val nextDepth = parentNodes.head + 1
-      depth(maxNodes, parentNodes.tail ++ Seq(nextDepth,nextDepth), tail ++ Seq(left, right))
+      val nextDepth = f(parentNodes.head,value)
+      depth(nextDepth,f)(parentNodes.tail ++ Seq(nextDepth, nextDepth), tail ++ Seq(left, right))
   }
 
   @tailrec

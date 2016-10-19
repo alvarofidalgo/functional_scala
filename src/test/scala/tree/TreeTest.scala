@@ -64,12 +64,12 @@ class TreeTest extends FlatSpec with ShouldMatchers{
 
   "We wan to calculate maximun of Int tree and result " should " be head if only one element " in new SimpleTree{
     val expected = 1
-    tree.maximum shouldBe expected
+    tree.maximum((maximum,value)=>maximum.max(value)) shouldBe expected
   }
 
   it should " be maximum of all  nodes when have more nodes " in new ThreeChild{
     val expected = 7
-    tree.maximum shouldBe expected
+    tree.maximum((maximum,value)=>maximum.max(value)) shouldBe expected
   }
 
   "We want to calculate depth and result " should " be one when only have one node " in  new SimpleTree{

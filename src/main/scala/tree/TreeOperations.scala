@@ -7,13 +7,13 @@ final class TreeOperations[A](tree: Tree[A]) {
 
   def size: Int =
     walkTree[Int](acc = 1,
-                 (numberNodes, b) => numberNodes.last + 1,
-                 (numberNodes, b) => numberNodes.last + 2)
+                 (numberNodesLeft, b) => numberNodesLeft.last + 1,
+                 (numberNodesRight, b) => numberNodesRight.last + 2)
 
-  def maximum: Int =
-    walkTree[Int](acc = tree.value.asInstanceOf[Int],
-                  (max, value) => max.head.max(value.asInstanceOf[Int]),
-                  (max, value) => max.head.max(value.asInstanceOf[Int]))
+  def maximum(f:(A,A)=>A): A =
+    walkTree[A](acc = tree.value,
+                  (maxLeft, value) => f(maxLeft.head,value),
+                  (maxRight, value) => f(maxRight.head,value))
 
   def depth:Int =
     walkTree[Int](acc = 1,(acc,value) => acc.head + 1,(acc,value)=>acc.head + 1)

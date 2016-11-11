@@ -28,4 +28,5 @@ class SomeTest extends FlatSpec with ShouldMatchers{
     val option = Some(value)
     option.getOrElse("assasasa") shouldBe  value
   }
+
 }

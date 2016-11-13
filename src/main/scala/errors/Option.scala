@@ -1,6 +1,5 @@
 package errors
 
-//TODO : IN REFACTOR
 case class Option[A](get: A) extends MyOption[A] {
 
 
@@ -16,8 +15,5 @@ case class Option[A](get: A) extends MyOption[A] {
 
   override def flatMap[B](f: (A) => MyOption[B]): MyOption[B] = otherFunction(None,myFunction(f,Some(get).flatMap[B]))
 
-  override def getOrElse[B >: A](default: => B): B = get match {
-    case null => default
-    case a => get
-  }
+  override def getOrElse[B >: A](default: => B): B = otherFunction(default,get)
 }

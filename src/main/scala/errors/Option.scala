@@ -4,11 +4,11 @@ package errors
 case class Option[A](get: A) extends MyOption[A] {
 
 
-  def myFunction[B,C](f1:(A)=>C,f2:((A)=>C)=> MyOption[B]): MyOption[B] = f2(f1)
+  def myFunction[B,C](f1:(A)=>C,f2:((A)=>C)=> B): B = f2(f1)
 
-  private def otherFunction [B,C,D](default:MyOption[B],notDefuaul:MyOption[B]) = get match {
-    case null => None
-    case a =>notDefuaul
+  private def otherFunction [B](default:B,notDefault:B):B = get match {
+    case null => default
+    case a =>notDefault
   }
 
   override def map[B](f: (A) => B): MyOption[B] = otherFunction(None,myFunction(f,Some(get).map[B]))

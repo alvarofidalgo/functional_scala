@@ -2,14 +2,21 @@ package errors
 
 case class Option[A](get: A) extends MyOption[A] {
 
-  private def getValue[B, C](default: B, f: (A) => B): B = get match {
-    case null => default
+  private def getValue[B, C](fDefault: () => B, f: (A) => B): B = get match {
+    case null => fDefault()
     case value => f(value)
   }
 
-  override def map[B](f: (A) => B): MyOption[B] = getValue(None, (get) => Some(get).map(f))
+  def map[B](f: (A) => B): MyOption[B] =
 
-  override def flatMap[B](f: (A) => MyOption[B]): MyOption[B] = getValue(None, (get) => Some(get).flatMap(f))
+    getValue(() => None.map(f), (get) => Some(get).map(f))
 
-  override def getOrElse[B >: A](default: => B): B = getValue(default, (get) => get)
+  def flatMap[B](f: (A) => MyOption[B]): MyOption[B] =
+    getValue(() => None.flatMap(f), (get) => Some(get).flatMap(f))
+
+  def getOrElse[B >: A](default: => B): B =
+    getValue(() => None.getOrElse(default), (get) => Some(get).getOrElse(default))
+
+  def orElse[B >: A](default: => MyOption[B]): MyOption[B] =
+    getValue(() => None.orElse(default), (get) => Some(get).orElse(default))
 }

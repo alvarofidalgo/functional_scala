@@ -20,7 +20,7 @@ case class Some[A](get:A) extends MyOption[A] {
 
    def getOrElse[B >: A](default : => B) : B = get
 
-  def orElse[B >: A](default: => MyOption[B]):MyOption[B] = Some(get)
+   def orElse[B >: A](default: => MyOption[B]):MyOption[B] = Some(get)
 }
 
 object None extends MyOption[Nothing] {

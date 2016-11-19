@@ -14,4 +14,6 @@ case class Option[A](get: A) extends MyOption[A] {
   def getOrElse[B >: A](default: => B): B = myOption.getOrElse(default)
 
   def orElse[B >: A](default: => MyOption[B]): MyOption[B] =  myOption.orElse(default)
+
+  def filter(f:A=>Boolean):MyOption[A] = Some(get)
 }

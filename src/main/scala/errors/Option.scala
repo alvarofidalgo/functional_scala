@@ -1,19 +1,22 @@
 package errors
 
-case class Option[A](get: A) extends MyOption[A] {
+case class Option[A](get: A)  {
 
-  private val myOption = get match {
-    case null => None
-    case value => Some(get)
+  private val function:A=>Boolean=(a) => a != null
+
+  private def myOptionSelector(f:A=>Boolean) = f(get) match {
+      case true => Some(get)
+      case false => None
   }
 
-  def map[B](f: (A) => B): MyOption[B] = myOption.map(f)
+  def map[B](implicit f: (A) => B, fSelector:A=>Boolean = function): MyOption[B] = myOptionSelector(fSelector).map(f)
 
-  def flatMap[B](f: (A) => MyOption[B]): MyOption[B] = myOption.flatMap(f)
 
-  def getOrElse[B >: A](default: => B): B = myOption.getOrElse(default)
+  def flatMap[B](implicit f: (A) => MyOption[B], fSelector:A=>Boolean = function): MyOption[B] = myOptionSelector(fSelector).flatMap(f)
 
-  def orElse[B >: A](default: => MyOption[B]): MyOption[B] =  myOption.orElse(default)
+  def getOrElse[B >: A](default: => B,fSelector:A=>Boolean = function): B = myOptionSelector(fSelector).getOrElse(default)
 
-  def filter(f:A=>Boolean):MyOption[A] = Some(get)
+  def orElse[B >: A](default: => MyOption[B],fSelector:A=>Boolean = function): MyOption[B] =  myOptionSelector(fSelector).orElse(default)
+
+  def filter(f:A=>Boolean):MyOption[A] = myOptionSelector(f).filter(f)
 }

@@ -16,10 +16,8 @@ trait MyOption[+A] {
 
 case class Some[A](get:A) extends MyOption[A] {
 
-   def map[B](f:A=>B):MyOption[B] = {
-     val a = 1
-     Some(f(get))
-   }
+   def map[B](f:A=>B):MyOption[B] = Some(f(get))
+
 
    def flatMap[B](f:A=>MyOption[B]):MyOption[B] = f(get)
 
@@ -34,11 +32,11 @@ object None extends MyOption[Nothing] {
 
   def map[B](f:Nothing=>B):MyOption[B] = None
 
-  def flatMap[B](f:Nothing=>MyOption[B]):MyOption[B] = this
+  def flatMap[B](f:Nothing=>MyOption[B]):MyOption[B] = None
 
   def getOrElse[B](default : => B) : B  = default
 
   def orElse[B](default: => MyOption[B]):MyOption[B] = default
 
-  def filter(f:Nothing=>Boolean):MyOption[Nothing] = this
+  def filter(f:Nothing=>Boolean):MyOption[Nothing] = None
 }

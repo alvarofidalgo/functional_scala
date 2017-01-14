@@ -2,13 +2,13 @@ package errors
 
 
 sealed trait Either[+E,+A] {
-  def map[B](f: (A) => B):Either[E,B]
+ // def map[B](f: (A) => B):Either[E,B]
 }
-case class Right[+E](value:E) extends Either[E,Nothing]{
+case class Right[+A](value:A) extends Either[Nothing,A]{
 
-  override def map[B](f: (Nothing) => B): Either[E, B] = ???
+   def map[B](f: (A) => B): Either[Nothing, B] = Right(f(value))
 }
-case class Left[+A](value:A) extends Either[Nothing,A] {
+case class Left[+E](value:E) extends Either[E,Nothing] {
 
-  override def map[B](f: (A) => B):Either[Nothing,B] = Left(f(value))
+ // override def map[B](f: (E) => B):Either[B,Nothing] = Left(f(value))
 }

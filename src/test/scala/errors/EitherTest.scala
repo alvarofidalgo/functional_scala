@@ -10,5 +10,12 @@ class EitherTest extends FlatSpec with ShouldMatchers {
     val right = Right(message)
     right.map((a)=>a.length) shouldBe Right(message.length)
   }
+
+
+  it should " nothing when side is left " in {
+    val message = " This is no error"
+    val left = Left(message)
+    left.map((a)=>a) shouldBe Left(message)
+  }
 }
 

@@ -17,5 +17,20 @@ class EitherTest extends FlatSpec with ShouldMatchers {
     val left = Left(message)
     left.map((a)=>a) shouldBe Left(message)
   }
+
+
+  " We want to implement flatmap function and result " should " be a transformation of right side" in {
+    val message = " This is no error"
+    val right = Right(message)
+    right.flatMap((a)=>Left(a.length)) shouldBe Left(message.length)
+  }
+
+  it should " no effects in Left side " in {
+    val message = " This is no error"
+    val right = Left(message)
+    right.flatMap((a)=>a) shouldBe Left(message)
+
+  }
+  
 }
 

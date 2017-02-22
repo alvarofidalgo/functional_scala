@@ -31,6 +31,6 @@ class EitherTest extends FlatSpec with ShouldMatchers {
     right.flatMap((a)=>a) shouldBe Left(message)
 
   }
-  
+
 }
 

@@ -1,5 +1,7 @@
 package lists
 
+import scala.annotation.tailrec
+
 sealed trait MyList[+A]
 
 case object Nil extends MyList[Nothing]

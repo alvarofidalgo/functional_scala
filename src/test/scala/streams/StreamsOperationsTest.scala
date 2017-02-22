@@ -34,5 +34,15 @@ class StreamsOperationsTest extends FlatSpec with ShouldMatchers {
     val expected = MyList[String]("1","2")
     Streams[String]("1","2").toList shouldBe expected
   }
+
+  " we want to implement fucntion take and result " should " return first element in Stream with one element " in {
+    val expected = Streams[Int](1)
+    Streams[Int](1).take(1).toList shouldBe expected.toList
+  }
+
+  it should "be return first element in Stream with two elements " in {
+    val expected = Streams[Int](1)
+    Streams[Int](1,2).take(1).toList shouldBe expected.toList
+  }
 }
 

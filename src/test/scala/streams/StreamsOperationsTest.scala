@@ -22,8 +22,8 @@ class StreamsOperationsTest extends FlatSpec with ShouldMatchers {
   }
 
   it should " be List with two Integer elements if Streams have two integer elements " in {
-    val expected = MyList[Int](1,2)
-    Streams[Int](1,2).toList shouldBe expected
+    val expected = MyList[Int](1, 2)
+    Streams[Int](1, 2).toList shouldBe expected
   }
 
   it should " be List with String elements if Streams have String " in {
@@ -78,6 +78,26 @@ class StreamsOperationsTest extends FlatSpec with ShouldMatchers {
   it should " be Stream with two reverse elements when original Stream have two " in {
     val expected = Streams[Int](2,1)
     Streams[Int](1,2).reverse should be (equalToStream(expected))
+  }
+
+  " We want to implement drop function and result " should " be empty Stream when we have Empty Stream " in {
+    val expected = Streams[Int]()
+    Streams[Int]().drop(1) should be (equalToStream(expected))
+  }
+
+  it should " be Stream with one element when we have one element and drop zero " in {
+    val expected = Streams[Int](1)
+    Streams[Int](1).drop(0) should be (equalToStream(expected))
+  }
+
+  it should " be empty Stream when we have Stream with one element and drop one " in {
+    val expected = Streams[Int]()
+    Streams[Int](1).drop(1) should be (equalToStream(expected))
+  }
+
+  it should " be empty Stream when we have one element and whe drop three " in {
+    val expected = Streams[Int]()
+    Streams[Int](1).drop(3) should be (equalToStream(expected))
   }
 }
 

@@ -30,6 +30,13 @@ object StreamsOperations {
       case Empty=>result()
       case InitStreams(head, tail) => tail().reverse(()=>InitStreams(head, result))
     }
+
+    @tailrec
+    final def drop(elements:Int):Streams[A] = (elements,streams) match {
+      case (_,Empty)=>streams
+      case (0,_)=>streams
+      case  (_,InitStreams(head, tail)) => tail().drop(elements-1)
+    }
   }
 
 }

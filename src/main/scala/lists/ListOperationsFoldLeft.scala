@@ -1,13 +1,13 @@
 package lists
 
-import conversions.List.recursive
+
 import functions.Partial
 import Partial._
 
 object ListOperationsFoldLeft {
 
   implicit final class ListOperationsFoldLeft[A](list: MyList[A]) extends Transforms[A] {
-
+    import lists.ListOperationsRecursive._
     def length: Int =
       list.foldLeft(acc = 0)((a, b) => a + 1)
 

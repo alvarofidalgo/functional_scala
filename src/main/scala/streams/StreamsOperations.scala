@@ -10,7 +10,7 @@ object StreamsOperations {
 
   implicit class StreamsOperations[A](streams: Streams[A]) {
 
-    import conversions.List.recursive
+    import lists.ListOperationsRecursive._
 
     @tailrec
     final def toList(implicit result: MyList[A] = Nil): MyList[A] = streams match {

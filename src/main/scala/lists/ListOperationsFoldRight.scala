@@ -1,10 +1,12 @@
 package lists
 
-import conversions.List.recursive
+
 
 object ListOperationsFoldRight {
 
  implicit  final class ListOperationsFoldRight[A](list: MyList[A]) {
+
+   import lists.ListOperationsRecursive._
 
     def length: Int =
       list.foldRight[Int](acc = 0)((a, b) => b + 1)

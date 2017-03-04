@@ -1,6 +1,5 @@
 package lists
 
-import conversions.List.recursive
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
@@ -8,6 +7,8 @@ import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
+
+  import lists.ListOperationsRecursive._
 
   " We want to calculate length and result " should " be List length " in new ListNotEmpty {
     val expected = 3
@@ -213,14 +214,14 @@ class ListOperationsRecursiveTest extends FlatSpec with ShouldMatchers {
   }
 
   "We want to implement zipWith function and result " should " be sum of index elements" in new ListNotEmpty {
-    val other = MyList[Int](4,5,6)
-    val expected = MyList[Int](5,7,9)
-    list.zipWith[Int,Int](other,(a,b)=> a + b ) shouldBe expected
+    val other = MyList[Int](4, 5, 6)
+    val expected = MyList[Int](5, 7, 9)
+    list.zipWith[Int, Int](other, (a, b) => a + b) shouldBe expected
   }
 
-  it should "be concatenate elements " in new  ListNotEmpty {
-    val other = MyList[String]("a","b","c")
-    val expected = MyList[String]("1a","2b","3c")
-    list.zipWith[String,String](other,(a,b)=> a.toString.concat(b)  ) shouldBe expected
+  it should "be concatenate elements " in new ListNotEmpty {
+    val other = MyList[String]("a", "b", "c")
+    val expected = MyList[String]("1a", "2b", "3c")
+    list.zipWith[String, String](other, (a, b) => a.toString.concat(b)) shouldBe expected
   }
 }

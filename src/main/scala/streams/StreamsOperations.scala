@@ -41,14 +41,13 @@ object StreamsOperations {
 
     @tailrec
     final def takeWhile(f: (A) => Boolean)
-                       (implicit result: Streams[A] = Empty,f2:()=>Option[Boolean] = () => None): Streams[A] =
-      (f2(),
-      streams)
+                       (implicit result: Streams[A] = Empty,
+                        f2:((A) => Boolean)=>Option[Boolean] = (f) => None): Streams[A] = (f2(f), streams)
     match {
       case (_,Empty)=> result
-      case (None,InitStreams(head, tail))=>  takeWhile(f)(result,()=>Some(f(head())))
-      case (Some(true),InitStreams(head, tail)) => tail().takeWhile(f)(InitStreams(head, () => result),()=>Some(f(head())))
-      case (Some(false),InitStreams(head, tail)) =>tail().takeWhile(f)(result,()=>Some(f(head())))
+      case (None,InitStreams(head, tail))=>  takeWhile(f)(result,(f)=>Some(f(head())))
+      case (Some(true),InitStreams(head, tail)) => tail().takeWhile(f)(InitStreams(head, () => result),(f)=>Some(f(head())))
+      case (Some(false),InitStreams(head, tail)) =>tail().takeWhile(f)(result,(f)=>Some(f(head())))
 
     }
   }

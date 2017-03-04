@@ -1,6 +1,6 @@
 package lists
 
-import conversions.List.withFoldLeft
+
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
@@ -8,6 +8,8 @@ import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class ListOperationsFoldLeftTest extends FlatSpec with ShouldMatchers {
+
+  import lists.ListOperationsFoldLeft._
 
   " We want to calculate length and result " should " be List length " in new ListNotEmpty {
     val expected = 3

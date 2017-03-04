@@ -10,5 +10,5 @@ object List {
 
   implicit def withFoldLeft[A](list: MyList[A]):ListOperationsFoldLeft[A] = new ListOperationsFoldLeft(list)
 
-  implicit def withFlatMap[A](list:MyList[A]):ListOperationsFlatMap[A] = new ListOperationsFlatMap(list)
+ // implicit def withFlatMap[A](list:MyList[A]):ListOperationsFlatMap[A] = new ListOperationsFlatMap(list)
 }

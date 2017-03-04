@@ -3,11 +3,13 @@ package lists
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
-import conversions.List.withFoldRight
+
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class ListOperationsFoldRightTest extends FlatSpec with ShouldMatchers{
+
+  import lists.ListOperationsFoldRight._
 
   " We want to calculate length and result " should " be List length " in new ListNotEmpty {
     val expected = 3

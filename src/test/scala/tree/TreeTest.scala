@@ -1,6 +1,6 @@
 package tree
 
-import conversions.Trees._
+
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
 
@@ -46,7 +46,7 @@ class TreeTest extends FlatSpec with ShouldMatchers {
     private val three = Branch(3, six, seven)
     val tree: Tree[Int] = Branch(1, two, three)
   }
-
+  import tree.TreeOperations._
   " We want to calculate size tree and result " should " be one node if tree is simple " in new SimpleTree {
     val expected = 1
     tree.size shouldBe expected

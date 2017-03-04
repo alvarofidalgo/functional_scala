@@ -45,10 +45,8 @@ object StreamsOperations {
       (f2(),
       streams)
     match {
+      case (_,Empty)=> result
       case (None,InitStreams(head, tail))=>  takeWhile(f)(result,()=>Some(f(head())))
-      case (None,Empty)=> result
-      case (Some(true),Empty) => result
-      case (Some(false),Empty) => result
       case (Some(true),InitStreams(head, tail)) => tail().takeWhile(f)(InitStreams(head, () => result),()=>Some(f(head())))
       case (Some(false),InitStreams(head, tail)) =>tail().takeWhile(f)(result,()=>Some(f(head())))
 

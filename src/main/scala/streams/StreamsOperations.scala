@@ -44,8 +44,8 @@ object StreamsOperations {
     match {
       case (true,Empty) => result
       case (true,InitStreams(head, tail)) => f(head()) match {
-        case true => tail().takeWhile(f)(InitStreams(head, () => result))
-        case false => tail().takeWhile(f)(result)
+        case true => tail().takeWhile(f)(InitStreams(head, () => result),f2)
+        case false => tail().takeWhile(f)(result,f2)
       }
     }
   }

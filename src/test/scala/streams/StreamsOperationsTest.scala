@@ -1,6 +1,7 @@
 package streams
 
 import lists.MyList
+import matchers.StreamMatcher._
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
 
@@ -31,6 +32,7 @@ class StreamsOperationsTest extends FlatSpec with ShouldMatchers {
   }
 
   it should " be List with two String elements if Streams have two String elements " in {
+    
     val expected = MyList[String]("1","2")
     Streams[String]("1","2").toList shouldBe expected
   }

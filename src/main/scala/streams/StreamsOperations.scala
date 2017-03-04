@@ -15,15 +15,20 @@ object StreamsOperations {
     @tailrec
     final def toList(implicit result: MyList[A] = Nil): MyList[A] = streams match {
       case Empty => result
-      case InitStreams(head, tail) =>
-        new StreamsOperations(tail()).toList(result.append(MyList(head())))
+      case InitStreams(head, tail) => tail().toList(result.append(MyList(head())))
     }
 
     @tailrec
-    final def take(elements: Int)(implicit result: Streams[A] = Empty): Streams[A] = (elements, streams) match {
-      case (_, Empty) => result
-      case (0, InitStreams(fHead, fTail)) => result
-      case (_, InitStreams(fHead, fTail)) => new StreamsOperations[A](fTail()).take(elements - 1)(InitStreams(fHead, () => result))
+    final def take(elements: Int)(implicit result: Streams[A] = Empty): Streams[A] = (elements,streams) match {
+      case (_,Empty) => result.reverse
+      case (0,_) =>  result.reverse
+      case (_,InitStreams(head, tail)) => tail().take(elements-1)(InitStreams(head, () => result))
+    }
+
+    @tailrec
+    final def reverse(implicit result:()=> Streams[A] =()=> Empty):Streams[A] = streams match {
+      case Empty=>result()
+      case InitStreams(head, tail) => tail().reverse(()=>InitStreams(head, result))
     }
   }
 

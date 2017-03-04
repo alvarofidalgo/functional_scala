@@ -32,19 +32,52 @@ class StreamsOperationsTest extends FlatSpec with ShouldMatchers {
   }
 
   it should " be List with two String elements if Streams have two String elements " in {
-    
+
     val expected = MyList[String]("1","2")
     Streams[String]("1","2").toList shouldBe expected
   }
 
-  " we want to implement fucntion take and result " should " return first element in Stream with one element " in {
-    val expected = Streams[Int](1)
-    Streams[Int](1).take(1).toList shouldBe expected.toList
+  " we want to implement fucntion take and result " should " be empty Stream when no have elements" in {
+    val expected = Streams[Int]()
+    Streams[Int]().take(1) should be (equalToStream(expected))
   }
 
-  it should "be return first element in Stream with two elements " in {
+  it should " be Stream with one element when take one and we have one element " in {
     val expected = Streams[Int](1)
-    Streams[Int](1,2).take(1).toList shouldBe expected.toList
+    Streams[Int](1).take(1) should be (equalToStream(expected))
+  }
+
+  it should " be Stream with two elements when take two and we have two elements " in {
+    val expected = Streams[Int](1,2)
+    Streams[Int](1,2).take(4) should be (equalToStream(expected))
+  }
+
+  it should " be Empty Stream when have two elements but take zero " in {
+    val expected = Streams[Int]()
+    Streams[Int](1,2).take(0) should be (equalToStream(expected))
+  }
+
+  it should " be stream with two elements when take two and have foour " in {
+    val expected = Streams[Int](1,2)
+    Streams[Int](1,2,3,4).take(2) should be (equalToStream(expected))
+  }
+
+
+  "We want to reverse Stream and result " should " be Empty Stream when no have elements " in {
+     val expected = Streams[Int]()
+    Streams[Int]().reverse should be (equalToStream(expected))
+  }
+
+
+  it should " be Stream with one element when original Stream have one " in {
+    val expected = Streams[Int](1)
+    Streams[Int](1).reverse should be (equalToStream(expected))
+  }
+
+
+  it should " be Stream with two reverse elements when original Stream have two " in {
+    val expected = Streams[Int](2,1)
+    Streams[Int](1,2).reverse should be (equalToStream(expected))
   }
 }
 

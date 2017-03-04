@@ -99,5 +99,22 @@ class StreamsOperationsTest extends FlatSpec with ShouldMatchers {
     val expected = Streams[Int]()
     Streams[Int](1).drop(3) should be (equalToStream(expected))
   }
+
+  " We want to implement takeWhile and result " should " be empty Stream when Stream was empty" in {
+    val expected = Streams[Int]()
+    Streams[Int]().takeWhile((a)=> true) should be (equalToStream(expected))
+  }
+
+
+  it should " be all original Stream when all elements complain predicate " in {
+    val expected = Streams[Int](1)
+    Streams[Int](1).takeWhile((a)=> true) should be (equalToStream(expected))
+  }
+
+  it should " be Empty Stream when not exist elements that complain predicate " in {
+    val expected = Streams[Int]()
+    Streams[Int](1,2).takeWhile((a)=> a > 3) should be (equalToStream(expected))
+  }
+
 }
 

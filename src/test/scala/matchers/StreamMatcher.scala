@@ -13,20 +13,11 @@ object StreamMatcher {
     override def apply(left: Streams[A]): MatchResult = {
 
       def loop(s:Streams[A],a:Streams[A])(implicit result:Boolean = true) : Boolean = (s,a) match {
-        case (InitStreams(head1, tail1),InitStreams(head2, tail2)) =>{
-          val h1= head1()
-          val h2=head2()
-          loop(tail1(),tail2())(result && h1==h2)
-        }
-        case (InitStreams(head1, tail1),Empty)  => {
-          false
-        }
-        case (Empty,InitStreams(head2, tail2))  => {
-          false
-        }
-        case (Empty,Empty)=>{
-          result
-        }
+        case (InitStreams(head1, tail1),InitStreams(head2, tail2)) => loop(tail1(),tail2())(result && head1()==head2())
+        case (InitStreams(head1, tail1),Empty)  => false
+        case (Empty,InitStreams(head2, tail2))  => false
+        case (Empty,Empty)=> result
+
       }
       MatchResult(
         loop(s,left),

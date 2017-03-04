@@ -19,23 +19,38 @@ object StreamsOperations {
     }
 
     @tailrec
-    final def take(elements: Int)(implicit result: Streams[A] = Empty): Streams[A] = (elements,streams) match {
-      case (_,Empty) => result.reverse
-      case (0,_) =>  result.reverse
-      case (_,InitStreams(head, tail)) => tail().take(elements-1)(InitStreams(head, () => result))
+    final def take(elements: Int)(implicit result: Streams[A] = Empty): Streams[A] = (elements, streams) match {
+      case (_, Empty) => result.reverse
+      case (0, _) => result.reverse
+      case (_, InitStreams(head, tail)) => tail().take(elements - 1)(InitStreams(head, () => result))
     }
 
     @tailrec
-    final def reverse(implicit result:()=> Streams[A] =()=> Empty):Streams[A] = streams match {
-      case Empty=>result()
-      case InitStreams(head, tail) => tail().reverse(()=>InitStreams(head, result))
+    final def reverse(implicit result: () => Streams[A] = () => Empty): Streams[A] = streams match {
+      case Empty => result()
+      case InitStreams(head, tail) => tail().reverse(() => InitStreams(head, result))
     }
 
     @tailrec
-    final def drop(elements:Int):Streams[A] = (elements,streams) match {
-      case (_,Empty)=>streams
-      case (0,_)=>streams
-      case  (_,InitStreams(head, tail)) => tail().drop(elements-1)
+    final def drop(elements: Int): Streams[A] = (elements, streams) match {
+      case (_, Empty) => streams
+      case (0, _) => streams
+      case (_, InitStreams(head, tail)) => tail().drop(elements - 1)
+    }
+
+    @tailrec
+    final def takeWhile(f: (A) => Boolean)
+                       (implicit lastResult: Boolean = true,
+                        result: Streams[A] = Empty): Streams[A] = (lastResult, streams) match {
+      case (true, Empty) => result
+      case (false,_)=>result
+      case (_, InitStreams(head, tail)) => {
+        val  res = f(head())
+        if (res)
+          tail().takeWhile(f)(res,InitStreams(head,()=> result))
+        else
+          tail().takeWhile(f)(res,result)
+      }
     }
   }
 

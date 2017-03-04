@@ -40,16 +40,15 @@ object StreamsOperations {
 
     @tailrec
     final def takeWhile(f: (A) => Boolean)
-                       (implicit lastResult: Boolean = true,
-                        result: Streams[A] = Empty): Streams[A] = (lastResult, streams) match {
-      case (true, Empty) => result
-      case (false,_)=>result
-      case (_, InitStreams(head, tail)) => {
+                       (implicit /*lastResult: Boolean = true,*/
+                        result: Streams[A] = Empty): Streams[A] = streams match {
+      case Empty => result
+      case InitStreams(head, tail) => {
         val  res = f(head())
         if (res)
-          tail().takeWhile(f)(res,InitStreams(head,()=> result))
+          tail().takeWhile(f)(InitStreams(head,()=> result))
         else
-          tail().takeWhile(f)(res,result)
+          tail().takeWhile(f)(result)
       }
     }
   }

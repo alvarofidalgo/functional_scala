@@ -43,11 +43,12 @@ object StreamsOperations {
                        (implicit result: Streams[A] = Empty,f2:()=>Boolean = () => true): Streams[A] = (f2(),streams)
     match {
       case (true,Empty) => result
+      case (false,Empty) => result
       case (true,InitStreams(head, tail)) => f(head()) match {
         case true => tail().takeWhile(f)(InitStreams(head, () => result),()=>f(head()))
         case false => tail().takeWhile(f)(result,()=>f(head()))
       }
-      case (false,InitStreams(head, tail)) =>result
+      case (false,InitStreams(head, tail)) =>tail().takeWhile(f)(result,()=>f(head()))
 
     }
   }

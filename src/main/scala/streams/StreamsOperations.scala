@@ -40,9 +40,10 @@ object StreamsOperations {
 
     @tailrec
     final def takeWhile(f: (A) => Boolean)
-                       (implicit result: Streams[A] = Empty,f2:()=>Boolean = () => true): Streams[A] = streams match {
-      case Empty => result
-      case InitStreams(head, tail) => f(head()) match {
+                       (implicit result: Streams[A] = Empty,f2:()=>Boolean = () => true): Streams[A] = (f2(),streams)
+    match {
+      case (true,Empty) => result
+      case (true,InitStreams(head, tail)) => f(head()) match {
         case true => tail().takeWhile(f)(InitStreams(head, () => result))
         case false => tail().takeWhile(f)(result)
       }

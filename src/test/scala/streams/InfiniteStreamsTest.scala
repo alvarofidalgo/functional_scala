@@ -10,8 +10,10 @@ class InfiniteStreamsTest extends FlatSpec with ShouldMatchers{
 
   import streams.StreamsOperations.StreamsOperations
 
+
   trait Infinite {
-    val infinite = InfiniteStreams.constant(value=1)
+    import InfiniteStreams._
+    val infinite = 1.constant
   }
 
 

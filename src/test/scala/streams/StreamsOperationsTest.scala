@@ -146,5 +146,21 @@ class StreamsOperationsTest extends FlatSpec with ShouldMatchers {
     Streams[Int](1,2,3).forAll((a)=>a<3) shouldBe expected
   }
 
+
+  " We want to implement Map function and result " should " be empty Stream when original Stream no elements " in {
+     val expected = Streams[Boolean]()
+     Streams[Int]().map[Boolean]((a)=> true) should be (equalToStream(expected))
+  }
+
+  it should " be Stream with one transformed element when exist one element " in {
+    val expected = Streams[Boolean](true)
+    Streams[Int](1).map[Boolean]((a)=> true) should be (equalToStream(expected))
+  }
+
+  it should " be Stream with two transformed elements when exist two elements " in {
+    val expected = Streams[Boolean](true,true)
+    Streams[Int](1,2).map[Boolean]((a)=> true) should be (equalToStream(expected))
+  }
+
 }
 

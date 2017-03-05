@@ -116,5 +116,18 @@ class StreamsOperationsTest extends FlatSpec with ShouldMatchers {
     Streams[Int](1,2).takeWhile((a)=> a > 3) should be (equalToStream(expected))
   }
 
+  " We want to implement foldRigth function and result " should " be initial value if Stream was empty " in {
+    val initial = ""
+    val f :(Int) => String =  (a)=>a.toString
+    Streams[Int]().foldRight(initial)((a,b)=>{f(a) + b}) shouldBe initial
+  }
+
+  it should "be concatenate initial with function if no empty " in {
+    val initial = ""
+    val expected = "12"
+    val f :(Int) => String =  (a)=>a.toString
+    Streams[Int](1,2).foldRight(initial)((a,b)=>{f(a) + b}) shouldBe expected
+  }
+
 }
 

@@ -1,6 +1,5 @@
 package streams
 
-import scala.Option
 import scala.annotation.tailrec
 
 import lists.MyList
@@ -42,13 +41,18 @@ object StreamsOperations {
     @tailrec
     final def takeWhile(f: (A) => Boolean)
                        (implicit result: Streams[A] = Empty,
-                        f2:((A) => Boolean)=>Option[Boolean] = (f) => None): Streams[A] = (f2(f), streams)
+                        f2: ((A) => Boolean) => Option[Boolean] = (f) => None): Streams[A] = (f2(f), streams)
     match {
-      case (_,Empty)=> result
-      case (None,InitStreams(head, tail))=>  takeWhile(f)(result,(f)=>Some(f(head())))
-      case (Some(true),InitStreams(head, tail)) => tail().takeWhile(f)(InitStreams(head, () => result),(f)=>Some(f(head())))
-      case (Some(false),InitStreams(head, tail)) =>tail().takeWhile(f)(result,(f)=>Some(f(head())))
+      case (_, Empty) => result
+      case (None, InitStreams(head, tail)) => takeWhile(f)(result, (f) => Some(f(head())))
+      case (Some(true), InitStreams(head, tail)) => tail().takeWhile(f)(InitStreams(head, () => result), (f) => Some(f(head())))
+      case (Some(false), InitStreams(head, tail)) => tail().takeWhile(f)(result, (f) => Some(f(head())))
+    }
 
+
+    def foldRight[B](z: =>B)(f:(A,=>B)=>B):B = streams match {
+      case InitStreams(head, tail) => f(head(),tail().foldRight(z)(f))
+      case _=>z
     }
   }
 

@@ -162,5 +162,17 @@ class StreamsOperationsTest extends FlatSpec with ShouldMatchers {
     Streams[Int](1,2).map[Boolean]((a)=> true) should be (equalToStream(expected))
   }
 
+
+  "we want to implement filter function and result " should " be mpty Stream when no havce elements " in {
+    val expected = Streams[Int]()
+    Streams[Int]().filter((a)=>a==2) should be (equalToStream(expected))
+  }
+
+
+  it should " be original Stream with elements that complain condition" in {
+    val expected = Streams[Int](2,2)
+    Streams[Int](2,3,2,3).filter((a)=>a==2) should be (equalToStream(expected))
+  }
+
 }
 

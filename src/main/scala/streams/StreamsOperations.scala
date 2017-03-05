@@ -60,11 +60,20 @@ object StreamsOperations {
       case _ => streams.foldRight(result = true)((value, result) => predicate(value) && result)
     }
 
-    def map[B](transform: (A) => B): Streams[B] =
+    final def map[B](transform: (A) => B): Streams[B] =
       streams.foldRight(result = Streams[B]())(
         (value, result) =>
           InitStreams(() => transform(value), () => result)
       )
+
+    final def filter(condition:(A)=>Boolean):Streams[A] = streams match {
+      case Empty => Empty
+      case _ =>   streams.foldRight(Streams[A]())((value,result)=> if (condition(value)) {
+        InitStreams(() => value, () => result)
+      }else{
+        result
+      })
+    }
   }
 
 }

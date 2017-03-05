@@ -5,31 +5,32 @@ import org.scalatest.ShouldMatchers
 
 import matchers.StreamMatcher._
 
-class InfiniteStreamsTest extends FlatSpec with ShouldMatchers{
-
+class InfiniteStreamsTest extends FlatSpec with ShouldMatchers {
 
   import streams.StreamsOperations.StreamsOperations
 
-
   trait Infinite {
+
     import InfiniteStreams._
+
     val infinite = 1.constant
   }
 
+  trait From {
 
-  " We implement function that create infinite Streams and result   " should " be we take zero elements " in new Infinite{
-    val expected = Streams[Int]()
-    infinite.take(0) should be (equalToStream(expected))
+    import InfiniteStreams._
 
+    val from = 2.from
   }
 
-  it should " be we take one element with same Stream " in new Infinite{
-    val expected = Streams[Int](1)
-    infinite.take(1) should be (equalToStream(expected))
+  " We implement function that create infinite Streams and result   " should " be we take n elements " in new Infinite {
+    val expected = Streams[Int](1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+    infinite.take(10) should be(equalToStream(expected))
+  }
+  
+  " We want to implement from function and result " should "be a infinite Stream from with take function " in new From {
+    val expected = Streams[Int](3,4,5,6)
+    from.take(4) should be(equalToStream(expected))
   }
 
-  it should " be take 10 elements in the same Stream " in new Infinite {
-    val expected = Streams[Int](1,1,1,1,1,1,1,1,1,1)
-    infinite.take(10) should be (equalToStream(expected))
-  }
 }

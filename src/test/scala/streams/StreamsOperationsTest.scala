@@ -190,5 +190,14 @@ class StreamsOperationsTest extends FlatSpec with ShouldMatchers {
     Streams[Int](1,2).append(Streams[Int](3,4)) should be (equalToStream(expected))
   }
 
+  " We want to implement FlatMap function and result " should " be Empty Stream when original no have data " in {
+    val expected = Streams[Int]()
+    Streams[Int]().flatMap((a)=>Streams(a,a,a)) should be (equalToStream(expected))
+  }
+
+  it should " be flatten Stream with elements transforms function " in {
+    val expected = Streams[Int](1,1,1)
+    Streams[Int](1).flatMap((a)=>Streams(a,a,a)) should be (equalToStream(expected))
+  }
 }
 

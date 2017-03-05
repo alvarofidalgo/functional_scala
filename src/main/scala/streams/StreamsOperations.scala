@@ -3,6 +3,7 @@ package streams
 import scala.annotation.tailrec
 
 import lists.MyList
+import lists.Transforms
 
 object StreamsOperations {
 
@@ -67,16 +68,22 @@ object StreamsOperations {
       )
 
     final def filter(condition: (A) => Boolean): Streams[A] =
-      streams.foldRight(result =Streams[A]())(
-        (value, result) =>  condition(value) match{
-          case true =>InitStreams(() => value, () => result)
-          case false=>result
+      streams.foldRight(result = Streams[A]())(
+        (value, result) => condition(value) match {
+          case true => InitStreams(() => value, () => result)
+          case false => result
         }
       )
 
-    final def append(streamAppender:Streams[A]):Streams[A] =
-      streams.foldRight(result=streamAppender)(
-        (value,result) => InitStreams(() => value, () => result)
+    final def append(streamAppender: Streams[A]): Streams[A] =
+      streams.foldRight(result = streamAppender)(
+        (value, result) => InitStreams(() => value, () => result)
+      )
+
+    final def flatMap(transform: (A) => Streams[A]): Streams[A] =
+      streams.foldRight(result = Streams[A]())(
+        (value, result) => result.append(transform(value))
+
       )
   }
 

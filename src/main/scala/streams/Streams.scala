@@ -9,6 +9,14 @@ case class InitStreams[+A](head: () => A, tail: () => Streams[A]) extends Stream
 
 object Streams {
 
+  def cons[A](hd: => A, tl: => Streams[A]): Streams[A] = {
+
+    lazy val head = hd
+    lazy val tail = tl
+    InitStreams[A](() => head, () => tail)
+  }
+
+
 
   def empty[A]: Streams[A] = Empty
 

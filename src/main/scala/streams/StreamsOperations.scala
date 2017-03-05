@@ -66,14 +66,13 @@ object StreamsOperations {
           InitStreams(() => transform(value), () => result)
       )
 
-    final def filter(condition:(A)=>Boolean):Streams[A] = streams match {
-      case Empty => Empty
-      case _ =>   streams.foldRight(Streams[A]())((value,result)=> if (condition(value)) {
-        InitStreams(() => value, () => result)
-      }else{
-        result
-      })
-    }
+    final def filter(condition: (A) => Boolean): Streams[A] =
+      streams.foldRight(Streams[A]())(
+        (value, result) =>  condition(value) match{
+          case true =>InitStreams(() => value, () => result)
+          case false=>result
+        }
+      )
   }
 
 }

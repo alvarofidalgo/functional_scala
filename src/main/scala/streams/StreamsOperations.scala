@@ -49,9 +49,9 @@ object StreamsOperations {
       case (Some(false), InitStreams(head, tail)) => tail().takeWhile(f)(result, (f) => Some(f(head())))
     }
 
-
-    def foldRight[B](z: =>B)(f:(A,=>B)=>B):B = streams match {
-      case InitStreams(head, tail) => f(head(),tail().foldRight(z)(f))
+    @tailrec
+    final def foldRight[B](z: =>B)(f:(A,=>B)=>B):B = streams.reverse match {
+      case InitStreams(head, tail) => tail().foldRight(f(head(),z))(f)
       case _=>z
     }
   }

@@ -129,5 +129,22 @@ class StreamsOperationsTest extends FlatSpec with ShouldMatchers {
     Streams[Int](1,2).foldRight(initial)((a,b)=>{f(a) + b}) shouldBe expected
   }
 
+  "We want to implement forAll function and result " should " be false if Stream is empty " in {
+    val expected = false
+    Streams[Int]().forAll((a)=>a>3) shouldBe expected
+  }
+
+
+  it should " be true if we have an element and compain predicate "  in {
+    val expected = true
+    Streams[Int](4).forAll((a)=>a>3) shouldBe expected
+  }
+
+
+  it should " be false if we have two elements and last not complain predicate " in {
+    val expected = false
+    Streams[Int](1,2,3).forAll((a)=>a<3) shouldBe expected
+  }
+
 }
 

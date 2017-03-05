@@ -50,9 +50,15 @@ object StreamsOperations {
     }
 
     @tailrec
-    final def foldRight[B](z: =>B)(f:(A,=>B)=>B):B = streams.reverse match {
-      case InitStreams(head, tail) => tail().foldRight(f(head(),z))(f)
-      case _=>z
+    final def foldRight[B](result: =>B)(f:(A,=>B)=>B):B = streams.reverse match {
+      case InitStreams(head, tail) => tail().foldRight(f(head(),result))(f)
+      case _=>result
+    }
+
+
+    final def forAll(p:(A)=>Boolean):Boolean =streams match {
+      case Empty => false
+      case _ =>streams.foldRight (result = true) ((value, result) => p (value) && result)
     }
   }
 

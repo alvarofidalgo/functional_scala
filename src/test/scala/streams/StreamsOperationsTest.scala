@@ -174,5 +174,21 @@ class StreamsOperationsTest extends FlatSpec with ShouldMatchers {
     Streams[Int](2,3,2,3).filter((a)=>a==2) should be (equalToStream(expected))
   }
 
+  "We want to implement append function and result " should "be Stream with one element when append one over empty" in {
+    val expected = Streams[Int](1)
+    Streams[Int]().append(Streams[Int](1)) should be (equalToStream(expected))
+  }
+
+
+  it should " be Stream with one element when apender is empty and original have one element " in {
+    val expected = Streams[Int](1)
+    Streams[Int](1).append(Streams[Int]()) should be (equalToStream(expected))
+  }
+
+  it should " be Stream with fou elemetns when both have two elements " in {
+    val expected = Streams[Int](1,2,3,4)
+    Streams[Int](1,2).append(Streams[Int](3,4)) should be (equalToStream(expected))
+  }
+
 }
 

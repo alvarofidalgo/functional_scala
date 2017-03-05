@@ -67,11 +67,16 @@ object StreamsOperations {
       )
 
     final def filter(condition: (A) => Boolean): Streams[A] =
-      streams.foldRight(Streams[A]())(
+      streams.foldRight(result =Streams[A]())(
         (value, result) =>  condition(value) match{
           case true =>InitStreams(() => value, () => result)
           case false=>result
         }
+      )
+
+    final def append(streamAppender:Streams[A]):Streams[A] =
+      streams.foldRight(result=streamAppender)(
+        (value,result) => InitStreams(() => value, () => result)
       )
   }
 

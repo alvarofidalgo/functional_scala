@@ -2,7 +2,9 @@ package streams
 
 object InfiniteStreams {
 
-  def constant[Int](value:Int):Streams[Int] = Streams.cons[Int](value, constant[Int](value))
+
+
+  def constant[A](value:A):Streams[A] = Streams.cons[A](value, constant[A](value))
 
 
 

@@ -27,7 +27,7 @@ class InfiniteStreamsTest extends FlatSpec with ShouldMatchers {
     val expected = Streams[Int](1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
     infinite.take(10) should be(equalToStream(expected))
   }
-  
+
   " We want to implement from function and result " should "be a infinite Stream from with take function " in new From {
     val expected = Streams[Int](3,4,5,6)
     from.take(4) should be(equalToStream(expected))

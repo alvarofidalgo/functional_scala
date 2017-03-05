@@ -9,9 +9,10 @@ object InfiniteStreams {
 
 
     final def from: Streams[Int] = {
-      val newValue = value.asInstanceOf[Int]
-      Streams.cons[Int](newValue+1, (newValue+1).from)
+      Streams.cons[Int](addOne, addOne.from)
     }
+
+    private def addOne:Int = value.asInstanceOf[Int] + 1
   }
 
 }

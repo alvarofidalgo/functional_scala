@@ -18,11 +18,11 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
 
   it should " be zero + |int.minValue| when nextValue return zero " in new RandomGenerator {
     override def nextInt: (Int, RandomGenerator) = (0,MockGenerator)
-    nonNegativeInt shouldBe (-1*Int.MinValue,MockGenerator)
+    nonNegativeInt shouldBe (~Int.MinValue + 1 ,MockGenerator)
   }
 
   it should " be zero when result sum |Int.MinValue| is Int.MaxValue sum one" in new RandomGenerator {
-     val x = Int.MaxValue + 1 - (-1*Int.MinValue)
+     val x = Int.MaxValue + 1 - ~Int.MinValue
     override def nextInt: (Int, RandomGenerator) = (x,MockGenerator)
     nonNegativeInt shouldBe (0 ,MockGenerator)
   }

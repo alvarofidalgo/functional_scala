@@ -20,5 +20,8 @@ trait RandomGenerator {
     val realValue = nonNegativeInt._1/road
     (realValue/road,nextInt._2)
   }
+
+
+  def intDoubleRandom:(Int,Double,RandomGenerator) = ???
 }
 

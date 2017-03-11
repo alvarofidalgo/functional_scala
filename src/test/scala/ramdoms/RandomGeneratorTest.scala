@@ -84,4 +84,22 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
     override def nextInt: (Int, RandomGenerator) = (min + 12 ,MockGenerator)
     doubleRandom shouldBe (0,MockGenerator)
   }
+
+  " We want to implement function that return int double and result " should " be (0,0) when nexInt is Min" in new MyRandomized {
+    override def nextInt = (min,MockGenerator)
+    intDoubleRandom shouldBe (0,0,MockGenerator)
+  }
+
+  it should " be (1,1/6) when nextInt is Min + 1"
+
+  it should " be (2,2/6) when NextInt is Min + 2"
+
+  it should " be (3,3/6) when NextInt is Min + 3"
+
+  it should " be (2,0) when NextInt is Min + 6"
+
+  it should " be (3,1/6) when NextInt is Min + 7"
+
+  it should " be (0,0) when NextInt is Min + 8 "
+
 }

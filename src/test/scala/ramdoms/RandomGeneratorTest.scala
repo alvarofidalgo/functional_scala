@@ -87,17 +87,17 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
 
   " We want to implement function that return int double and result " should " be (0,0) when nexInt is Min" in new MyRandomized {
     override def nextInt: (Int, MockGenerator.type) = (min,MockGenerator)
-    intDoubleRandom shouldBe (0,0,MockGenerator)
+    intDoubleRandom shouldBe ((0,0),MockGenerator)
   }
 
   it should " be (1,1/6) when nextInt is Min + 1"  in new MyRandomized {
     override def nextInt: (Int, MockGenerator.type) = (min + 1,MockGenerator)
-    intDoubleRandom shouldBe (1,1/6,MockGenerator)
+    intDoubleRandom shouldBe ((1,1/6),MockGenerator)
   }
 
   it should " be (2,0) when NextInt is Min + 6" in new MyRandomized {
     override def nextInt: (Int, MockGenerator.type) = (min + 6,MockGenerator)
-    intDoubleRandom shouldBe (2,0,MockGenerator)
+    intDoubleRandom shouldBe ((2,0),MockGenerator)
   }
 
 

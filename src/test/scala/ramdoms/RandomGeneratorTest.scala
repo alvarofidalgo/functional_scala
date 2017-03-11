@@ -36,6 +36,11 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
     nonNegativeInt shouldBe (2,MockGenerator)
   }
 
+  it should "be max when return min sum nexValue is  max " in new MyRandomized {
+    override def nextInt: (Int, RandomGenerator) = (min + 3 ,MockGenerator)
+    nonNegativeInt shouldBe (3,MockGenerator)
+  }
+
   it should "be zero when return min sum nexValue is one upper than max " in new MyRandomized {
     override def nextInt: (Int, RandomGenerator) = (min + 4 ,MockGenerator)
     nonNegativeInt shouldBe (0,MockGenerator)

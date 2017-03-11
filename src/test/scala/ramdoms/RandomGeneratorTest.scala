@@ -50,4 +50,25 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
     override def nextInt: (Int, RandomGenerator) = (min + 5 ,MockGenerator)
     nonNegativeInt shouldBe (1,MockGenerator)
   }
+
+  " We want to implement function that return Double between 0 and 1 and result " should " be zero when return min Value " in  new MyRandomized {
+    override def nextInt: (Int, RandomGenerator) = (min,MockGenerator)
+    doubleRandom shouldBe (0,MockGenerator)
+  }
+
+
+  it should " be 1/6 when return min + 1" in new MyRandomized {
+    override def nextInt: (Int, RandomGenerator) = (min + 1 ,MockGenerator)
+    doubleRandom shouldBe (1/6,MockGenerator)
+  }
+
+  it should " be 2/6 when return min +2 " in new MyRandomized {
+    override def nextInt: (Int, RandomGenerator) = (min + 2 ,MockGenerator)
+    doubleRandom shouldBe (2/6,MockGenerator)
+  }
+
+  it should " be zero when return min + 6 " in new MyRandomized {
+    override def nextInt: (Int, RandomGenerator) = (min + 3 ,MockGenerator)
+    doubleRandom shouldBe (3/6,MockGenerator)
+  }
 }

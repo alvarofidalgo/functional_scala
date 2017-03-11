@@ -36,24 +36,13 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
     nonNegativeInt shouldBe (2,MockGenerator)
   }
 
-
- /* it should " be two when NextInt return next two MinValue " in new RandomGenerator {
-    override def nextInt: (Int, RandomGenerator) = (Int.MinValue + 2 ,MockGenerator)
-    nonNegativeInt shouldBe (2,MockGenerator)
-  }
-
-  it should " be zero when NextInt return  Int.MaxValue + Int.MinValue  + 1" in new RandomGenerator {
-    override def nextInt: (Int, RandomGenerator) = (Int.MaxValue + Int.MinValue + 1 ,MockGenerator)
+  it should "be zero when return min sum nexValue is one upper than max " in new MyRandomized {
+    override def nextInt: (Int, RandomGenerator) = (min + 4 ,MockGenerator)
     nonNegativeInt shouldBe (0,MockGenerator)
   }
 
-  it should "be one when NextInt return   Int.MaxValue + Int.MinValue  + 2 " in new RandomGenerator {
-    override def nextInt: (Int, RandomGenerator) = (Int.MaxValue + Int.MinValue + 2 ,MockGenerator)
+  it should "be one when return min sum nexValue is two upper than max " in new MyRandomized {
+    override def nextInt: (Int, RandomGenerator) = (min + 5 ,MockGenerator)
     nonNegativeInt shouldBe (1,MockGenerator)
   }
-
-  it should "sss" in new RandomGenerator {
-    override def nextInt: (Int, RandomGenerator) = (Int.MaxValue + Int.MinValue + 3 ,MockGenerator)
-    nonNegativeInt shouldBe (2,MockGenerator)
-  }*/
 }

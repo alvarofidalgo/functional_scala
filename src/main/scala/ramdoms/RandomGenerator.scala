@@ -22,6 +22,6 @@ trait RandomGenerator {
   }
 
 
-  def intDoubleRandom:(Int,Double,RandomGenerator) = ???
+  def intDoubleRandom:(Int,Double,RandomGenerator) = (nonNegativeInt._1,doubleRandom._1,nextInt._2)
 }
 

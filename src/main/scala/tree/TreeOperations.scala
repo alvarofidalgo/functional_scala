@@ -21,12 +21,6 @@ object TreeOperations {
     def depth: Int =
       walkTree[Int](acc = 1, (acc, value) => acc.head + 1, (acc, value) => acc.head + 1)
 
-    def functonA: Int = {
-      var a = 1
-      a = 2
-      a
-    }
-
     @tailrec
     def walkTree[B](acc: B, fLeft: (Seq[B], A) => B, fRight: (Seq[B], A) => B)
                    (implicit accNodeValues: Seq[B] = Seq(acc), trees: Seq[Tree[A]] = Seq(tree)): B = trees match {

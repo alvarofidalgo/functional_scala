@@ -5,25 +5,55 @@ import org.scalatest.ShouldMatchers
 
 class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
 
-  object MockGenerator extends RandomGenerator {
+
+  trait MyRandomized extends RandomGenerator {
+    val min = -3
+    val max = 3
+    override val limits: (Int, Int) = (min,max)
+  }
+
+  object MockGenerator extends MyRandomized {
+
 
     override def nextInt: (Int, RandomGenerator) = ???
+
   }
 
 
-  "We want to generate Random number and result " should " be Zero when nextValue return MinValue" in new RandomGenerator {
-    override def nextInt: (Int, RandomGenerator) = (Int.MinValue,MockGenerator)
+  "We want to generate Random number and result " should " be Zero when nextValue return MinValue" in new MyRandomized {
+    override def nextInt: (Int, RandomGenerator) = (min,MockGenerator)
+    nonNegativeInt shouldBe (0,MockGenerator)
+
+  }
+
+  it should " be one when NextInt return next MinValue " in new MyRandomized {
+    override def nextInt: (Int, RandomGenerator) = (min + 1 ,MockGenerator)
+    nonNegativeInt shouldBe (1,MockGenerator)
+  }
+
+  it should " be two when NextInt return next two minValue " in new MyRandomized {
+    override def nextInt: (Int, RandomGenerator) = (min + 2 ,MockGenerator)
+    nonNegativeInt shouldBe (2,MockGenerator)
+  }
+
+
+ /* it should " be two when NextInt return next two MinValue " in new RandomGenerator {
+    override def nextInt: (Int, RandomGenerator) = (Int.MinValue + 2 ,MockGenerator)
+    nonNegativeInt shouldBe (2,MockGenerator)
+  }
+
+  it should " be zero when NextInt return  Int.MaxValue + Int.MinValue  + 1" in new RandomGenerator {
+    override def nextInt: (Int, RandomGenerator) = (Int.MaxValue + Int.MinValue + 1 ,MockGenerator)
     nonNegativeInt shouldBe (0,MockGenerator)
   }
 
-  it should " be zero + |int.minValue| when nextValue return zero " in new RandomGenerator {
-    override def nextInt: (Int, RandomGenerator) = (0,MockGenerator)
-    nonNegativeInt shouldBe (~Int.MinValue + 1 ,MockGenerator)
+  it should "be one when NextInt return   Int.MaxValue + Int.MinValue  + 2 " in new RandomGenerator {
+    override def nextInt: (Int, RandomGenerator) = (Int.MaxValue + Int.MinValue + 2 ,MockGenerator)
+    nonNegativeInt shouldBe (1,MockGenerator)
   }
 
-  it should " be zero when result sum |Int.MinValue| is Int.MaxValue sum one" in new RandomGenerator {
-     val x = Int.MaxValue + 1 - ~Int.MinValue
-    override def nextInt: (Int, RandomGenerator) = (x,MockGenerator)
-    nonNegativeInt shouldBe (0 ,MockGenerator)
-  }
+  it should "sss" in new RandomGenerator {
+    override def nextInt: (Int, RandomGenerator) = (Int.MaxValue + Int.MinValue + 3 ,MockGenerator)
+    nonNegativeInt shouldBe (2,MockGenerator)
+  }*/
 }

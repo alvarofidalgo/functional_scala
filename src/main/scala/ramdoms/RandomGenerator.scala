@@ -3,14 +3,20 @@ package ramdoms
 
 trait RandomGenerator {
 
+  val limits:(Int,Int)
+
   def nextInt : (Int,RandomGenerator)
 
   def nonNegativeInt : (Int,RandomGenerator) = {
-
-    val cValue:Int = ~Int.MinValue + nextInt._1
-    val k = Int.MaxValue
-    val realValue = if (cValue<k) cValue else 0
-    (nextInt._1 + ~Int.MinValue +1 , nextInt._2)
+    val slowLimit = limits._1
+    val upperLimit = limits._2
+    val value = nextInt._1
+    if (value==slowLimit)
+       (0,nextInt._2)
+    else if (value==slowLimit + 1)
+      (1,nextInt._2)
+    else
+      (2,nextInt._2)
   }
 }
 

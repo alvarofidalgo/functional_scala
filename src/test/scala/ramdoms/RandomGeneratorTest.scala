@@ -68,7 +68,12 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
   }
 
   it should " be zero when return min + 6 " in new MyRandomized {
-    override def nextInt: (Int, RandomGenerator) = (min + 3 ,MockGenerator)
-    doubleRandom shouldBe (3/6,MockGenerator)
+    override def nextInt: (Int, RandomGenerator) = (min + 6 ,MockGenerator)
+    doubleRandom shouldBe (0,MockGenerator)
+  }
+
+  it should " be one when return min + 7 " in new MyRandomized {
+    override def nextInt: (Int, RandomGenerator) = (min + 7 ,MockGenerator)
+    doubleRandom shouldBe (1,MockGenerator)
   }
 }

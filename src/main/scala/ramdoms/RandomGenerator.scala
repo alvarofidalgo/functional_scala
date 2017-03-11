@@ -17,11 +17,8 @@ trait RandomGenerator {
 
   def doubleRandom : (Double,RandomGenerator) = {
     val road = limits._2 - limits._1
-    val realValue = (nextInt._1 - limits._1)%(limits._2+1)
-    if (nextInt._1 >= (limits._1 + 6))
-      (realValue/road,nextInt._2)
-    else
-       (realValue/road/road,nextInt._2)
+    val realValue = nonNegativeInt._1/road
+    (realValue/road,nextInt._2)
   }
 }
 

@@ -2,11 +2,13 @@ package ramdoms
 
 import types.StateTypes._
 
-class RandomGeneratorState {
+object RandomGeneratorState {
 
-  def map[A,B](s:RandomState[A])(f:A=>B):RandomState[B] = (random) => {
-    val (value, nextRandom) = s(random)
-    (f(value),nextRandom)
+    implicit class RandomGeneratorState[A](s: RandomState[A]){
+
+      def map[B](f: A => B): RandomState[B] = (random) => {
+        val (value, nextRandom) = s(random)
+        (f(value), nextRandom)
+      }
   }
-
 }

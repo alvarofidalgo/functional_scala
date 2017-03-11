@@ -8,10 +8,10 @@ trait RandomGenerator {
   def nextInt : (Int,RandomGenerator)
 
   def nonNegativeInt : (Int,RandomGenerator) = {
-    val slowLimit = limits._1
-    val upperLimit = limits._2
+    val min = limits._1
+    val max = limits._2
     val value = nextInt._1
-    (value - slowLimit,nextInt._2)
+    (value - min,nextInt._2)
   }
 }
 

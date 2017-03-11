@@ -1,8 +1,11 @@
 package errors
 
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class EitherTest extends FlatSpec with ShouldMatchers {
 
   " We want to implement map function in Either and result " should " be new Either with same side value in Rigth " in {

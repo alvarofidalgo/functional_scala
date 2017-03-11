@@ -2,9 +2,11 @@ package streams
 
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
-
 import matchers.StreamMatcher._
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class InfiniteStreamsTest extends FlatSpec with ShouldMatchers {
 
   import streams.StreamsOperations.StreamsOperations

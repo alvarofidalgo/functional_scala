@@ -1,8 +1,11 @@
 package errors
 
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class OptionTest extends FlatSpec with ShouldMatchers {
 
   trait Value {

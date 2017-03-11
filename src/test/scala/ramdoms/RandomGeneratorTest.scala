@@ -1,8 +1,11 @@
 package ramdoms
 
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
 
 

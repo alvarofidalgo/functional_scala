@@ -1,9 +1,12 @@
 package tree
 
 
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class TreeTest extends FlatSpec with ShouldMatchers {
 
   trait SimpleTree {

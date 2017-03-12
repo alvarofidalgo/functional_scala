@@ -34,10 +34,9 @@ class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
 
   it should " be 1/6 when return min + 1" in new Constants {
     val generator:RandomState[Int] = (RandomGenerator)=>(minValue+1,RandomGenerator)
-    val h:Float=1/6
-    val expected:(Double,RandomGenerator) = (h,randomize)
+    val expected:(Double,RandomGenerator) = (1.toDouble/6.toDouble,randomize)
     val result:(Double,RandomGenerator) = generator.toDoubleRand(randomize)
-    result._1 shouldBe expected._1
+    result shouldBe expected
   }
 
  // it should " be 2/6 when return min +2 "

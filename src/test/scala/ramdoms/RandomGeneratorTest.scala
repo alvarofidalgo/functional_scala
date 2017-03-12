@@ -16,9 +16,17 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
 
   trait NonNegative extends Constants {
 
-    def testNonNegative(addMinValue:Int,result:Int) = {
-      val randomize = DoubleRandomized(min = minValue,max=maxValue,next = (minValue + addMinValue))
+    def testNonNegative(addMinValue:Int,result:Double) = {
+      val randomize = DoubleRandomized(min = minValue,max=maxValue,next = minValue + addMinValue)
       randomize.nonNegativeInt shouldBe (result,MockGenerator)
+    }
+  }
+
+  trait DoubleRandom  extends Constants {
+
+    def testDoubleRandom(addMinValue:Int,result:Double) = {
+      val randomize = DoubleRandomized(min = minValue,max=maxValue,next = minValue + addMinValue)
+      randomize.doubleRandom shouldBe (result,MockGenerator)
     }
   }
 
@@ -48,35 +56,29 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
     testNonNegative(addMinValue = 5,result=1)
   }
 
-  " We want to implement function that return Double between 0 and 1 and result " should " be zero when return min Value " in  new MyRandomized {
-    override def nextInt: (Int, RandomGenerator) = (min,MockGenerator)
-    doubleRandom shouldBe (0,MockGenerator)
+  " We want to implement function that return Double between 0 and 1 and result " should " be zero when return min Value " in  new DoubleRandom {
+    testDoubleRandom(addMinValue = 0,result = 0)
   }
 
 
-  it should " be 1/6 when return min + 1" in new MyRandomized {
-    override def nextInt: (Int, RandomGenerator) = (min + 1 ,MockGenerator)
-    doubleRandom shouldBe (1/6,MockGenerator)
+  it should " be 1/6 when return min + 1"  in  new DoubleRandom {
+    testDoubleRandom(addMinValue = 1,result = 1/6)
   }
 
-  it should " be 2/6 when return min +2 " in new MyRandomized {
-    override def nextInt: (Int, RandomGenerator) = (min + 2 ,MockGenerator)
-    doubleRandom shouldBe (2/6,MockGenerator)
+  it should " be 2/6 when return min +2 " in  new DoubleRandom {
+    testDoubleRandom(addMinValue = 2,result = 2/6)
   }
 
-  it should " be zero when return min + 6 " in new MyRandomized {
-    override def nextInt: (Int, RandomGenerator) = (min + 6 ,MockGenerator)
-    doubleRandom shouldBe (0,MockGenerator)
+  it should " be zero when return min + 6 " in  new DoubleRandom {
+    testDoubleRandom(addMinValue = 6,result = 0)
   }
 
-  it should " be 1/6 when return min + 7 " in new MyRandomized {
-    override def nextInt: (Int, RandomGenerator) = (min + 7 ,MockGenerator)
-    doubleRandom shouldBe (1/6,MockGenerator)
+  it should " be 1/6 when return min + 7 " in  new DoubleRandom {
+    testDoubleRandom(addMinValue = 7,result = 1/6)
   }
 
-  it should " be zero when return min + 12 " in new MyRandomized {
-    override def nextInt: (Int, RandomGenerator) = (min + 12 ,MockGenerator)
-    doubleRandom shouldBe (0,MockGenerator)
+  it should " be zero when return min + 12 " in  new DoubleRandom {
+    testDoubleRandom(addMinValue = 12,result = 0)
   }
 
   " We want to implement function that return int double and result " should " be (0,0) when nexInt is Min" in new MyRandomized {

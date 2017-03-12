@@ -12,22 +12,30 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
   trait Constants {
      val minValue = -3
      val maxValue = 3
+
+     def buildRandomize(addToMinValue:Int):RandomGenerator = {
+       DoubleRandomized(min = minValue,max=maxValue,next = minValue + addToMinValue)
+     }
   }
 
   trait NonNegative extends Constants {
 
-    def testNonNegative(addMinValue:Int,result:Double) = {
-      val randomize = DoubleRandomized(min = minValue,max=maxValue,next = minValue + addMinValue)
-      randomize.nonNegativeInt shouldBe (result,MockGenerator)
-    }
+    def testNonNegative(addMinValue:Int,result:Double) =
+      buildRandomize(addToMinValue=addMinValue).nonNegativeInt shouldBe (result,MockGenerator)
+
   }
 
   trait DoubleRandom  extends Constants {
 
-    def testDoubleRandom(addMinValue:Int,result:Double) = {
-      val randomize = DoubleRandomized(min = minValue,max=maxValue,next = minValue + addMinValue)
-      randomize.doubleRandom shouldBe (result,MockGenerator)
-    }
+    def testDoubleRandom(addMinValue:Int,result:Double) =
+      buildRandomize(addToMinValue=addMinValue).doubleRandom shouldBe (result,MockGenerator)
+
+  }
+
+  trait  IntDoubleRandom  extends Constants {
+
+    def testIntDoubleRandom (addMinValue:Int,result:(Int,Double)) =
+      buildRandomize(addToMinValue=addMinValue).intDoubleRandom shouldBe (result,MockGenerator)
   }
 
 
@@ -81,19 +89,16 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
     testDoubleRandom(addMinValue = 12,result = 0)
   }
 
-  " We want to implement function that return int double and result " should " be (0,0) when nexInt is Min" in new MyRandomized {
-    override def nextInt: (Int, MockGenerator.type) = (min,MockGenerator)
-    intDoubleRandom shouldBe ((0,0),MockGenerator)
+  " We want to implement function that return int double and result " should " be (0,0) when nexInt is Min" in new IntDoubleRandom {
+    testIntDoubleRandom (addMinValue = 0,result= (0,0) )
   }
 
-  it should " be (1,1/6) when nextInt is Min + 1"  in new MyRandomized {
-    override def nextInt: (Int, MockGenerator.type) = (min + 1,MockGenerator)
-    intDoubleRandom shouldBe ((1,1/6),MockGenerator)
+  it should " be (1,1/6) when nextInt is Min + 1"  in new IntDoubleRandom {
+    testIntDoubleRandom (addMinValue = 1,result= (1,1/6) )
   }
 
-  it should " be (2,0) when NextInt is Min + 6" in new MyRandomized {
-    override def nextInt: (Int, MockGenerator.type) = (min + 6,MockGenerator)
-    intDoubleRandom shouldBe ((2,0),MockGenerator)
+  it should " be (2,0) when NextInt is Min + 6" in new IntDoubleRandom {
+    testIntDoubleRandom (addMinValue = 6,result= (2,0) )
   }
 
 

@@ -11,7 +11,13 @@ object RandomGeneratorState {
         (f(value), nextRandom)
       }
 
-      def toDoubleRand:RandomState[Double] = (rng) => (0,rng)
+      def toDoubleRand(random:RandomGenerator):RandomState[Double] =
+        s.map((a) => {
+          val min = random.limits._1
+          val max = random.limits._2
+          val road = max - min
+          ((random.nextInt._1 - min) % max).toDouble / road.toDouble
+        })
 
 
     }

@@ -4,69 +4,11 @@ import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
 import org.scalatest.junit.JUnitRunner
-import doubles.{DoubleRandomized, MockGenerator}
 
 @RunWith(classOf[JUnitRunner])
 class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
 
-  trait Constants {
-     val minValue = -3
-     val maxValue = 3
-
-     def buildRandomize(addToMinValue:Int):RandomGenerator = {
-       DoubleRandomized(min = minValue,max=maxValue,next = minValue + addToMinValue)
-     }
-  }
-
-
-  trait Checker[A] extends Constants{
-
-
-    def functionToExecute:(Int)=>(A,RandomGenerator)
-
-
-    def test(addMinValue:Int,result:A) = {
-      functionToExecute(addMinValue) shouldBe (result,MockGenerator)
-    }
-
-  }
-
-  trait CheckerInstance {
-
-    def apply[A](implicit checker: Checker[A]): Checker[A] = checker
-
-    implicit val nonNegative = new Checker[Int] {
-      override def functionToExecute: (Int) => (Int, RandomGenerator) =
-                        (a) => buildRandomize(addToMinValue=a).nonNegativeInt
-    }
-
-    implicit val doubleRandom = new Checker[Double] {
-      override def functionToExecute: (Int) => (Double, RandomGenerator) =
-                       (a) => buildRandomize(addToMinValue=a).doubleRandom
-    }
-
-
-    implicit val intDoubleRandom = new Checker[(Int,Double)] {
-      override def functionToExecute: (Int) => ((Int, Double), RandomGenerator) = (a)=> buildRandomize(addToMinValue=a).intDoubleRandom
-    }
-
-  }
-
-  trait CheckerSyntax {
-
-    object syntax {
-
-        implicit class Check[A] (result:A)(implicit checker: Checker[A]){
-
-             def check(addMinValue:Int) = checker.test(addMinValue,result)
-
-        }
-    }
-  }
-
-  object Checker extends  CheckerInstance with CheckerSyntax
-
-  import Checker.syntax._
+  import checkers.Checker.syntax._
 
   "We want to generate Random number and result " should " be Zero when nextValue return MinValue" in   {
     val result:Int = 0

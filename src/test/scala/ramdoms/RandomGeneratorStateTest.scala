@@ -4,7 +4,7 @@ import org.scalatest.{FlatSpec, ShouldMatchers}
 import types.StateTypes.RandomState
 import doubles.DoubleRandomized
 
-
+//TODO : Thos test
 class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
 
   import ramdoms.RandomGeneratorState._
@@ -14,6 +14,7 @@ class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
     val maxValue = 3
 
   }
+
 
   " We want to implement Map function and result " should " be (A,Rng1) when we have (1,Rng1)" in new Constants{
       val randomize = DoubleRandomized(min = minValue,max=maxValue,next = minValue)

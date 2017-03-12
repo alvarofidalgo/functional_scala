@@ -100,41 +100,51 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
     result.check(addMinValue = 5)
   }
 
-  import Checker._
+
   " We want to implement function that return Double between 0 and 1 and result " should " be zero when return min Value " in  {
-    doubleRandom.test(addMinValue = 0,result = 0)
+    val result:Double = 0
+    result.check(addMinValue = 0)
   }
 
   it should " be 1/6 when return min + 1"  in {
-    doubleRandom.test(addMinValue = 1,result = 1/6)
+    val result:Double = 1/6
+    result.check(addMinValue = 1)
   }
 
   it should " be 2/6 when return min +2 " in  {
-    doubleRandom.test(addMinValue = 2,result = 2/6)
+    val result:Double = 2/6
+    result.check(addMinValue = 2)
   }
 
   it should " be zero when return min + 6 " in {
-    doubleRandom.test(addMinValue = 6,result = 0)
+    val result:Double = 0
+    result.check(addMinValue = 6)
   }
 
   it should " be 1/6 when return min + 7 " in  {
-    doubleRandom.test(addMinValue = 7,result = 1/6)
+    val result:Double = 1/6
+    result.check(addMinValue = 7)
   }
 
   it should " be zero when return min + 12 " in  {
-    doubleRandom.test(addMinValue = 12,result = 0)
+    val result:Double = 0
+    result.check(addMinValue = 12)
   }
 
+
   " We want to implement function that return int double and result " should " be (0,0) when nexInt is Min" in {
-    intDoubleRandom.test(addMinValue = 0,result= (0,0))
+    val result:(Int,Double)= (0,0)
+    result.check(addMinValue = 0)
   }
 
   it should " be (1,1/6) when nextInt is Min + 1"  in {
-    intDoubleRandom.test(addMinValue = 1,result= (1,1/6))
+    val result:(Int,Double) = (1,1/6)
+    result.check(addMinValue = 1)
   }
 
   it should " be (2,0) when NextInt is Min + 6" in {
-    intDoubleRandom.test(addMinValue = 6,result= (2,0))
+    val result:(Int,Double) = (2,0)
+    result.check(addMinValue = 6)
   }
 
 }

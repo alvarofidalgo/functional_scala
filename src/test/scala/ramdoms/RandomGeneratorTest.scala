@@ -52,35 +52,55 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
 
   }
 
-  object Checker1 extends  CheckerInstance
+  trait CheckerSyntax {
 
+    object syntax {
 
-  import  Checker1._
+        implicit class Check[A] (result:A)(implicit checker: Checker[A]){
 
-  "We want to generate Random number and result " should " be Zero when nextValue return MinValue" in   {
-    nonNegative.test(addMinValue = 0,result=0)
+             def check(addMinValue:Int) = checker.test(addMinValue,result)
+
+        }
+    }
   }
 
+  object Checker extends  CheckerInstance with CheckerSyntax
+
+  import Checker.syntax._
+
+  "We want to generate Random number and result " should " be Zero when nextValue return MinValue" in   {
+    val result:Int = 0
+    result.check(addMinValue = 0)
+
+  }
+
+
   it should " be one when NextInt return next MinValue " in   {
-    nonNegative.test(addMinValue = 1,result=1)
+    val result:Int = 1
+    result.check(addMinValue = 1)
   }
 
   it should " be two when NextInt return next two minValue " in    {
-    nonNegative.test(addMinValue = 2,result=2)
+    val result:Int = 2
+    result.check(addMinValue = 2)
   }
 
   it should "be max when return min sum nexValue is  max " in   {
-    nonNegative.test(addMinValue = 3,result=3)
+    val result:Int = 3
+    result.check(addMinValue = 3)
   }
 
   it should "be zero when return min sum nexValue is one upper than max " in    {
-    nonNegative.test(addMinValue = 4,result=0)
+    val result:Int = 0
+    result.check(addMinValue = 4)
   }
 
   it should "be one when return min sum nexValue is two upper than max " in  {
-    nonNegative.test(addMinValue = 5,result=1)
+    val result:Int = 1
+    result.check(addMinValue = 5)
   }
 
+  import Checker._
   " We want to implement function that return Double between 0 and 1 and result " should " be zero when return min Value " in  {
     doubleRandom.test(addMinValue = 0,result = 0)
   }

@@ -44,48 +44,48 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
 
 
   " We want to implement function that return Double between 0 and 1 and result " should " be zero when return min Value " in  {
-    val result:Double = 0
+    val result:Double = 0.toDouble
     result.check(addMinValue = 0)
   }
 
   it should " be 1/6 when return min + 1"  in {
-    val result:Double = 1/6
+    val result:Double = 1.toDouble/6.toDouble
     result.check(addMinValue = 1)
   }
 
   it should " be 2/6 when return min +2 " in  {
-    val result:Double = 2/6
+    val result:Double = 2.toDouble/6.toDouble
     result.check(addMinValue = 2)
   }
 
   it should " be zero when return min + 6 " in {
-    val result:Double = 0
+    val result:Double = 0.toDouble
     result.check(addMinValue = 6)
   }
 
   it should " be 1/6 when return min + 7 " in  {
-    val result:Double = 1/6
+    val result:Double = 1.toDouble/6.toDouble
     result.check(addMinValue = 7)
   }
 
   it should " be zero when return min + 12 " in  {
-    val result:Double = 0
+    val result:Double = 0.toDouble
     result.check(addMinValue = 12)
   }
 
 
   " We want to implement function that return int double and result " should " be (0,0) when nexInt is Min" in {
-    val result:(Int,Double)= (0,0)
+    val result:(Int,Double)= (0,0.toDouble)
     result.check(addMinValue = 0)
   }
 
   it should " be (1,1/6) when nextInt is Min + 1"  in {
-    val result:(Int,Double) = (1,1/6)
+    val result:(Int,Double) = (1,1.toDouble/6.toDouble)
     result.check(addMinValue = 1)
   }
 
   it should " be (2,0) when NextInt is Min + 6" in {
-    val result:(Int,Double) = (2,0)
+    val result:(Int,Double) = (2,0.toDouble)
     result.check(addMinValue = 6)
   }
 

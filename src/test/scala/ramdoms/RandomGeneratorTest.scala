@@ -14,36 +14,38 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
      val maxValue = 3
   }
 
+  trait NonNegative extends Constants {
 
-  "We want to generate Random number and result " should " be Zero when nextValue return MinValue" in  new Constants {
-    val randomize = DoubleRandomized(min = minValue,max=maxValue,next = 0)
-    randomize.nonNegativeInt shouldBe (0,MockGenerator)
+    def testNonNegative(addMinValue:Int,result:Int) = {
+      val randomize = DoubleRandomized(min = minValue,max=maxValue,next = (minValue + addMinValue))
+      randomize.nonNegativeInt shouldBe (result,MockGenerator)
+    }
+  }
+
+
+  "We want to generate Random number and result " should " be Zero when nextValue return MinValue" in  new NonNegative {
+    testNonNegative(addMinValue = 0,result=0)
 
   }
 
-  it should " be one when NextInt return next MinValue " in new MyRandomized {
-    override def nextInt: (Int, RandomGenerator) = (min + 1 ,MockGenerator)
-    nonNegativeInt shouldBe (1,MockGenerator)
+  it should " be one when NextInt return next MinValue " in  new NonNegative  {
+    testNonNegative(addMinValue = 1,result=1)
   }
 
-  it should " be two when NextInt return next two minValue " in new MyRandomized {
-    override def nextInt: (Int, RandomGenerator) = (min + 2 ,MockGenerator)
-    nonNegativeInt shouldBe (2,MockGenerator)
+  it should " be two when NextInt return next two minValue " in  new NonNegative  {
+    testNonNegative(addMinValue = 2,result=2)
   }
 
-  it should "be max when return min sum nexValue is  max " in new MyRandomized {
-    override def nextInt: (Int, RandomGenerator) = (min + 3 ,MockGenerator)
-    nonNegativeInt shouldBe (3,MockGenerator)
+  it should "be max when return min sum nexValue is  max " in  new NonNegative  {
+    testNonNegative(addMinValue = 3,result=3)
   }
 
-  it should "be zero when return min sum nexValue is one upper than max " in new MyRandomized {
-    override def nextInt: (Int, RandomGenerator) = (min + 4 ,MockGenerator)
-    nonNegativeInt shouldBe (0,MockGenerator)
+  it should "be zero when return min sum nexValue is one upper than max " in  new NonNegative  {
+    testNonNegative(addMinValue = 4,result=0)
   }
 
-  it should "be one when return min sum nexValue is two upper than max " in new MyRandomized {
-    override def nextInt: (Int, RandomGenerator) = (min + 5 ,MockGenerator)
-    nonNegativeInt shouldBe (1,MockGenerator)
+  it should "be one when return min sum nexValue is two upper than max " in  new NonNegative  {
+    testNonNegative(addMinValue = 5,result=1)
   }
 
   " We want to implement function that return Double between 0 and 1 and result " should " be zero when return min Value " in  new MyRandomized {

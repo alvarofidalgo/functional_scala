@@ -18,12 +18,12 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
      }
   }
 
-
-
+  
   trait Checker[A] extends Constants{
 
     val noneNegative:(Int)=>(Int,RandomGenerator) = (a) => buildRandomize(addToMinValue=a).nonNegativeInt
     val doubleRandom:(Int)=>(Double,RandomGenerator) = (a)=>buildRandomize(addToMinValue=a).doubleRandom
+    val intDoubleRandom:(Int) =>  ((Int,Double),RandomGenerator) = (a)=> buildRandomize(addToMinValue=a).intDoubleRandom
 
 
     def test(addMinValue:Int,result:A,f:(Int)=>(A,RandomGenerator)) = {
@@ -31,14 +31,6 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
     }
 
   }
-  
-
-  trait  IntDoubleRandom  extends Constants {
-
-    def testIntDoubleRandom (addMinValue:Int,result:(Int,Double)) =
-      buildRandomize(addToMinValue=addMinValue).intDoubleRandom shouldBe (result,MockGenerator)
-  }
-
 
   "We want to generate Random number and result " should " be Zero when nextValue return MinValue" in  new Checker[Int] {
     test(addMinValue = 0,result=0,noneNegative)
@@ -90,16 +82,16 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
     test(addMinValue = 12,result = 0,doubleRandom)
   }
 
-  " We want to implement function that return int double and result " should " be (0,0) when nexInt is Min" in new IntDoubleRandom {
-    testIntDoubleRandom (addMinValue = 0,result= (0,0) )
+  " We want to implement function that return int double and result " should " be (0,0) when nexInt is Min" in new Checker[(Int,Double)] {
+    test(addMinValue = 0,result= (0,0) ,intDoubleRandom)
   }
 
-  it should " be (1,1/6) when nextInt is Min + 1"  in new IntDoubleRandom {
-    testIntDoubleRandom (addMinValue = 1,result= (1,1/6) )
+  it should " be (1,1/6) when nextInt is Min + 1"  in new Checker[(Int,Double)]  {
+    test(addMinValue = 1,result= (1,1/6) ,intDoubleRandom)
   }
 
-  it should " be (2,0) when NextInt is Min + 6" in new IntDoubleRandom {
-    testIntDoubleRandom (addMinValue = 6,result= (2,0) )
+  it should " be (2,0) when NextInt is Min + 6" in new Checker[(Int,Double)] {
+    test(addMinValue = 6,result= (2,0) ,intDoubleRandom)
   }
 
 

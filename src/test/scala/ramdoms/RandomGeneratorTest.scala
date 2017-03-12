@@ -85,34 +85,28 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
     nonNegative.test(addMinValue = 5,result=1)
   }
 
-  " We want to implement function that return Double between 0 and 1 and result " should " be zero when return min Value " in  new Checker[Double] {
-    override def functionToExecute: (Int) => (Double, RandomGenerator) =  (a)=>buildRandomize(addToMinValue=a).doubleRandom
-    test(addMinValue = 0,result = 0)
+  " We want to implement function that return Double between 0 and 1 and result " should " be zero when return min Value " in  {
+    doubleRandom.test(addMinValue = 0,result = 0)
   }
 
-  it should " be 1/6 when return min + 1"  in  new Checker[Double] {
-    override def functionToExecute: (Int) => (Double, RandomGenerator) =  (a)=>buildRandomize(addToMinValue=a).doubleRandom
-    test(addMinValue = 1,result = 1/6)
+  it should " be 1/6 when return min + 1"  in {
+    doubleRandom.test(addMinValue = 1,result = 1/6)
   }
 
-  it should " be 2/6 when return min +2 " in  new Checker[Double] {
-    override def functionToExecute: (Int) => (Double, RandomGenerator) =  (a)=>buildRandomize(addToMinValue=a).doubleRandom
-    test(addMinValue = 2,result = 2/6)
+  it should " be 2/6 when return min +2 " in  {
+    doubleRandom.test(addMinValue = 2,result = 2/6)
   }
 
-  it should " be zero when return min + 6 " in new Checker[Double]{
-    override def functionToExecute: (Int) => (Double, RandomGenerator) =  (a)=>buildRandomize(addToMinValue=a).doubleRandom
-    test(addMinValue = 6,result = 0)
+  it should " be zero when return min + 6 " in {
+    doubleRandom.test(addMinValue = 6,result = 0)
   }
 
-  it should " be 1/6 when return min + 7 " in  new Checker[Double] {
-    override def functionToExecute: (Int) => (Double, RandomGenerator) =  (a)=>buildRandomize(addToMinValue=a).doubleRandom
-    test(addMinValue = 7,result = 1/6)
+  it should " be 1/6 when return min + 7 " in  {
+    doubleRandom.test(addMinValue = 7,result = 1/6)
   }
 
-  it should " be zero when return min + 12 " in  new Checker[Double]{
-    override def functionToExecute: (Int) => (Double, RandomGenerator) =  (a)=>buildRandomize(addToMinValue=a).doubleRandom
-    test(addMinValue = 12,result = 0)
+  it should " be zero when return min + 12 " in  {
+    doubleRandom.test(addMinValue = 12,result = 0)
   }
 
   " We want to implement function that return int double and result " should " be (0,0) when nexInt is Min" in new Checker[(Int,Double)] {

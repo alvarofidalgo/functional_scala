@@ -30,17 +30,18 @@ trait CheckerInstance {
 
   implicit val nonNegative = new Checker[Int] {
     override def functionToExecute: (Int) => (Int, RandomGenerator) =
-      (a) => buildRandomize(addToMinValue=a).nonNegativeInt
+                       (a) => buildRandomize(addToMinValue=a).nonNegativeInt
   }
 
   implicit val doubleRandom = new Checker[Double] {
     override def functionToExecute: (Int) => (Double, RandomGenerator) =
-      (a) => buildRandomize(addToMinValue=a).doubleRandom
+                             (a) => buildRandomize(addToMinValue=a).doubleRandom
   }
 
 
   implicit val intDoubleRandom = new Checker[(Int,Double)] {
-    override def functionToExecute: (Int) => ((Int, Double), RandomGenerator) = (a)=> buildRandomize(addToMinValue=a).intDoubleRandom
+    override def functionToExecute: (Int) => ((Int, Double), RandomGenerator) =
+                                  (a)=> buildRandomize(addToMinValue=a).intDoubleRandom
   }
 
 }

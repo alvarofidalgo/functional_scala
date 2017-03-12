@@ -10,5 +10,9 @@ object RandomGeneratorState {
         val (value, nextRandom) = s(random)
         (f(value), nextRandom)
       }
-  }
+
+      def toDoubleRand:RandomState[Double] = (rng) => (0,rng)
+
+
+    }
 }

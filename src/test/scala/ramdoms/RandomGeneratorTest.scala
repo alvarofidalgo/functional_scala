@@ -4,15 +4,20 @@ import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
 import org.scalatest.junit.JUnitRunner
-import doubles.{MockGenerator,MyRandomized}
+import doubles.{DoubleRandomized, MockGenerator, MyRandomized}
 
 @RunWith(classOf[JUnitRunner])
 class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
 
+  trait Constants {
+     val minValue = -3
+     val maxValue = 3
+  }
 
-  "We want to generate Random number and result " should " be Zero when nextValue return MinValue" in new MyRandomized {
-    override def nextInt: (Int, RandomGenerator) = (min,MockGenerator)
-    nonNegativeInt shouldBe (0,MockGenerator)
+
+  "We want to generate Random number and result " should " be Zero when nextValue return MinValue" in  new Constants {
+    val randomize = DoubleRandomized(min = minValue,max=maxValue,next = 0)
+    randomize.nonNegativeInt shouldBe (0,MockGenerator)
 
   }
 

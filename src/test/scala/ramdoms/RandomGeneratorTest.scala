@@ -58,15 +58,11 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
   import  Checker1._
 
   "We want to generate Random number and result " should " be Zero when nextValue return MinValue" in   {
-
     nonNegative.test(addMinValue = 0,result=0)
-
   }
 
   it should " be one when NextInt return next MinValue " in   {
     nonNegative.test(addMinValue = 1,result=1)
-
-
   }
 
   it should " be two when NextInt return next two minValue " in    {
@@ -109,19 +105,16 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
     doubleRandom.test(addMinValue = 12,result = 0)
   }
 
-  " We want to implement function that return int double and result " should " be (0,0) when nexInt is Min" in new Checker[(Int,Double)] {
-    override def functionToExecute: (Int) => ((Int, Double), RandomGenerator) = (a)=> buildRandomize(addToMinValue=a).intDoubleRandom
-    test(addMinValue = 0,result= (0,0))
+  " We want to implement function that return int double and result " should " be (0,0) when nexInt is Min" in {
+    intDoubleRandom.test(addMinValue = 0,result= (0,0))
   }
 
-  it should " be (1,1/6) when nextInt is Min + 1"  in new Checker[(Int,Double)]  {
-    override def functionToExecute: (Int) => ((Int, Double), RandomGenerator) = (a)=> buildRandomize(addToMinValue=a).intDoubleRandom
-    test(addMinValue = 1,result= (1,1/6))
+  it should " be (1,1/6) when nextInt is Min + 1"  in {
+    intDoubleRandom.test(addMinValue = 1,result= (1,1/6))
   }
 
-  it should " be (2,0) when NextInt is Min + 6" in new Checker[(Int,Double)] {
-    override def functionToExecute: (Int) => ((Int, Double), RandomGenerator) = (a)=> buildRandomize(addToMinValue=a).intDoubleRandom
-    test(addMinValue = 6,result= (2,0))
+  it should " be (2,0) when NextInt is Min + 6" in {
+    intDoubleRandom.test(addMinValue = 6,result= (2,0))
   }
 
 }

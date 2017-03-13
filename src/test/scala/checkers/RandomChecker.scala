@@ -15,10 +15,10 @@ trait Checker[A]  extends ShouldMatchers{
   }
 
 
-  def functionToExecute:(Int)=>(A,RandomGenerator)
+  def functionToExecute:(Int)=>A
 
   def test(addMinValue:Int,res:A) = {
-    functionToExecute(addMinValue) shouldBe (res,MockGenerator)
+    functionToExecute(addMinValue) shouldBe res
   }
 
 }
@@ -27,18 +27,18 @@ trait CheckerInstance {
 
   def apply[A](implicit checker: Checker[A]): Checker[A] = checker
 
-  implicit val nonNegative = new Checker[Int] {
+  implicit val nonNegative = new Checker[(Int,RandomGenerator)] {
     override def functionToExecute: (Int) => (Int, RandomGenerator) =
                        (a) => buildRandomize(addToMinValue=a).nonNegativeInt
   }
 
-  implicit val doubleRandom = new Checker[Double] {
+  implicit val doubleRandom = new Checker[(Double,RandomGenerator)] {
     override def functionToExecute: (Int) => (Double, RandomGenerator) =
                              (a) => buildRandomize(addToMinValue=a).doubleRandom
   }
 
 
-  implicit val intDoubleRandom = new Checker[(Int,Double)] {
+  implicit val intDoubleRandom = new Checker[((Int,Double),RandomGenerator)] {
     override def functionToExecute: (Int) => ((Int, Double), RandomGenerator) =
                                   (a)=> buildRandomize(addToMinValue=a).intDoubleRandom
   }

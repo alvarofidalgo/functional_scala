@@ -2,9 +2,9 @@ package ramdoms
 
 import org.scalatest.{FlatSpec, ShouldMatchers}
 import types.StateTypes.RandomState
-import doubles.DoubleRandomized
+import doubles.{DoubleRandomized, MockGenerator}
 
-//TODO : Thos test
+//TODO : This test will need refactor
 class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
 
   import ramdoms.RandomGeneratorState._
@@ -15,13 +15,32 @@ class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
 
   }
 
+ /* trait Checker[A]  extends ShouldMatchers{
+
+    val minValue = -3
+    val maxValue = 3
+
+    def buildRandomize(addToMinValue:Int):RandomGenerator = {
+      DoubleRandomized(min = minValue,max=maxValue,next = minValue + addToMinValue)
+    }
+
+
+    def functionToExecute:(Int)=>(A,RandomGenerator)
+
+    def test(addMinValue:Int,res:A) = {
+      functionToExecute(addMinValue) shouldBe (res,MockGenerator)
+    }
+
+  }*/
+
+
 
   " We want to implement Map function and result " should " be (A,Rng1) when we have (1,Rng1)" in new Constants{
       val randomize = DoubleRandomized(min = minValue,max=maxValue,next = minValue)
       val generator:RandomState[Int] = (RandomGenerator)=>(1,RandomGenerator)
-      val expected:RandomState[String]=(RandomGenerator) =>("A",RandomGenerator)
+      val expected= ("A",randomize)
       val result =  generator.map((_)=>"A")
-      result(randomize) shouldBe expected(randomize)
+      result(randomize) shouldBe expected
   }
 
 

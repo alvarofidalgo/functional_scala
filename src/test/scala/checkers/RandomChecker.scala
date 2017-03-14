@@ -3,6 +3,7 @@ package checkers
 import doubles.{DoubleRandomized, MockGenerator}
 import org.scalatest.ShouldMatchers
 import ramdoms.RandomGenerator
+import types.StateTypes._
 
 
 trait Checker[A]  extends ShouldMatchers{
@@ -43,7 +44,17 @@ trait CheckerInstance {
                                   (a)=> buildRandomize(addToMinValue=a).intDoubleRandom
   }
 
-  //implicit val randomMap = new Checker[] {}
+  implicit val randomMap = new Checker[(String,RandomGenerator)] {
+    import ramdoms.RandomGeneratorState._
+    override def functionToExecute: (Int) => (String, RandomGenerator) = {
+      {
+        (addMin)=> {
+          val generator: RandomState[Int] = (RandomGenerator) => (1, MockGenerator)
+          generator.map ((_) => "A") (MockGenerator)
+        }
+      }
+    }
+  }
 
 }
 

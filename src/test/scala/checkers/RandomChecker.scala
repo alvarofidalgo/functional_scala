@@ -43,6 +43,8 @@ trait CheckerInstance {
                                   (a)=> buildRandomize(addToMinValue=a).intDoubleRandom
   }
 
+  //implicit val randomMap = new Checker[] {}
+
 }
 
 trait CheckerSyntax {

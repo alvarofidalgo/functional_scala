@@ -15,7 +15,7 @@ class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
 
   }
 
-  trait Checker  extends ShouldMatchers{
+  trait Checker1  extends ShouldMatchers{
 
     val minValue = -3
     val maxValue = 3
@@ -25,22 +25,27 @@ class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
     }
 
 
-    def functionToExecute:(Int)=>RandomState[String] = (addMin) => {
-         (_)=>
-           val generator:RandomState[Int] = (RandomGenerator)=>(1,MockGenerator)
-           generator.map((_)=>"A")(MockGenerator)
+    def functionToExecute:(Int)=>(String,RandomGenerator) = {
+      (addMin)=> {
+        val randomize = buildRandomize(addMin)
+        val generator: RandomState[Int] = (RandomGenerator) => (1, MockGenerator)
+        generator.map ((_) => "A") (MockGenerator)
+     }
+    }
 
-       }
 
 
-    def test(addMinValue:Int,res:(RandomGenerator)=>(String,RandomGenerator)) = {
-      functionToExecute(addMinValue)(buildRandomize(addMinValue)) shouldBe res(buildRandomize(addMinValue))
+
+
+
+    def test(addMinValue:Int,res:RandomState[String]) = {
+      functionToExecute(addMinValue) shouldBe res(buildRandomize(addMinValue))
     }
   }
 
 
 
-  " We want to implement Map function and result " should " be (A,Rng1) when we have (1,Rng1)" in new Checker{
+  " We want to implement Map function and result " should " be (A,Rng1) when we have (1,Rng1)" in new Checker1{
     test(minValue,(RandomGenerator)=>("A",MockGenerator))
   }
 

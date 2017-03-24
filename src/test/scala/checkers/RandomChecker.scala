@@ -3,7 +3,7 @@ package checkers
 import doubles.{DoubleRandomized, MockGenerator}
 import org.scalatest.ShouldMatchers
 import ramdoms.RandomGenerator
-import types.MyTypes.CustomDouble
+import types.MyTypes.{CustomDouble, StateDouble}
 import types.StateTypes._
 
 
@@ -27,6 +27,8 @@ trait Checker[A]  extends ShouldMatchers{
 
 trait CheckerInstance {
 
+  import ramdoms.RandomGeneratorState._
+
   def apply[A](implicit checker: Checker[A]): Checker[A] = checker
 
   implicit val nonNegative = new Checker[(Int,RandomGenerator)] {
@@ -49,13 +51,27 @@ trait CheckerInstance {
   }
 
   implicit val randomMap = new Checker[(String,RandomGenerator)] {
-    import ramdoms.RandomGeneratorState._
     override def functionToExecute: (Int) => (String, RandomGenerator) = {
       {
         (addMin)=> {
           val generator: RandomState[Int] = (RandomGenerator) => (1, MockGenerator)
           generator.map ((_) => "A") (MockGenerator)
         }
+      }
+    }
+  }
+
+
+
+  implicit val doubleState = new Checker[(StateDouble,RandomGenerator)] {
+
+    override def functionToExecute: (Int) => (StateDouble, RandomGenerator) = {
+
+      (addMin)=> {
+        val ramdomize = DoubleRandomized(min = minValue,max=maxValue,next = addMin)
+        val generator:RandomState[Int] = (RandomGenerator)=>(addMin,RandomGenerator)
+        val result =generator.toDoubleRand(ramdomize)(MockGenerator)
+        (StateDouble(result._1),result._2)
       }
     }
   }

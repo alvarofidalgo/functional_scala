@@ -9,4 +9,6 @@ object MyTypes {
   case class StateDouble(value:Double)
 
   case class StateStringMap(value:String)
+
+  case class StateStringMap2(value:String)
 }

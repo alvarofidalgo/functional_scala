@@ -3,7 +3,7 @@ package ramdoms
 import org.scalatest.{FlatSpec, ShouldMatchers}
 import types.StateTypes.RandomState
 import doubles.{DoubleRandomized, MockGenerator}
-import types.MyTypes.{CustomDouble, StateDouble}
+import types.MyTypes.{CustomDouble, StateDouble, StateStringMap}
 
 class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
 
@@ -17,7 +17,7 @@ class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
   import checkers.Checker.syntax._
 
   " We want to implement Map function and result " should " be (A,Rng1) when we have (1,Rng1)" in {
-    val res:(String,RandomGenerator) = ("A",MockGenerator)
+    val res:(StateStringMap,RandomGenerator) = (StateStringMap("A"),MockGenerator)
     val minValue = -3
     res.check(minValue)
   }

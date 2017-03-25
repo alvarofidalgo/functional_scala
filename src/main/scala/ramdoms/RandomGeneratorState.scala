@@ -11,6 +11,12 @@ object RandomGeneratorState {
         (f(value), nextRandom)
       }
 
+      def map2[B,C](random:RandomState[B])(f:(A,B)=>C) : RandomState[C] = (r)=> {
+        val (value,n) = s(r)
+        val (value2,n2) = random(r)
+        (f(value,value2),n)
+      }
+
       def toDoubleRand(random:RandomGenerator):RandomState[Double] =
         s.map((a) => {
           val min = random.limits._1

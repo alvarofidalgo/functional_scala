@@ -44,7 +44,6 @@ trait CheckerInstance {
                              }
   }
 
-
   implicit val intDoubleRandom = new Checker[((Int,Double),RandomGenerator)] {
     override def functionToExecute: (Int) => ((Int, Double), RandomGenerator) =
                                   (a)=> buildRandomize(addToMinValue=a).intDoubleRandom
@@ -60,7 +59,6 @@ trait CheckerInstance {
       }
     }
   }
-
 
 
   implicit val doubleState = new Checker[(StateDouble,RandomGenerator)] {

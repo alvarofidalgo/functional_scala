@@ -55,12 +55,15 @@ class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
   }
 
 
-  " We want to implement map2 function and result  " should " be new ramdom combine by function " in {
-    val first:RandomState[Int] = null
-    val second:RandomState[Double] = null
-    val expected : RandomState[String] = null
-    val f:(Int,Double) => String = null
-    first.map2(second)(f)
+  " We want to implement map2 function and result  " should " be new ramdom combine by function " in new Constants {
+    import ramdoms.RandomGeneratorState._
+    val ramdomize = DoubleRandomized(min = minValue,max=maxValue,next = 0)
+    val first:RandomState[Int] = (RandomGenerator)=>(1,RandomGenerator)
+    val second:RandomState[Double] = (RandomGenerator)=>(2.0,RandomGenerator)
+    val expected : RandomState[String] = (RandomGenerator)=>("1+2.0",RandomGenerator)
+    val f:(Int,Double) => String = (a,b)=> s"$a+$b"
+
+    first.map2(second)(f)(ramdomize) shouldBe expected(ramdomize)
   }
 
 }

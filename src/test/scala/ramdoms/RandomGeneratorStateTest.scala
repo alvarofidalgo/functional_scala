@@ -5,7 +5,6 @@ import types.StateTypes.RandomState
 import doubles.{DoubleRandomized, MockGenerator}
 import types.MyTypes.{CustomDouble, StateDouble}
 
-//TODO : This test will need refactor
 class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
 
 
@@ -53,6 +52,15 @@ class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
   it should " be zero when return min + 12 " in new Constants {
     val result:(StateDouble,RandomGenerator) = (StateDouble(0.toDouble/6.toDouble),MockGenerator)
     result.check(minValue + 12)
+  }
+
+
+  " We want to implement map2 function and result  " should " be new ramdom combine by function " in {
+    val first:RandomState[Int] = null
+    val second:RandomState[Double] = null
+    val expected : RandomState[String] = null
+    val f:(Int,Double) => String = null
+    first.map2(second)(f)
   }
 
 }

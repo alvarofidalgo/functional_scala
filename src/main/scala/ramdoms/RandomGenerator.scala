@@ -1,6 +1,7 @@
 package ramdoms
 
 
+// TODO : EXTRAER LOS MÉTODOS
 trait RandomGenerator {
 
   val limits:(Int,Int)

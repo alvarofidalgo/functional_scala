@@ -25,6 +25,6 @@ object RandomGeneratorState {
           ((random.nextInt._1 - min) % max).toDouble / road.toDouble
         })
 
-
+      def flatMap[B](f:A=>RandomState[B]):RandomState[B] = ???
     }
 }

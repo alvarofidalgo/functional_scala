@@ -11,4 +11,6 @@ object MyTypes {
   case class StateStringMap(value:String)
 
   case class StateStringMap2(value:String)
+
+  case class StateStringFlatMap(value:String)
 }

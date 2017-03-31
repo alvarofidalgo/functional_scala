@@ -3,6 +3,7 @@ package ramdoms
 import org.scalatest.{FlatSpec, ShouldMatchers}
 import types.StateTypes.RandomState
 import doubles.{DoubleRandomized, MockGenerator}
+import types.MyTypes.StateStringFlatMap
 import types.MyTypes.{CustomDouble, StateDouble, StateStringMap, StateStringMap2}
 
 class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
@@ -58,6 +59,14 @@ class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
   " We want to implement map2 function and result  " should " be new ramdom combine by function " in new Constants {
 
     val result:(StateStringMap2,RandomGenerator)  = (StateStringMap2("1+2.0"),MockGenerator)
+    result.check(0)
+
+  }
+
+
+  "We want to implement flatMap function and result " should " be equals function result with first parameter " in {
+
+    val result:(StateStringFlatMap,RandomGenerator) = (StateStringFlatMap("is-1"),MockGenerator)
     result.check(0)
 
   }

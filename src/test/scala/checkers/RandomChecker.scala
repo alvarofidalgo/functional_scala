@@ -60,7 +60,6 @@ trait CheckerInstance {
     }
   }
 
-
   implicit val doubleState = new Checker[(StateDouble,RandomGenerator)] {
 
     override def functionToExecute: (Int) => (StateDouble, RandomGenerator) = {
@@ -82,6 +81,19 @@ trait CheckerInstance {
         val f:(Int,Double) => StateStringMap2 = (a,b)=> StateStringMap2(s"$a+$b")
         first.map2(second)(f)(MockGenerator)
       }
+  }
+
+  implicit val stringFlatMap = new Checker[(StateStringFlatMap,RandomGenerator)] {
+    override def functionToExecute: (Int) => (StateStringFlatMap, RandomGenerator) = {
+      (addMin)=> {
+        val first:RandomState[Int] = (RandomGenerator)=>(1,RandomGenerator)
+        val funct:Int=>RandomState[StateStringFlatMap] = {
+          (a) => new StateStringFlatMap(s"is-")
+        }
+        first.flatMap(funct)(MockGenerator)
+      }
+    }
+
   }
 
 }

@@ -14,7 +14,7 @@ class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
 
   }
   
-  import checkers.Checker.syntax._
+  import checkers.CheckerState.syntax._
 
   " We want to implement Map function and result " should " be (A,Rng1) when we have (1,Rng1)" in {
     val res:(StateStringMap,RandomGenerator) = (StateStringMap("A"),MockGenerator)

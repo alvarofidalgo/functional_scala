@@ -88,7 +88,7 @@ trait CheckerInstance {
       (addMin)=> {
         val first:RandomState[Int] = (RandomGenerator)=>(1,RandomGenerator)
         val funct:Int=>RandomState[StateStringFlatMap] = {
-          (a) => new StateStringFlatMap(s"is-")
+          (a) =>(RandomGenerator) =>(new StateStringFlatMap(s"is-$a"),RandomGenerator)
         }
         first.flatMap(funct)(MockGenerator)
       }

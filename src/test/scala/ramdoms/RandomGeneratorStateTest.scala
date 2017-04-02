@@ -1,10 +1,9 @@
 package ramdoms
 
 import org.scalatest.{FlatSpec, ShouldMatchers}
-import types.StateTypes.RandomState
-import doubles.{DoubleRandomized, MockGenerator}
+import doubles.MockGenerator
 import types.MyTypes.StateStringFlatMap
-import types.MyTypes.{CustomDouble, StateDouble, StateStringMap, StateStringMap2}
+import types.MyTypes.{StateDouble, StateStringMap, StateStringMap2}
 
 class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
 

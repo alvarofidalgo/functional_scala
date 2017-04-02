@@ -7,7 +7,7 @@ import types.MyTypes._
 import types.StateTypes._
 
 
-trait CheckerState[A]  extends ShouldMatchers{
+trait CheckerState[A,B]  extends ShouldMatchers{
 
   val minValue = -3
   val maxValue = 3
@@ -17,9 +17,9 @@ trait CheckerState[A]  extends ShouldMatchers{
   }
 
 
-  def functionToExecute:(Int)=>A
+  def functionToExecute:(B)=>A
 
-  def test(addMinValue:Int,res:A) = {
+  def test(addMinValue:B,res:A) = {
     functionToExecute(addMinValue) shouldBe res
   }
 
@@ -30,10 +30,10 @@ trait CheckerStateInstance {
 
   import ramdoms.RandomGeneratorState._
 
-  def apply[A](implicit checker: CheckerState[A]): CheckerState[A] = checker
+  def apply[A,B](implicit checker: CheckerState[A,B]): CheckerState[A,B] = checker
 
 
-  implicit val doubleState = new CheckerState[(StateDouble,RandomGenerator)] {
+  implicit val doubleState = new CheckerState[(StateDouble,RandomGenerator),Int] {
 
     override def functionToExecute: (Int) => (StateDouble, RandomGenerator) = {
 
@@ -45,7 +45,7 @@ trait CheckerStateInstance {
     }
   }
 
-  implicit val randomMap = new CheckerState[(StateStringMap,RandomGenerator)] {
+  implicit val randomMap = new CheckerState[(StateStringMap,RandomGenerator),Int] {
     override def functionToExecute: (Int) => (StateStringMap, RandomGenerator) = {
       {
         (addMin)=> {
@@ -56,7 +56,7 @@ trait CheckerStateInstance {
     }
   }
 
-  implicit val stringMap2state = new CheckerState[(StateStringMap2,RandomGenerator)] {
+  implicit val stringMap2state = new CheckerState[(StateStringMap2,RandomGenerator),Int] {
     override def functionToExecute: (Int) => (StateStringMap2, RandomGenerator) =
       (addMin)=> {
         val first:RandomState[Int] = (RandomGenerator)=>(1,RandomGenerator)
@@ -66,7 +66,7 @@ trait CheckerStateInstance {
       }
   }
 
-  implicit val stringFlatMap = new CheckerState[(StateStringFlatMap,RandomGenerator)] {
+  implicit val stringFlatMap = new CheckerState[(StateStringFlatMap,RandomGenerator),Int] {
     override def functionToExecute: (Int) => (StateStringFlatMap, RandomGenerator) = {
       (addMin)=> {
         val first:RandomState[Int] = (RandomGenerator)=>(1,RandomGenerator)
@@ -86,9 +86,9 @@ trait CheckerStateSyntax {
 
   object syntax {
 
-    implicit class CheckState[A] (result:A)(implicit checker: CheckerState[A]){
+    implicit class CheckState[A,B] (result:A)(implicit checker: CheckerState[A,B]){
 
-      def check(addMinValue:Int) = checker.test(addMinValue,result)
+      def check(addMinValue:B) = checker.test(addMinValue,result)
 
     }
   }

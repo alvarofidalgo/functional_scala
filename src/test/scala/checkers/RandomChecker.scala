@@ -13,7 +13,7 @@ trait Checker[A]  extends ShouldMatchers{
   val maxValue = 3
 
   def buildRandomize(addToMinValue:Int):RandomGenerator = {
-    DoubleRandomized(min = minValue,max=maxValue,next = minValue + addToMinValue)
+    DoubleRandomized(min = minValue,max=maxValue,next = addToMinValue)
   }
 
 
@@ -33,20 +33,20 @@ trait CheckerInstance {
 
   implicit val nonNegative = new Checker[(Int,RandomGenerator)] {
     override def functionToExecute: (Int) => (Int, RandomGenerator) =
-                       (addMin) => buildRandomize(addToMinValue=addMin).nonNegativeInt
+                       (addMin) => buildRandomize(addToMinValue=minValue + addMin).nonNegativeInt
   }
 
   implicit val doubleRandom = new Checker[(CustomDouble,RandomGenerator)] {
     override def functionToExecute: (Int) => (CustomDouble, RandomGenerator) =
                              (addMin) => {
-                               val result = buildRandomize(addToMinValue=addMin).doubleRandom
+                               val result = buildRandomize(addToMinValue=minValue + addMin).doubleRandom
                                (CustomDouble(result._1),result._2)
                              }
   }
 
   implicit val intDoubleRandom = new Checker[((Int,Double),RandomGenerator)] {
     override def functionToExecute: (Int) => ((Int, Double), RandomGenerator) =
-                                  (addMin)=> buildRandomize(addToMinValue=addMin).intDoubleRandom
+                                  (addMin)=> buildRandomize(addToMinValue=minValue + addMin).intDoubleRandom
   }
 
 

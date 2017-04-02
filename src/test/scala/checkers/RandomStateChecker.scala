@@ -17,9 +17,9 @@ trait CheckerState[A,B]  extends ShouldMatchers{
   }
 
 
-  def functionToExecute:(B)=>A
+  def functionToExecute:(A)=>B
 
-  def test(addMinValue:B,res:A) = {
+  def test(addMinValue:A,res:B) = {
     functionToExecute(addMinValue) shouldBe res
   }
 
@@ -33,7 +33,7 @@ trait CheckerStateInstance {
   def apply[A,B](implicit checker: CheckerState[A,B]): CheckerState[A,B] = checker
 
 
-  implicit val doubleState = new CheckerState[(StateDouble,RandomGenerator),Int] {
+  implicit val doubleState = new CheckerState[Int,(StateDouble,RandomGenerator)] {
 
     override def functionToExecute: (Int) => (StateDouble, RandomGenerator) = {
 
@@ -45,7 +45,7 @@ trait CheckerStateInstance {
     }
   }
 
-  implicit val randomMap = new CheckerState[(StateStringMap,RandomGenerator),Int] {
+  implicit val randomMap = new CheckerState[Int,(StateStringMap,RandomGenerator)] {
     override def functionToExecute: (Int) => (StateStringMap, RandomGenerator) = {
       {
         (addMin)=> {
@@ -56,7 +56,7 @@ trait CheckerStateInstance {
     }
   }
 
-  implicit val stringMap2state = new CheckerState[(StateStringMap2,RandomGenerator),Int] {
+  implicit val stringMap2state = new CheckerState[Int,(StateStringMap2,RandomGenerator)] {
     override def functionToExecute: (Int) => (StateStringMap2, RandomGenerator) =
       (addMin)=> {
         val first:RandomState[Int] = (RandomGenerator)=>(1,RandomGenerator)
@@ -66,7 +66,7 @@ trait CheckerStateInstance {
       }
   }
 
-  implicit val stringFlatMap = new CheckerState[(StateStringFlatMap,RandomGenerator),Int] {
+  implicit val stringFlatMap = new CheckerState[Int,(StateStringFlatMap,RandomGenerator)] {
     override def functionToExecute: (Int) => (StateStringFlatMap, RandomGenerator) = {
       (addMin)=> {
         val first:RandomState[Int] = (RandomGenerator)=>(1,RandomGenerator)
@@ -86,9 +86,9 @@ trait CheckerStateSyntax {
 
   object syntax {
 
-    implicit class CheckState[A,B] (result:A)(implicit checker: CheckerState[A,B]){
+    implicit class CheckState[A,B] (result:B)(implicit checker: CheckerState[A,B]){
 
-      def check(addMinValue:B) = checker.test(addMinValue,result)
+      def check(addMinValue:A) = checker.test(addMinValue,result)
 
     }
   }

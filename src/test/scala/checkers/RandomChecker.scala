@@ -56,9 +56,8 @@ trait CheckerInstance {
     override def functionToExecute: (Int) => (StateDouble, RandomGenerator) = {
 
       (addMin)=> {
-        val ramdomize = DoubleRandomized(min = minValue,max=maxValue,next = addMin)
         val generator:RandomState[Int] = (RandomGenerator)=>(addMin,RandomGenerator)
-        val result =generator.toDoubleRand(ramdomize)(MockGenerator)
+        val result =generator.toDoubleRand(buildRandomize(addMin))(MockGenerator)
         (StateDouble(result._1),result._2)
       }
     }

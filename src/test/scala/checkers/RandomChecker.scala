@@ -33,32 +33,23 @@ trait CheckerInstance {
 
   implicit val nonNegative = new Checker[(Int,RandomGenerator)] {
     override def functionToExecute: (Int) => (Int, RandomGenerator) =
-                       (a) => buildRandomize(addToMinValue=a).nonNegativeInt
+                       (addMin) => buildRandomize(addToMinValue=addMin).nonNegativeInt
   }
 
   implicit val doubleRandom = new Checker[(CustomDouble,RandomGenerator)] {
     override def functionToExecute: (Int) => (CustomDouble, RandomGenerator) =
-                             (a) => {
-                               val result = buildRandomize(addToMinValue=a).doubleRandom
+                             (addMin) => {
+                               val result = buildRandomize(addToMinValue=addMin).doubleRandom
                                (CustomDouble(result._1),result._2)
                              }
   }
 
   implicit val intDoubleRandom = new Checker[((Int,Double),RandomGenerator)] {
     override def functionToExecute: (Int) => ((Int, Double), RandomGenerator) =
-                                  (a)=> buildRandomize(addToMinValue=a).intDoubleRandom
+                                  (addMin)=> buildRandomize(addToMinValue=addMin).intDoubleRandom
   }
 
-  implicit val randomMap = new Checker[(StateStringMap,RandomGenerator)] {
-    override def functionToExecute: (Int) => (StateStringMap, RandomGenerator) = {
-      {
-        (addMin)=> {
-          val generator: RandomState[Int] = (RandomGenerator) => (1, MockGenerator)
-          generator.map ((_) =>StateStringMap( "A")) (MockGenerator)
-        }
-      }
-    }
-  }
+
 
   implicit val doubleState = new Checker[(StateDouble,RandomGenerator)] {
 
@@ -69,6 +60,17 @@ trait CheckerInstance {
         val generator:RandomState[Int] = (RandomGenerator)=>(addMin,RandomGenerator)
         val result =generator.toDoubleRand(ramdomize)(MockGenerator)
         (StateDouble(result._1),result._2)
+      }
+    }
+  }
+
+  implicit val randomMap = new Checker[(StateStringMap,RandomGenerator)] {
+    override def functionToExecute: (Int) => (StateStringMap, RandomGenerator) = {
+      {
+        (addMin)=> {
+          val generator: RandomState[Int] = (RandomGenerator) => (1, MockGenerator)
+          generator.map ((_) =>StateStringMap( "A")) (MockGenerator)
+        }
       }
     }
   }

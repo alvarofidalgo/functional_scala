@@ -10,7 +10,7 @@ trait Checker[A]  extends ShouldMatchers{
 
   val minValue = -3
   val maxValue = 3
-  
+
 
   def functionToExecute:(Int)=>A
 

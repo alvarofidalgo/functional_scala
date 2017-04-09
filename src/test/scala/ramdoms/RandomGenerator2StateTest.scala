@@ -13,10 +13,10 @@ class RandomGenerator2StateTest extends FlatSpec with ShouldMatchers{
 
   trait MapFunction {
 
-      val f:(String)=>Int = (a)=> a match {
-         case "A"=>1
-         case "B"=>2
-       }
+      val f:(String)=>Int = {
+        case "A" => 1
+        case "B" => 2
+      }
 
       def check(entry:RandomState[String],result:RandomState[Int])=
            entry.map(f)(MockGenerator) shouldBe result(MockGenerator)

@@ -17,21 +17,24 @@ class RandomGenerator2StateTest extends FlatSpec with ShouldMatchers{
          case "A"=>1
          case "B"=>2
        }
+
+      def check(entry:RandomState[String],result:RandomState[Int])=
+           entry.map(f)(MockGenerator) shouldBe result(MockGenerator)
   }
 
   " We want to implement map function with State and result " should " be A transform in 1 " in new MapFunction {
 
       val entry : RandomState[String] = (RandomGenerator)=> ("A",MockGenerator)
       val result: RandomState[Int] = (RandomGenerator)=> (1,MockGenerator)
-       entry.map(f)(MockGenerator) shouldBe result(MockGenerator)
+       check(entry,result)
 
   }
 
 
-  it should " be B transform in two " in new MapFunction {
+  it should " be B transform in 2 " in new MapFunction {
     val entry : RandomState[String] = (RandomGenerator)=> ("B",MockGenerator)
     val result: RandomState[Int] = (RandomGenerator)=> (2,MockGenerator)
-    entry.map(f)(MockGenerator) shouldBe result(MockGenerator)
+    check(entry,result)
   }
 
 }

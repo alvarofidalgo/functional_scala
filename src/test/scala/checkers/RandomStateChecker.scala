@@ -45,16 +45,6 @@ trait CheckerStateInstance {
     }
   }
 
-  implicit val randomMap = new CheckerState[Int,(StateStringMap,RandomGenerator)] {
-    override def functionToExecute: (Int) => (StateStringMap, RandomGenerator) = {
-      {
-        (addMin)=> {
-          val generator: RandomState[Int] = (RandomGenerator) => (1, MockGenerator)
-          generator.map ((_) =>StateStringMap( "A")) (MockGenerator)
-        }
-      }
-    }
-  }
 
   implicit val stringMap2state = new CheckerState[Int,(StateStringMap2,RandomGenerator)] {
     override def functionToExecute: (Int) => (StateStringMap2, RandomGenerator) =

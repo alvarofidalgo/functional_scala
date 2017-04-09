@@ -16,12 +16,6 @@ class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
   
   import checkers.CheckerState.syntax._
 
-  " We want to implement Map function and result " should " be (A,Rng1) when we have (1,Rng1)" in {
-    val res:(StateStringMap,RandomGenerator) = (StateStringMap("A"),MockGenerator)
-    val minValue = -3
-    res.check(minValue)
-  }
-
 
   " We want to implement function that return Double between 0 and 1 and result " should " be zero when return min Value " in new Constants{
     val result:(StateDouble,RandomGenerator) = (StateDouble(0.toDouble),MockGenerator)

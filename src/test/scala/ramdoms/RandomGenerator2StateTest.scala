@@ -38,6 +38,12 @@ class RandomGenerator2StateTest extends FlatSpec with ShouldMatchers{
   }
 
 
- // " We want to implement map2 function and result " should ""
+  " We want to implement map2 function and result " should " be  AB and 1 transform in 3.0 " in {
+
+  }
+
+  it should " be AB and 2 transform in 4.0 " in {
+    
+  }
 
 }

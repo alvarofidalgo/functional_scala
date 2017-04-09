@@ -48,7 +48,11 @@ class RandomGenerator2StateTest extends FlatSpec with ShouldMatchers{
   }
 
   it should " be AB and 2 transform in 4.0 " in {
-
+    val entry : RandomState[String] = (RandomGenerator)=> ("AB",MockGenerator)
+    val secondEntry: RandomState[Int] = (RandomGenerator)=> (2,MockGenerator)
+    val result:RandomState[Double] = (RandomGenerator)=> (4.0,MockGenerator)
+    val f:(String,Int)=>Double = (a,b) => (a.length + b).toDouble
+    entry.map2(secondEntry)(f)(MockGenerator) shouldBe result(MockGenerator)
   }
 
 }

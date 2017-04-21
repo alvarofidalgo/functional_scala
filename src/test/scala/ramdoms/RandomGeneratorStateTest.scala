@@ -48,7 +48,7 @@ class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
     result.check(minValue + 12)
   }
 
-  
+
   "We want to implement flatMap function and result " should " be equals function result with first parameter " in {
 
     val result:(StateStringFlatMap,RandomGenerator) = (StateStringFlatMap("is-1"),MockGenerator)

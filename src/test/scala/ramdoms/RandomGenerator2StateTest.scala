@@ -1,12 +1,12 @@
 package ramdoms
 
-import doubles.MockGenerator
+import doubles.{DoubleRandomized, MockGenerator}
 import org.scalatest.{FlatSpec, ShouldMatchers}
-import types.MyTypes.StateStringFlatMap
+import types.MyTypes.{StateDouble, StateStringFlatMap}
 import types.StateTypes._
 
 
-//TODO : REMAKE FLATMAP FUNCTION TEST
+//TODO : Delete DRY
 class RandomGenerator2StateTest extends FlatSpec with ShouldMatchers{
 
   import ramdoms.RandomGeneratorState._
@@ -57,6 +57,42 @@ class RandomGenerator2StateTest extends FlatSpec with ShouldMatchers{
     val f:String=>RandomState[Int] = (string) => (RandomGenerator)=>(string.length,MockGenerator)
     val result:RandomState[Int] = (RandomGenerator)=> (3,MockGenerator)
     entry.flatMap(f)(MockGenerator)  shouldBe result(MockGenerator)
+  }
+
+  trait Constants {
+    val minValue = -3
+    val maxValue = 3
+
+    def check(res:Double,entry:Int) = {
+      val result:RandomState[Double]= (doubleValue) => (res,MockGenerator)
+      val parameter = DoubleRandomized(min = minValue,max=maxValue,next = entry)
+      val generator:RandomState[Int] = (RandomGenerator)=>(minValue,RandomGenerator)
+      generator.toDoubleRand(parameter)(MockGenerator) shouldBe result(MockGenerator)
+    }
+
+  }
+
+
+  " We want to implement function that return Double between 0 and 1 and result " should " be zero when return min Value " in new Constants{
+    check(0,minValue)
+
+  }
+
+  it should " be 1/6 when return min + 1" in new Constants {
+    check(1.toDouble/6.toDouble,minValue + 1)
+  }
+
+  it should " be 2/6 when return min +2 " in new Constants {
+    check(2.toDouble/6.toDouble,minValue + 2)
+  }
+
+  it should " be zero when return min + 6 " in new Constants {
+    check(0.toDouble/6.toDouble,minValue + 6)
+  }
+
+  it should " be 1/6 when return min + 7 " in new Constants {
+    check(1.toDouble/6.toDouble,minValue + 7)
+
   }
 
 }

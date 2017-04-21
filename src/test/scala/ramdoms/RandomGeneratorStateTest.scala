@@ -48,15 +48,7 @@ class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
     result.check(minValue + 12)
   }
 
-
-  " We want to implement map2 function and result  " should " be new ramdom combine by function " in new Constants {
-
-    val result:(StateStringMap2,RandomGenerator)  = (StateStringMap2("1+2.0"),MockGenerator)
-    result.check(0)
-
-  }
-
-
+  
   "We want to implement flatMap function and result " should " be equals function result with first parameter " in {
 
     val result:(StateStringFlatMap,RandomGenerator) = (StateStringFlatMap("is-1"),MockGenerator)

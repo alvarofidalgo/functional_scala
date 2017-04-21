@@ -9,7 +9,7 @@ import types.StateTypes._
 class RandomGenerator2StateTest extends FlatSpec with ShouldMatchers{
 
   import ramdoms.RandomGeneratorState._
-  
+
   trait Map2Function {
     val f:(String,Int)=>Double = (a,b) => (a.length + b).toDouble
     val entry : RandomState[String] = (RandomGenerator)=> ("AB",MockGenerator)
@@ -18,7 +18,7 @@ class RandomGenerator2StateTest extends FlatSpec with ShouldMatchers{
       entry.map2(secondEntry)(f)(MockGenerator) shouldBe result(MockGenerator)
   }
 
-  " We want to implement map function with State and result " should " be A transform in 1 " in new MapFunction[String,Int] {
+  " We want to implement map function with State and result " should " be A transform in 1 " in  {
       val entry : RandomState[String] = (RandomGenerator)=> ("A",MockGenerator)
       val result: RandomState[Int] = (RandomGenerator)=> (1,MockGenerator)
       entry.map(string=>string.length)(MockGenerator) shouldBe result(MockGenerator)
@@ -26,7 +26,7 @@ class RandomGenerator2StateTest extends FlatSpec with ShouldMatchers{
   }
 
 
-  it should " be AB transform in 2 " in new MapFunction [String,Int]{
+  it should " be AB transform in 2 " in {
     val entry : RandomState[String] = (RandomGenerator)=> ("AB",MockGenerator)
     val result: RandomState[Int] = (RandomGenerator)=> (2,MockGenerator)
     entry.map(string=>string.length)(MockGenerator) shouldBe result(MockGenerator)

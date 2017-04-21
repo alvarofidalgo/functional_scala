@@ -5,54 +5,45 @@ import org.scalatest.{FlatSpec, ShouldMatchers}
 import types.StateTypes._
 
 
-//TODO : when remake this test then change Name
+//TODO : REFACTOR TIME
 class RandomGenerator2StateTest extends FlatSpec with ShouldMatchers{
 
   import ramdoms.RandomGeneratorState._
+  
+  trait Map2Function {
+    val f:(String,Int)=>Double = (a,b) => (a.length + b).toDouble
+    val entry : RandomState[String] = (RandomGenerator)=> ("AB",MockGenerator)
 
-
-  trait MapFunction {
-
-      val f:(String)=>Int = {
-        case "A" => 1
-        case "B" => 2
-      }
-
-      def check(entry:RandomState[String],result:RandomState[Int])=
-           entry.map(f)(MockGenerator) shouldBe result(MockGenerator)
+    def check (secondEntry:RandomState[Int],result:RandomState[Double]) =
+      entry.map2(secondEntry)(f)(MockGenerator) shouldBe result(MockGenerator)
   }
 
-  " We want to implement map function with State and result " should " be A transform in 1 " in new MapFunction {
-
+  " We want to implement map function with State and result " should " be A transform in 1 " in new MapFunction[String,Int] {
       val entry : RandomState[String] = (RandomGenerator)=> ("A",MockGenerator)
       val result: RandomState[Int] = (RandomGenerator)=> (1,MockGenerator)
-       check(entry,result)
+      entry.map(string=>string.length)(MockGenerator) shouldBe result(MockGenerator)
 
   }
 
 
-  it should " be B transform in 2 " in new MapFunction {
-    val entry : RandomState[String] = (RandomGenerator)=> ("B",MockGenerator)
-    val result: RandomState[Int] = (RandomGenerator)=> (2,MockGenerator)
-    check(entry,result)
-  }
-
-
-  " We want to implement map2 function and result " should " be  AB and 1 transform in 3.0 " in {
+  it should " be AB transform in 2 " in new MapFunction [String,Int]{
     val entry : RandomState[String] = (RandomGenerator)=> ("AB",MockGenerator)
+    val result: RandomState[Int] = (RandomGenerator)=> (2,MockGenerator)
+    entry.map(string=>string.length)(MockGenerator) shouldBe result(MockGenerator)
+  }
+
+
+  " We want to implement map2 function and result " should " be  AB and 1 transform in 3.0 " in new Map2Function{
+
     val secondEntry: RandomState[Int] = (RandomGenerator)=> (1,MockGenerator)
     val result:RandomState[Double] = (RandomGenerator)=> (3.0,MockGenerator)
-    val f:(String,Int)=>Double = (a,b) => (a.length + b).toDouble
-    entry.map2(secondEntry)(f)(MockGenerator) shouldBe result(MockGenerator)
-
+    check(secondEntry,result)
   }
 
-  it should " be AB and 2 transform in 4.0 " in {
-    val entry : RandomState[String] = (RandomGenerator)=> ("AB",MockGenerator)
+  it should " be AB and 2 transform in 4.0 " in new Map2Function{
     val secondEntry: RandomState[Int] = (RandomGenerator)=> (2,MockGenerator)
     val result:RandomState[Double] = (RandomGenerator)=> (4.0,MockGenerator)
-    val f:(String,Int)=>Double = (a,b) => (a.length + b).toDouble
-    entry.map2(secondEntry)(f)(MockGenerator) shouldBe result(MockGenerator)
+    check(secondEntry,result)
   }
 
 }

@@ -3,8 +3,9 @@ package ramdoms
 import org.scalatest.{FlatSpec, ShouldMatchers}
 import doubles.MockGenerator
 import types.MyTypes.StateStringFlatMap
-import types.MyTypes.{StateDouble, StateStringMap, StateStringMap2}
+import types.MyTypes.StateDouble
 
+// TODO : extract
 class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
 
 
@@ -47,13 +48,6 @@ class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
     val result:(StateDouble,RandomGenerator) = (StateDouble(0.toDouble/6.toDouble),MockGenerator)
     result.check(minValue + 12)
   }
-
-
-  "We want to implement flatMap function and result " should " be equals function result with first parameter " in {
-
-    val result:(StateStringFlatMap,RandomGenerator) = (StateStringFlatMap("is-1"),MockGenerator)
-    result.check(0)
-
-  }
+  
 
 }

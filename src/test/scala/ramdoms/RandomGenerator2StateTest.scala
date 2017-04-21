@@ -2,10 +2,11 @@ package ramdoms
 
 import doubles.MockGenerator
 import org.scalatest.{FlatSpec, ShouldMatchers}
+import types.MyTypes.StateStringFlatMap
 import types.StateTypes._
 
 
-//TODO : REFACTOR TIME
+//TODO : REMAKE FLATMAP FUNCTION TEST
 class RandomGenerator2StateTest extends FlatSpec with ShouldMatchers{
 
   import ramdoms.RandomGeneratorState._
@@ -41,6 +42,21 @@ class RandomGenerator2StateTest extends FlatSpec with ShouldMatchers{
     val secondEntry: RandomState[Int] = (RandomGenerator)=> (2,MockGenerator)
     val result:RandomState[Double] = (RandomGenerator)=> (4.0,MockGenerator)
     entry.map2(secondEntry)(f)(MockGenerator) shouldBe result(MockGenerator)
+  }
+
+
+  " We want to implement flatmap function and result " should " be (RandomGenerator) => (2,MockGenerator) when entry is (RandomGenerator)=> (\"AB\",MockGenerator)" in {
+    val entry : RandomState[String] = (RandomGenerator)=> ("AB",MockGenerator)
+    val f:String=>RandomState[Int] = (string) => (RandomGenerator)=>(string.length,MockGenerator)
+    val result:RandomState[Int] = (RandomGenerator)=> (2,MockGenerator)
+    entry.flatMap(f)(MockGenerator)  shouldBe result(MockGenerator)
+  }
+
+  it should " be (RandomGenerator) => (3,MockGenerator) when entry is (RandomGenerator)=> (\"ABC\",MockGenerator) " in {
+    val entry : RandomState[String] = (RandomGenerator)=> ("ABC",MockGenerator)
+    val f:String=>RandomState[Int] = (string) => (RandomGenerator)=>(string.length,MockGenerator)
+    val result:RandomState[Int] = (RandomGenerator)=> (3,MockGenerator)
+    entry.flatMap(f)(MockGenerator)  shouldBe result(MockGenerator)
   }
 
 }

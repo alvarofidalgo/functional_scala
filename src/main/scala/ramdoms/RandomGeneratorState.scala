@@ -19,6 +19,7 @@ object RandomGeneratorState {
 
       def toDoubleRand(random:RandomGenerator):RandomState[Double] =
         s.map((a) => {
+
           val min = random.limits._1
           val max = random.limits._2
           val road = max - min

@@ -2,12 +2,10 @@ package ramdoms
 
 import doubles.{DoubleRandomized, MockGenerator}
 import org.scalatest.{FlatSpec, ShouldMatchers}
-import types.MyTypes.{StateDouble, StateStringFlatMap}
 import types.StateTypes._
 
 
-//TODO : Delete DRY
-class RandomGenerator2StateTest extends FlatSpec with ShouldMatchers{
+class RandomGeneratorStateTest extends FlatSpec with ShouldMatchers{
 
   import ramdoms.RandomGeneratorState._
 

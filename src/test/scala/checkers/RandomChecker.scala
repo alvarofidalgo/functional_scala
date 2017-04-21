@@ -32,14 +32,14 @@ trait CheckerInstance {
                                           next = minValue + addMin).nonNegativeInt
   }
 
-  implicit val doubleRandom = new Checker[(CustomDouble,RandomGenerator)] {
-    override def functionToExecute: (Int) => (CustomDouble, RandomGenerator) =
+  implicit val doubleRandom = new Checker[(Double,RandomGenerator)] {
+    override def functionToExecute: (Int) => (Double, RandomGenerator) =
                              (addMin) => {
                                val result =
                                  DoubleRandomized(min = minValue,
                                                   max=maxValue,
                                                   next = minValue + addMin).doubleRandom
-                               (CustomDouble(result._1),result._2)
+                               (result._1,result._2)
                              }
   }
 

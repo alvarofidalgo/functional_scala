@@ -4,12 +4,14 @@ package dispenser
 class MachineState {
 
 
+  private val rules = Seq(StateRule(lowerLimit=0,upperLimit=40,name="PAYMENT"),
+                  StateRule(lowerLimit=40,upperLimit=Int.MaxValue,name="SELECTED"))
+
+
   def next(amount:Int):String = {
-    if ((amount==20) || (amount==39))
-      "PAYMENT"
-    else if (amount == 40)
-      "SELECTED"
-    else
-      "UNKNOWN"
+    val coincidenceRules = rules.filter(rule => amount >=rule.lowerLimit && amount < rule.upperLimit )
+    val state = coincidenceRules.head
+    state.name
   }
+
 }

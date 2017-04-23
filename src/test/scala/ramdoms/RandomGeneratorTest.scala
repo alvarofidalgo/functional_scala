@@ -5,7 +5,6 @@ import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
 import org.scalatest.junit.JUnitRunner
-import types.MyTypes.CustomDouble
 
 @RunWith(classOf[JUnitRunner])
 class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
@@ -46,32 +45,32 @@ class RandomGeneratorTest extends FlatSpec with ShouldMatchers{
 
 
   " We want to implement function that return Double between 0 and 1 and result " should " be zero when return min Value " in  {
-    val result:(CustomDouble,RandomGenerator) = (CustomDouble(0.toDouble),MockGenerator)
+    val result:(Double,RandomGenerator) = (0.toDouble,MockGenerator)
     result.check(addMinValue = 0)
   }
 
   it should " be 1/6 when return min + 1"  in {
-    val result:(CustomDouble,RandomGenerator) = (CustomDouble(1.toDouble/6.toDouble),MockGenerator)
+    val result:(Double,RandomGenerator) = (1.toDouble/6.toDouble,MockGenerator)
     result.check(addMinValue = 1)
   }
 
   it should " be 2/6 when return min +2 " in  {
-    val result:(CustomDouble,RandomGenerator) = (CustomDouble(2.toDouble/6.toDouble),MockGenerator)
+    val result:(Double,RandomGenerator) = (2.toDouble/6.toDouble,MockGenerator)
     result.check(addMinValue = 2)
   }
 
   it should " be zero when return min + 6 " in {
-    val result:(CustomDouble,RandomGenerator) = (CustomDouble(0.toDouble),MockGenerator)
+    val result:(Double,RandomGenerator) = (0.toDouble,MockGenerator)
     result.check(addMinValue = 6)
   }
 
   it should " be 1/6 when return min + 7 " in  {
-    val result:(CustomDouble,RandomGenerator) = (CustomDouble(1.toDouble/6.toDouble),MockGenerator)
+    val result:(Double,RandomGenerator) = (1.toDouble/6.toDouble,MockGenerator)
     result.check(addMinValue = 7)
   }
 
   it should " be zero when return min + 12 " in  {
-    val result:(CustomDouble,RandomGenerator) = (CustomDouble(0.toDouble),MockGenerator)
+    val result:(Double,RandomGenerator) = (0.toDouble,MockGenerator)
     result.check(addMinValue = 12)
   }
 

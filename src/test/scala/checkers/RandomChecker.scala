@@ -1,20 +1,14 @@
 package checkers
 
-import doubles.{DoubleRandomized, MockGenerator}
+import doubles.DoubleRandomized
 import org.scalatest.ShouldMatchers
 import ramdoms.RandomGenerator
-import types.MyTypes._
-import types.StateTypes._
 
 
 trait Checker[A]  extends ShouldMatchers{
 
   val minValue = -3
   val maxValue = 3
-
-  def buildRandomize(addToMinValue:Int):RandomGenerator = {
-    DoubleRandomized(min = minValue,max=maxValue,next = addToMinValue)
-  }
 
 
   def functionToExecute:(Int)=>A
@@ -27,74 +21,33 @@ trait Checker[A]  extends ShouldMatchers{
 
 trait CheckerInstance {
 
-  import ramdoms.RandomGeneratorState._
-
   def apply[A](implicit checker: Checker[A]): Checker[A] = checker
 
   implicit val nonNegative = new Checker[(Int,RandomGenerator)] {
     override def functionToExecute: (Int) => (Int, RandomGenerator) =
-                       (addMin) => buildRandomize(addToMinValue=minValue + addMin).nonNegativeInt
+                       (addMin) =>
+                         DoubleRandomized(min = minValue,
+                                          max=maxValue,
+                                          next = minValue + addMin).nonNegativeInt
   }
 
-  implicit val doubleRandom = new Checker[(CustomDouble,RandomGenerator)] {
-    override def functionToExecute: (Int) => (CustomDouble, RandomGenerator) =
+  implicit val doubleRandom = new Checker[(Double,RandomGenerator)] {
+    override def functionToExecute: (Int) => (Double, RandomGenerator) =
                              (addMin) => {
-                               val result = buildRandomize(addToMinValue=minValue + addMin).doubleRandom
-                               (CustomDouble(result._1),result._2)
+                               val result =
+                                 DoubleRandomized(min = minValue,
+                                                  max=maxValue,
+                                                  next = minValue + addMin).doubleRandom
+                               (result._1,result._2)
                              }
   }
 
   implicit val intDoubleRandom = new Checker[((Int,Double),RandomGenerator)] {
     override def functionToExecute: (Int) => ((Int, Double), RandomGenerator) =
-                                  (addMin)=> buildRandomize(addToMinValue=minValue + addMin).intDoubleRandom
-  }
-
-
-
-  implicit val doubleState = new Checker[(StateDouble,RandomGenerator)] {
-
-    override def functionToExecute: (Int) => (StateDouble, RandomGenerator) = {
-
-      (addMin)=> {
-        val generator:RandomState[Int] = (RandomGenerator)=>(addMin,RandomGenerator)
-        val result =generator.toDoubleRand(buildRandomize(addMin))(MockGenerator)
-        (StateDouble(result._1),result._2)
-      }
-    }
-  }
-
-  implicit val randomMap = new Checker[(StateStringMap,RandomGenerator)] {
-    override def functionToExecute: (Int) => (StateStringMap, RandomGenerator) = {
-      {
-        (addMin)=> {
-          val generator: RandomState[Int] = (RandomGenerator) => (1, MockGenerator)
-          generator.map ((_) =>StateStringMap( "A")) (MockGenerator)
-        }
-      }
-    }
-  }
-
-  implicit val stringMap2state = new Checker[(StateStringMap2,RandomGenerator)] {
-    override def functionToExecute: (Int) => (StateStringMap2, RandomGenerator) =
-      (addMin)=> {
-        val first:RandomState[Int] = (RandomGenerator)=>(1,RandomGenerator)
-        val second:RandomState[Double] = (RandomGenerator)=>(2.0,RandomGenerator)
-        val f:(Int,Double) => StateStringMap2 = (a,b)=> StateStringMap2(s"$a+$b")
-        first.map2(second)(f)(MockGenerator)
-      }
-  }
-
-  implicit val stringFlatMap = new Checker[(StateStringFlatMap,RandomGenerator)] {
-    override def functionToExecute: (Int) => (StateStringFlatMap, RandomGenerator) = {
-      (addMin)=> {
-        val first:RandomState[Int] = (RandomGenerator)=>(1,RandomGenerator)
-        val funct:Int=>RandomState[StateStringFlatMap] = {
-          (a) =>(RandomGenerator) =>(new StateStringFlatMap(s"is-$a"),RandomGenerator)
-        }
-        first.flatMap(funct)(MockGenerator)
-      }
-    }
-
+                  (addMin) =>
+                    DoubleRandomized(min = minValue,
+                                     max=maxValue,
+                                     next = minValue + addMin).intDoubleRandom
   }
 
 }

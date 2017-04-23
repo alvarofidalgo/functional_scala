@@ -15,14 +15,14 @@ class MachineStateTest extends FlatSpec with ShouldMatchers{
   it should " be PAYMENT if amount  was  20 " in {
 
      val machineState = new MachineState()
-      machineState.next(amount=20) shouldBe "PAYMENT"
+      machineState.next(amount=20) shouldBe PAYMENT
   }
 
 
-  it should " be SELECTED if amount was 40 " in {
+  it should " be SELECTION if amount was 40 " in {
 
     val machineState = new MachineState()
-    machineState.next(amount=40) shouldBe "SELECTED"
+    machineState.next(amount=40) shouldBe SELECTED
 
   }
 
@@ -30,14 +30,14 @@ class MachineStateTest extends FlatSpec with ShouldMatchers{
   it should " be PAYMENT if amount was 39 " in {
 
     val machineState = new MachineState()
-    machineState.next(amount=39) shouldBe "PAYMENT"
+    machineState.next(amount=39) shouldBe PAYMENT
 
   }
 
-  it should " be SELECTED if amount was 41 " in {
+  it should " be SELECTION if amount was 41 " in {
 
     val machineState = new MachineState()
-    machineState.next(amount=41) shouldBe "SELECTED"
+    machineState.next(amount=41) shouldBe SELECTED
 
   }
 

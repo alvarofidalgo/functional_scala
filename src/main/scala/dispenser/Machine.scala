@@ -1,11 +1,19 @@
 package dispenser
 
 
-class Machine {
+case class Machine(state:String,amount:Int) {
 
 
 
-   def insert(total:Int,money:Int):(String,Int) = ("PAYMENT",total + money)
+   def insert(money:Int):Machine = {
+     val value = amount + money
+     val newState =
+     if (value < 40)
+      "PAYMENT"
+     else
+       "SELECTION"
+     Machine(state = newState,amount = value)
+   }
 
 
 }

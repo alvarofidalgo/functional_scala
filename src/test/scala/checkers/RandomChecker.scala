@@ -3,7 +3,6 @@ package checkers
 import doubles.DoubleRandomized
 import org.scalatest.ShouldMatchers
 import ramdoms.RandomGenerator
-import types.MyTypes._
 
 
 trait Checker[A]  extends ShouldMatchers{

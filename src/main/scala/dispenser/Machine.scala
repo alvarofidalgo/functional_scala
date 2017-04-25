@@ -1,10 +1,14 @@
 package dispenser
 
+import types.StateTypes._
 
-case class Machine(state:TypeState,amount:Int) {
-  
-   def insert(money:Int):Machine = {
+case class Machine(amount:Int) {
+
+   def insert(money:Int):State[Machine,(TypeState,Int)] = {
      val value = amount + money
-     Machine(state = new MachineState().next(value),amount = value)
+     (machine) =>
+
+       ((new MachineState().next(value),value),Machine(value))
+
    }
 }

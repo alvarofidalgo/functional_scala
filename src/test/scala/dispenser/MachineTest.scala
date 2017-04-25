@@ -13,16 +13,16 @@ class MachineTest extends FlatSpec with ShouldMatchers {
 
 
   it should " be in  PAYMENT with 10 cents when machine was in PAYMENT with 0 cents and we inserted 10 cents " in {
-    Machine(state = PAYMENT,amount = 0).insert(money=10) shouldBe Machine(PAYMENT,10)
+    Machine(amount = 0).insert(money=10)(Machine(amount = 10)) shouldBe ((PAYMENT,10),Machine(10))
   }
 
 
   it should "be in PAYMENT with 20 cents when machine was in Payment with 10 cents and we inserted 10 cents " in {
-    Machine(state = PAYMENT,amount = 10).insert(money=10) shouldBe Machine(PAYMENT,20)
+    Machine(amount = 10).insert(money=10)(Machine(amount = 20))  shouldBe ((PAYMENT,20),Machine(20))
   }
 
 
   it should " be in SELECTION with 40 when machine was in PAYMENT with 30 cents and we inserted 10 cents " in {
-    Machine(state = PAYMENT,amount = 30).insert(money=10) shouldBe Machine(SELECTED,40)
+    Machine(amount = 30).insert(money=10)(Machine(amount = 10)) shouldBe ((SELECTED,40),Machine(40))
   }
 }

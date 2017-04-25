@@ -12,7 +12,6 @@ class MachineTest extends FlatSpec with ShouldMatchers {
   behavior of " Coffee Machine"
 
 
-
   it should " be in  PAYMENT with 10 cents when machine was in PAYMENT with 0 cents and we inserted 10 cents " in {
     Machine(state = PAYMENT,amount = 0).insert(money=10) shouldBe Machine(PAYMENT,10)
   }

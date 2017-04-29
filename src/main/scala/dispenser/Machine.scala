@@ -16,4 +16,11 @@ case object Machine{
       (newState,Machine(value))
 
   }
+
+
+  def select(money:Int):State[Machine,(TypeState)] = {
+    (machine) =>
+      val value = machine.amount - money
+      (RETURN,Machine(value))
+  }
 }

@@ -3,7 +3,7 @@ package dispenser
 import dispenser.MachineTypes._
 
 
-case class MachineState(amount:Int)
+
 
 object CoffeeMachine extends Machine[MachineTransition]{
 

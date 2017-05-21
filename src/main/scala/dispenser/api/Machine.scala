@@ -1,4 +1,4 @@
-package dispenser
+package dispenser.api
 
 trait Machine[P[_]] {
 

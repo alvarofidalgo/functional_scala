@@ -1,9 +1,10 @@
 package dispenser
 
 import dispenser.MachineTypes.MachineTransition
+import dispenser.api.Selector
 
 
-object CoinDeposit extends Deposit[MachineTransition]{
+object CoinDeposit extends Selector[MachineTransition]{
 
 
   def select(price:Int):MachineTransition[Int] = (machine)=> {

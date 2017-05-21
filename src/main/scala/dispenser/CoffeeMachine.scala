@@ -1,19 +1,24 @@
 package dispenser
 
 
-class CoffeeMachine(amount:Int) {
+import types.StateTypes.State
+
+
+
+case class CoffeeMachine(amount:Seq[Int] = Seq.empty[Int]) {
 
   def insert(amount:Int):CoffeeMachine = {
-    new CoffeeMachine(this.amount + amount)
+    new CoffeeMachine(this.amount ++ Seq(amount))
   }
 
-  def select():String = {
+  def select():State[CoffeeMachine,String] = (machine)=>{
 
-    state(amount = this.amount ,price = 40) match {
+    state(amount = machine.amount.foldLeft(0)((a,b)=>a+b),price = 40) match {
       case Missing=>
-        val amountMissing = 40 - amount
-        s"$amountMissing cents is missing"
-      case Complete=>   "your coffee"
+        val amountMissing = 40 - machine.amount.foldLeft(0)((a,b)=>a+b)
+        val message =s"$amountMissing cents is missing"
+        (message,machine)
+      case Complete=>  ("your coffee",machine)
     }
   }
 

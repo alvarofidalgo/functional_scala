@@ -8,7 +8,7 @@ class CoinDepositTest extends FlatSpec with ShouldMatchers{
 
   behavior of " Coin deposit have money and result "
 
-  val coinDeposit = new CoinDeposit()
+  val coinDeposit = CoinDeposit
 
 
   it should " be return 10 when 30 cents is missing " in {

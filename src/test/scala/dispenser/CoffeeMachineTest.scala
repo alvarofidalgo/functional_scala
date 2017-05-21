@@ -11,6 +11,7 @@ class CoffeeMachineTest extends FlatSpec with ShouldMatchers {
 
 
   val coffeeMachine = new CoffeeMachine(amount = 0)
+  val coffeeStateZero = new MachineState(amount = 0)
 
   behavior of " John use coffee machine and result "
 
@@ -18,21 +19,21 @@ class CoffeeMachineTest extends FlatSpec with ShouldMatchers {
 
   it should " be '30 cents is missing' when 10 cents was introduced and coffee was selected " in {
 
-    val newStateMachine = coffeeMachine.insert(amount=10)
-    newStateMachine.select()(newStateMachine) shouldBe (newStateMachine,"30 cents is missing")
+    val (newStateMachine,_) = coffeeMachine.insert(amount=10)(coffeeStateZero)
+    coffeeMachine.select()(newStateMachine) shouldBe (newStateMachine,"30 cents is missing")
   }
 
 
   it should " be '20 cents is missing' when 20 cents was introduced and coffee was selected " in {
 
-    val newStateMachine = coffeeMachine.insert(amount=20)
-    newStateMachine.select()(newStateMachine) shouldBe  (newStateMachine,"20 cents is missing")
+    val (newStateMachine,_) = coffeeMachine.insert(amount=20)(coffeeStateZero)
+    coffeeMachine.select()(newStateMachine) shouldBe  (newStateMachine,"20 cents is missing")
   }
 
   it should " be 'your coffee' when 40 cents was introduced and coffee was selected " in {
 
-    val newStateMachine = coffeeMachine.insert(amount=40)
-    newStateMachine.select()(newStateMachine) shouldBe (newStateMachine,"your coffee")
+    val (newStateMachine,_) = coffeeMachine.insert(amount=40)(coffeeStateZero)
+    coffeeMachine.select()(newStateMachine) shouldBe (newStateMachine,"your coffee")
   }
 
 

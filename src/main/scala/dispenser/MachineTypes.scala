@@ -3,5 +3,5 @@ package dispenser
 
 object MachineTypes {
 
-  type MachineTransition[T] = (CoffeeMachine) => (CoffeeMachine,T)
+  type MachineTransition[T] = (MachineState) => (MachineState,T)
 }

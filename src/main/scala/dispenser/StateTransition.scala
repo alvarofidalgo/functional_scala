@@ -1,5 +1,7 @@
 package dispenser
 
+import dispenser.types.{Complete, MachineStates, Missing}
+
 
 object StateTransition {
 

@@ -1,7 +1,8 @@
 package dispenser
 
-import dispenser.MachineTypes._
 import dispenser.api.Machine
+import dispenser.components.{CoinDeposit, MessageMachine}
+import dispenser.types.MachineTypes.MachineTransition
 
 
 
@@ -15,8 +16,8 @@ object CoffeeMachine extends Machine[MachineTransition]{
 
   def select():MachineTransition[String] = (machine) =>{
 
-    val (machineState,_) = CoinDeposit.select(price=40)(machine)
-    val (_,message) = MessageMachine.select(price=40)(machine)
+    val machineState = CoinDeposit.coins(price=40)(machine)
+    val message= MessageMachine.messageShow(price=40)(machine)
     (machineState,message)
 
   }

@@ -1,5 +1,4 @@
-package dispenser
-
+package dispenser.types
 
 sealed trait MachineStates
 

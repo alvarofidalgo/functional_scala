@@ -5,7 +5,7 @@ import dispenser.MachineTypes._
 
 case class MachineState(amount:Int)
 
-class CoffeeMachine extends Machine[MachineTransition]{
+object CoffeeMachine extends Machine[MachineTransition]{
 
   def insert(amount:Int):MachineTransition[Int] =(machine) =>{
     val newAmount = machine.amount + amount
@@ -22,8 +22,7 @@ class CoffeeMachine extends Machine[MachineTransition]{
         (machineState,message)
       case Complete=>
         val message = "your coffee"
-        val machineState = MachineState(machine.amount)
-        (machineState,message)
+        (MachineState(amount = 0),message)
     }
   }
 

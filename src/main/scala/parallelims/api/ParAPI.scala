@@ -2,6 +2,8 @@ package parallelims.api
 
 import java.util.concurrent.Semaphore
 
+import parallelims.process.Forker
+
 
 object ParAPI {
 
@@ -14,17 +16,10 @@ object ParAPI {
 
   def fork[A](a: => Par[A]):Par[A] = {
     val semaphore = new Semaphore(0)
-    var returned:Par[A] = null
-    val thread = new Thread() {
-
-      override def run(): Unit = {
-        returned = a
-        semaphore.release()
-      }
-    }
+    val thread = new Forker(semaphore,a)
     thread.start()
     semaphore.acquire()
-    returned
+    a
   }
 
 

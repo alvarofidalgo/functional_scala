@@ -8,9 +8,10 @@ object ParAPI {
   def unit[A](unit: => A):Par[A] = new ParImplement[A](unit)
 
 
-  def get[A](par:Par[A]):A = par.get
+  def map2[A,B,C](first:Par[A],second:Par[B])(f:(A,B)=>C):Par[C] = unit(f(first.get,second.get))
 
 
-  def map2[A](first:Par[A],second:Par[A])(f:(A,A)=>A):Par[A] = unit(f(first.get,second.get))
+  def fork[A](a: => Par[A]):Par[A] = unit(a.get)
+
 
 }

@@ -32,4 +32,6 @@ class CalculatorTest extends FlatSpec with ShouldMatchers{
     calulator.sum(Seq(1,1,2)).get  shouldBe 4
   }
 
+
+
 }

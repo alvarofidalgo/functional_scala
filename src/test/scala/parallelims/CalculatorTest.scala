@@ -22,9 +22,14 @@ class CalculatorTest extends FlatSpec with ShouldMatchers{
   }
 
 
-  it should " be sum all elements when have two or more elements " in {
+  it should " be sum all elements when have two  elements " in {
 
     calulator.sum(Seq(1,1)) shouldBe 2
+  }
+
+  it should " be sum all elements when have two or more elements " in {
+
+    calulator.sum(Seq(1,1,2)) shouldBe 4
   }
 
 }

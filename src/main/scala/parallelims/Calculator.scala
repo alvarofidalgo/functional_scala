@@ -11,7 +11,11 @@ class Calculator {
     case head::Nil =>  ParAPI.get(ParAPI.unit(head))
     case head::tail =>
       val (first, second) =numbers.splitAt(numbers.length / 2)
-      ParAPI.get(ParAPI.unit(sum(first))) + ParAPI.get(ParAPI.unit(sum(second)))
+      ParAPI.map2(ParAPI.unit(sum(first)),ParAPI.unit(sum(second))){
+        (first,second)=> {
+          first + second
+        }
+      }.get
   }
 
 

@@ -1,5 +1,4 @@
-package parallelims
-
+package parallelims.api
 
 sealed trait Par[A] {
 

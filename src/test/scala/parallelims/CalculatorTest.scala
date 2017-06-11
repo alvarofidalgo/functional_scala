@@ -4,12 +4,6 @@ import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
 
 
-// 0 ELEMENTOS
-// 1 ELEMENTO
-// 2 ELEMENTOS
-// 3 ELEMETOS
-
-
 class CalculatorTest extends FlatSpec with ShouldMatchers{
 
 

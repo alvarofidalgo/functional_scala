@@ -14,15 +14,13 @@ object ParAPI {
   def map2[A,B,C](first:Par[A],second:Par[B])(f:(A,B)=>C):Par[C] = unit(f(first.get,second.get))
 
 
-  def fork[A](a: => Par[A]):Par[A] = {
-    val semaphore = new Semaphore(0)
-    val result =Forker(a).runPar(semaphore){
-      (par) => par.get
-    }
-  //  semaphore.acquire()
-    result
+  def fork[A](a: => Par[A]):Par[A] = Forker.runPar(new Semaphore(0),a)
+           {
+              (t)=> t.start()
+            }{
+              (par) => par.get
+            }
 
-  }
 
 
 }

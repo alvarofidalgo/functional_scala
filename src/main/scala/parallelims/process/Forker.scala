@@ -5,16 +5,19 @@ import java.util.concurrent.Semaphore
 import parallelims.api.{Par, ParImplement}
 
 
-case class Forker[A] (var returned:Par[A])extends Thread{
+object  Forker extends Thread{
 
-  def runPar(semaphore:Semaphore)(f:Par[A]=>A):Par[A] = {
+  def runPar[A](semaphore:Semaphore,value:Par[A] )
+            (f1:(Thread)=>Unit)
+            (f2:(Par[A])=>A):Par[A] = {
     var result:A =null.asInstanceOf[A]
-    new Thread() {
+
+    f1(new Thread() {
       override def run() = {
-        result = f(returned)
+        result = f2(value)
         semaphore.release()
       }
-    }.start()
+    })
     semaphore.acquire()
     new ParImplement[A](result)
   }

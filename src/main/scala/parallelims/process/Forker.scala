@@ -7,15 +7,17 @@ import parallelims.api.{Par, ParImplement}
 
 case class Forker[A] (var returned:Par[A])extends Thread{
 
-def runPar(semaphore:Semaphore):Par[A] = {
-  new Thread() {
-    override def run() = {
-      returned = new ParImplement[A](returned.get)
-      semaphore.release()
-    }
-  }.start()
-  returned
-}
+  def runPar(semaphore:Semaphore)(f:Par[A]=>A):Par[A] = {
+    var result:A =null.asInstanceOf[A]
+    new Thread() {
+      override def run() = {
+        result = f(returned)
+        semaphore.release()
+      }
+    }.start()
+    semaphore.acquire()
+    new ParImplement[A](result)
+  }
 
 
 }

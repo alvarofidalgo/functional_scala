@@ -16,8 +16,10 @@ object ParAPI {
 
   def fork[A](a: => Par[A]):Par[A] = {
     val semaphore = new Semaphore(0)
-    val result =Forker(a).runPar(semaphore)
-    semaphore.acquire()
+    val result =Forker(a).runPar(semaphore){
+      (par) => par.get
+    }
+  //  semaphore.acquire()
     result
 
   }

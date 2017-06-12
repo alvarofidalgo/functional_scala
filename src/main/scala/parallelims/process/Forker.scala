@@ -2,14 +2,14 @@ package parallelims.process
 
 import java.util.concurrent.Semaphore
 
-import parallelims.api.{Par, ParImplement}
+import parallelims.api.{Future, ParImplement}
 
 
 object  Forker extends Thread{
 
-  def runPar[A](semaphore:Semaphore,value:Par[A] )
+  def runPar[A](semaphore:Semaphore,value:Future[A] )
             (f1:(Thread)=>Unit)
-            (f2:(Par[A])=>A):Par[A] = {
+            (f2:(Future[A])=>A):Future[A] = {
     var result:A =null.asInstanceOf[A]
 
     f1(new Thread() {

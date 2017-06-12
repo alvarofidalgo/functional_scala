@@ -8,13 +8,13 @@ import parallelims.process.Forker
 object ParAPI {
 
 
-  def unit[A](unit: => A):Par[A] = new ParImplement[A](unit)
+  def unit[A](unit: => A):Future[A] = new ParImplement[A](unit)
 
 
-  def map2[A,B,C](first:Par[A],second:Par[B])(f:(A,B)=>C):Par[C] = unit(f(first.get,second.get))
+  def map2[A,B,C](first:Future[A],second:Future[B])(f:(A,B)=>C):Future[C] = unit(f(first.get,second.get))
 
 
-  def fork[A](a: => Par[A]):Par[A] = Forker.runPar(new Semaphore(0),a)
+  def fork[A](a: => Future[A]):Future[A] = Forker.runPar(new Semaphore(0),a)
            {
               (t)=> t.start()
             }{

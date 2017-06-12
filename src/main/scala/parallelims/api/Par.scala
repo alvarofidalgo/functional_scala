@@ -1,12 +1,9 @@
 package parallelims.api
 
-sealed trait Par[A] {
-
-  def get:A
-}
 
 
-class ParImplement[A](unit: => A) extends Par[A] {
+
+class ParImplement[A](unit: => A) extends Future[A] {
 
 
   override def get: A = unit

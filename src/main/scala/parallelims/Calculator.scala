@@ -1,12 +1,13 @@
 package parallelims
 
-import parallelims.api.{Future, ParAPI}
+import parallelims.api.{ParAPI}
+import parallelims.types.Types._
 
 
 class Calculator {
 
 
-  def sum(numbers:Seq[Int]):Future[Int] = numbers match{
+  def sum(numbers:Seq[Int]):Par[Int] = numbers match{
     case Nil => ParAPI.unit(0)
     case head::Nil =>  ParAPI.unit(head)
     case head::tail =>

@@ -2,7 +2,7 @@ package parallelims
 
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
-import parallelims.api.ExecutionService
+import parallelims.impl.ExecutionService
 
 
 class CalculatorTest extends FlatSpec with ShouldMatchers{

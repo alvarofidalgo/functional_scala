@@ -1,4 +1,7 @@
-package parallelims.api
+package parallelims.impl
+
+import parallelims.api.{Callable, Future}
+
 import scala.concurrent.duration.TimeUnit
 
 

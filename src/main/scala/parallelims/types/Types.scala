@@ -1,6 +1,7 @@
 package parallelims.types
 
-import parallelims.api.{ExecutionService, Future}
+import parallelims.api.Future
+import parallelims.impl.ExecutionService
 
 
 object Types {

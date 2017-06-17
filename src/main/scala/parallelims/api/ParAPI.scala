@@ -2,10 +2,14 @@ package parallelims.api
 
 import parallelims.types.Types.Par
 
+import scala.concurrent.duration.TimeUnit
+
 object ParAPI {
 
 
-  private case class MyFuture[A](get:A) extends Future[A]
+  private case class MyFuture[A](get:A) extends Future[A] {
+    override def get(timeOut: Long, unit: TimeUnit): A = ???
+  }
 
 
   def unit[A](unit: => A):Par[A] = (execution) => MyFuture(get=unit)

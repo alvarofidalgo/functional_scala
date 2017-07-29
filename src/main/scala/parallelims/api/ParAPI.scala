@@ -1,5 +1,7 @@
 package parallelims.api
 
+import java.util.concurrent.TimeUnit
+
 import parallelims.impl.MyFuture
 import parallelims.types.Types.Par
 
@@ -17,9 +19,9 @@ object ParAPI {
   implicit class ParOperations [A](par:Par[A]) {
 
     def map2[B, C](second: Par[B])(f: (A, B) => C): Par[C] = (execution) => {
-      val firstValue = par(execution).get
-      val secondValue = second(execution).get
-      MyFuture(get = f(firstValue, secondValue))
+      val firstValue = par(execution).get( 1 ,TimeUnit.NANOSECONDS)
+      val secondValue = second(execution).get(1,TimeUnit.NANOSECONDS)
+      MyFuture(get = f(firstValue.get, secondValue.get))
     }
 
 

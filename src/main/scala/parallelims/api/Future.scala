@@ -7,6 +7,6 @@ trait Future [A] {
 
   def get:A
 
-  def get(timeOut:Long,unit:TimeUnit):A
+  def get(timeOut:Long,unit:TimeUnit):Option[A]
 
 }

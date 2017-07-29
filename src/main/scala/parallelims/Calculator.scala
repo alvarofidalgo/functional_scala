@@ -1,16 +1,21 @@
 package parallelims
 
 
-
+import parallelims.types.Types._
 
 class Calculator {
 
 
-  def sum(numbers:Seq[Int]):Int = if (numbers.size<=1)
-    new ParImplement(numbers.headOption getOrElse  0).get
-  else {
-    val (first, second) =numbers.splitAt(numbers.length / 2)
-    new ParImplement(sum(first)).get + new ParImplement(sum(second)).get
-  }
+  import parallelims.api.ParAPI._
 
+  def sum(numbers:Seq[Int]):Par[Int] = numbers match{
+    case Nil => 0.unit
+    case head::Nil =>  head.unit
+    case head::tail =>
+      val (first, second) =numbers.splitAt(numbers.length / 2)
+      sum(first).fork.map2(sum(second).fork) {
+        (first,second)=> first + second
+      }
+
+  }
 }

@@ -1,15 +1,16 @@
 package parallelims.api
 
+import org.scalatest.mock.MockitoSugar
 import org.scalatest.{FlatSpec, ShouldMatchers}
 import parallelims.impl.{ExecutionService, MyFuture}
 import parallelims.types.Types.Par
 
-import scala.concurrent.duration.TimeUnit
+
+import parallelims.api.ParAPI._
 
 
-import  parallelims.api.ParAPI._
 
-class ParApiTest extends FlatSpec with ShouldMatchers{
+class ParApiTest extends FlatSpec with ShouldMatchers with MockitoSugar{
 
   val executionService = new ExecutionService()
 
@@ -27,13 +28,11 @@ class ParApiTest extends FlatSpec with ShouldMatchers{
   behavior of " We want to implemet async behavior and result "
 
 
-  // ESTRATEGIA DE TESTS PARA EL ASÍNCRONO
-  //
-
-
   it should "be computation was asynchronously " in {
     val element:Par[Int] = (execution) => MyFuture(1)
-    element.asyncF((a)=> a.toString)(3)
+    val number = 1
+    element.asyncF((a)=> a.toString)(number)(executionService).get shouldBe   s"$number"
+
   }
 
 

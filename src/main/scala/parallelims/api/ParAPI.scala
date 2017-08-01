@@ -28,15 +28,16 @@ object ParAPI {
       MyFuture(get = f(firstValue.get, secondValue.get))
     }
 
-    def asyncF[B](f:A=>B):A=>Par[B] = (a) => ParOperations((execution) => MyFuture(f(a))).fork
-
-
-
+    def asyncF[B](f:A=>B):A=>Par[B] = (a) => {
+     val res:Par[B] = (execution) => MyFuture(f(a))
+      res.fork
+    }
 
     def fork: Par[A] = (execution) =>
-      execution.submit(new Callable[A] {
-        override def call: A = par(execution).get
-      })
+          execution.submit(new Callable[A] {
+            override def call: A = par(execution).get
+          })
+
 
 
   }

@@ -12,7 +12,7 @@ import parallelims.api.ParAPI._
 
 class ParApiTest extends FlatSpec with ShouldMatchers with MockitoSugar{
 
-  val executionService = new ExecutionService()
+
 
   behavior of "We want implement map2 function and result "
 
@@ -21,7 +21,7 @@ class ParApiTest extends FlatSpec with ShouldMatchers with MockitoSugar{
     val first:Par[Int] = (execution) => MyFuture(1)
     val second:Par[String] = (execution) => MyFuture("A")
     val f:(Int,String) => Double = (a,b) => a.toDouble + b.size.toDouble
-    first.map2(second)(f) (executionService) shouldBe MyFuture(1.toDouble + 1.toDouble)
+    execute(first.map2(second)(f))  shouldBe MyFuture(1.toDouble + 1.toDouble)
   }
 
 
@@ -31,9 +31,9 @@ class ParApiTest extends FlatSpec with ShouldMatchers with MockitoSugar{
   it should "be computation was asynchronously " in {
     val element:Par[Int] = (execution) => MyFuture(1)
     val number = 1
-    element.asyncF((a)=> a.toString)(number)(executionService).get shouldBe   s"$number"
-
+    execute(element.asyncF((a)=> a.toString)(number)).get shouldBe   s"$number"
   }
 
 
+  def execute[A](f:(ExecutionService)=>A) = f(new ExecutionService())
 }

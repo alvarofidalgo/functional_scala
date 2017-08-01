@@ -10,16 +10,9 @@ object ParAPI {
 
 
 
- /* implicit class ParConversor[A](value:A) {
-
-
-
-  //  def unit : Par[A] = (execution) => MyFuture(get = value)
-
-  //  def lazyUnit[A](a: =>A) : Par[A] = ???
-  }*/
-
   implicit class ParOperations [A](par:Par[A]) {
+
+    
 
     def map2[B, C](second: Par[B])(f: (A, B) => C): Par[C] = (execution) => {
       val firstValue = par(execution).get( 1 ,TimeUnit.NANOSECONDS)

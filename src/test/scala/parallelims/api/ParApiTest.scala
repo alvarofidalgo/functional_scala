@@ -13,13 +13,6 @@ class ParApiTest extends FlatSpec with ShouldMatchers{
 
   val executionService = new ExecutionService()
 
-
-  /*case class FutureMock[A](value:A) extends Future[A]{
-    override def get: A = value
-
-    override def get(timeOut: Long, unit: TimeUnit): Option[A] = ???
-  }*/
-
   behavior of "We want implement map2 function and result "
 
 
@@ -31,10 +24,17 @@ class ParApiTest extends FlatSpec with ShouldMatchers{
   }
 
 
-  it should " be None when not comply time " in {
-    val first:Par[Int] = (execution) => MyFuture(1)
-    val second:Par[String] = (execution) => MyFuture("A")
-    val f:(Int,String) => Double = (a,b) => a.toDouble + b.size.toDouble
+  behavior of " We want to implemet async behavior and result "
+
+
+  // ESTRATEGIA DE TESTS PARA EL ASÍNCRONO
+  //
+
+
+  it should "be computation was asynchronously " in {
+    val element:Par[Int] = (execution) => MyFuture(1)
+    element.asyncF((a)=> a.toString)(3)
   }
+
 
 }

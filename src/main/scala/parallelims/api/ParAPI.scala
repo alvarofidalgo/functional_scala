@@ -23,7 +23,13 @@ object ParAPI {
       })
 
 
-    def map[B](f:(A)=>B):Par[B] = (execution) => MyFuture(f(par(execution).get))
+    def map[B](f:(A)=>B): Par[B] = {
+      val parUnit:Par[Unit]  = (execution)=> MyFuture(())
+      val transform:(A,Any) => B = (a,_)=>f(a)
+      par.map2(parUnit)(transform)
+    }
+
+
 
     def map2[B, C](second: Par[B])(f: (A, B) => C): Par[C] = (execution) => {
       val firstValue = par(execution).get( 1 ,TimeUnit.NANOSECONDS)

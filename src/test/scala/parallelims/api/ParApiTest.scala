@@ -10,13 +10,9 @@ import scala.concurrent.duration.TimeUnit
 
 
 
-class ParApiTest extends FlatSpec with ShouldMatchers {
+class ParApiTest extends FlatSpec with ShouldMatchers with ParallelimsOpTest{
 
 
-  case class MyFuture[A](get:A) extends Future[A] {
-    override def get(timeOut: Long, unit: TimeUnit): Option[A] = Option(get)
-
-  }
 
   behavior of "We want implement map2 function and result "
 
@@ -58,6 +54,4 @@ class ParApiTest extends FlatSpec with ShouldMatchers {
 
 
   }
-
-  def execute[A](f:(ExecutionService)=>A):A = f(new ExecutionService())
 }

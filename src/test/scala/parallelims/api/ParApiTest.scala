@@ -44,9 +44,8 @@ class ParApiTest extends FlatSpec with ShouldMatchers with MockitoSugar{
 
   it should " be new Par[Boolean] when apply f(Int)=>Boolean " in {
     val element:Par[Int] = (execution) => execution.submit(MyCallable(callReturn = 1) )
-    val expected:Par[Boolean] = (execution) => MyFuture(true)
     val f:(Int)=>(Boolean) = (a) => a == 1
-    execute(element.map(f)) shouldBe execute(expected)
+    execute(element map f) shouldBe MyFuture(true)
   }
 
 

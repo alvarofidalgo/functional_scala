@@ -1,12 +1,16 @@
 package matchers
 
+import java.util.concurrent.TimeUnit
+
 import org.scalatest.matchers.BeMatcher
 import org.scalatest.matchers.MatchResult
+import parallelims.api.Future
 import streams.Empty
 import streams.InitStreams
 import streams.Streams
 
-object StreamMatcher {
+
+object CustomMatchers {
 
  implicit class equalToStream[A](s: Streams[A]) extends BeMatcher[Streams[A]] {
 
@@ -27,6 +31,19 @@ object StreamMatcher {
     }
 
 
+  }
+
+  implicit class futureIsEqualTo[A](future:Future[A]) extends BeMatcher[Future[A]] {
+    override def apply(left: Future[A]): MatchResult = {
+      val withTime = future.get(timeOut = 1,
+                                unit=  TimeUnit.NANOSECONDS).equals(left.get(timeOut = 1, unit=  TimeUnit.NANOSECONDS))
+      val withoutTime = future.get.equals(left.get)
+      MatchResult(
+        withTime && withoutTime,
+        s" Future $left is not equals to $future",
+        " Futures are equals"
+      )
+    }
   }
 
 

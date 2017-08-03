@@ -1,17 +1,10 @@
 package parallelims
 
 
-import parallelims.api.Callable
+import parallelims.api.MyCallable
 import parallelims.types.Types._
 
 class Calculator {
-
-
-  case class MyCallable[A] ( callReturn:A) extends Callable[A] {
-
-    override def call: A = callReturn
-  }
-
 
   import parallelims.api.ParAPI._
 

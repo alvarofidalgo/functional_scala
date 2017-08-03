@@ -19,12 +19,6 @@ class ParApiTest extends FlatSpec with ShouldMatchers with MockitoSugar{
 
   }
 
-
-  case class MyCallable[A] ( callReturn:A) extends Callable[A] {
-
-    override def call: A = callReturn
-  }
-
   behavior of "We want implement map2 function and result "
 
 

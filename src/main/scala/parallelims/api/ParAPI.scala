@@ -6,10 +6,10 @@ import parallelims.types.Types.Par
 
 object ParAPI {
 
-  case class MyCallable[A] ( callReturn:A) extends Callable[A] {
+ /* case class MyCallable[A] ( callReturn:A) extends Callable[A] {
 
     override def call: A = callReturn
-  }
+  }*/
 
   implicit class ParOperations [A](par:Par[A]) {
 

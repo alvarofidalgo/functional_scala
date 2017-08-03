@@ -4,13 +4,20 @@ import org.scalatest.mock.MockitoSugar
 import org.scalatest.{FlatSpec, ShouldMatchers}
 import parallelims.impl.{ExecutionService, MyFuture}
 import parallelims.types.Types.Par
-
-
+import matchers.CustomMatchers._
 import parallelims.api.ParAPI._
+
+import scala.concurrent.duration.TimeUnit
 
 
 
 class ParApiTest extends FlatSpec with ShouldMatchers with MockitoSugar{
+
+
+  case class MyFuture[A](get:A) extends Future[A] {
+    override def get(timeOut: Long, unit: TimeUnit): Option[A] = Option(get)
+
+  }
 
 
   case class MyCallable[A] ( callReturn:A) extends Callable[A] {
@@ -25,7 +32,8 @@ class ParApiTest extends FlatSpec with ShouldMatchers with MockitoSugar{
     val first:Par[Int] = (execution) => execution.submit(MyCallable(callReturn = 1) )
     val second:Par[String] = (execution) => execution.submit(MyCallable(callReturn = "A") )
     val f:(Int,String) => Double = (a,b) => a.toDouble + b.size.toDouble
-    execute(first.map2(second)(f))  shouldBe MyFuture(1.toDouble + 1.toDouble)
+    val expected = MyFuture( get = 1.toDouble + 1.toDouble)
+    execute(first.map2(second)(f))  shouldBe futureIsEqualTo(expected)
   }
 
 
@@ -35,7 +43,8 @@ class ParApiTest extends FlatSpec with ShouldMatchers with MockitoSugar{
   it should "be computation was asynchronously " in {
     val element:Par[Int] = (execution) => execution.submit(MyCallable(callReturn = 1) )
     val number = 1
-    execute(element.asyncF((a)=> a.toString)(number)).get shouldBe   s"$number"
+    val expected = MyFuture(get = s"$number")
+    execute(element.asyncF((a)=> a.toString)(number)) shouldBe   futureIsEqualTo(expected)
   }
 
 
@@ -45,7 +54,8 @@ class ParApiTest extends FlatSpec with ShouldMatchers with MockitoSugar{
   it should " be new Par[Boolean] when apply f(Int)=>Boolean " in {
     val element:Par[Int] = (execution) => execution.submit(MyCallable(callReturn = 1) )
     val f:(Int)=>(Boolean) = (a) => a == 1
-    execute(element map f) shouldBe MyFuture(true)
+    val expected = MyFuture(true)
+    execute(element map f) shouldBe futureIsEqualTo(expected)
   }
 
 
@@ -55,5 +65,5 @@ class ParApiTest extends FlatSpec with ShouldMatchers with MockitoSugar{
 
   }
 
-  def execute[A](f:(ExecutionService)=>A) = f(new ExecutionService())
+  def execute[A](f:(ExecutionService)=>A):A = f(new ExecutionService())
 }

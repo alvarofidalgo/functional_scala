@@ -8,12 +8,15 @@ import parallelims.types.Types.Par
 
 object ParAPI {
 
+  case class MyCallable[A] ( callReturn:A) extends Callable[A] {
 
+    override def call: A = callReturn
+  }
 
   implicit class ParOperations [A](par:Par[A]) {
 
     def asyncF[B](f:A=>B):A=>Par[B] = (a) => {
-      val res:Par[B] = (execution) => MyFuture(f(a))
+      val res:Par[B] = (execution) => execution.submit(MyCallable(callReturn = f(a)))
       res.fork
     }
 
@@ -24,7 +27,7 @@ object ParAPI {
 
 
     def map[B](f:(A)=>B): Par[B] = {
-      val parUnit:Par[Unit]  = (execution)=> MyFuture(())
+      val parUnit:Par[Unit]  = (execution)=> execution.submit(MyCallable(callReturn = ()))
       val transform:(A,Any) => B = (a,_)=>f(a)
       par.map2(parUnit)(transform)
     }
@@ -34,8 +37,8 @@ object ParAPI {
     def map2[B, C](second: Par[B])(f: (A, B) => C): Par[C] = (execution) => {
       val firstValue = par(execution).get( 1 ,TimeUnit.NANOSECONDS)
       val secondValue = second(execution).get(1,TimeUnit.NANOSECONDS)
-
-      MyFuture(get = f(firstValue.get, secondValue.get))
+      execution.submit(MyCallable(callReturn = f(firstValue.get, secondValue.get)))
+      //MyFuture(get = f(firstValue.get, secondValue.get))
     }
 
 

@@ -2,7 +2,7 @@ package streams
 
 import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
-import matchers.StreamMatcher._
+import matchers.CustomMatchers._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 

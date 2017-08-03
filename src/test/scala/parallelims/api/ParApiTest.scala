@@ -2,7 +2,7 @@ package parallelims.api
 
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{FlatSpec, ShouldMatchers}
-import parallelims.impl.{ExecutionService, MyFuture}
+import parallelims.impl.ExecutionService
 import parallelims.types.Types.Par
 import matchers.CustomMatchers._
 import parallelims.api.ParAPI._

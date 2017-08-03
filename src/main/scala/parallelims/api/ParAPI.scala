@@ -1,8 +1,6 @@
 package parallelims.api
 
 import java.util.concurrent.TimeUnit
-
-import parallelims.impl.MyFuture
 import parallelims.types.Types.Par
 
 
@@ -38,7 +36,6 @@ object ParAPI {
       val firstValue = par(execution).get( 1 ,TimeUnit.NANOSECONDS)
       val secondValue = second(execution).get(1,TimeUnit.NANOSECONDS)
       execution.submit(MyCallable(callReturn = f(firstValue.get, secondValue.get)))
-      //MyFuture(get = f(firstValue.get, secondValue.get))
     }
 
 

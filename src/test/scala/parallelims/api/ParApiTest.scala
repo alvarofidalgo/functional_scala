@@ -1,6 +1,5 @@
 package parallelims.api
 
-import org.scalatest.mock.MockitoSugar
 import org.scalatest.{FlatSpec, ShouldMatchers}
 import parallelims.impl.ExecutionService
 import parallelims.types.Types.Par
@@ -11,7 +10,7 @@ import scala.concurrent.duration.TimeUnit
 
 
 
-class ParApiTest extends FlatSpec with ShouldMatchers with MockitoSugar{
+class ParApiTest extends FlatSpec with ShouldMatchers {
 
 
   case class MyFuture[A](get:A) extends Future[A] {
@@ -56,6 +55,7 @@ class ParApiTest extends FlatSpec with ShouldMatchers with MockitoSugar{
   behavior of " We want to implement parMap function and result "
 //def parMap[A,B](ps: List[A])(f: A => B): Par[List[B]]
   it should " be empty List with Paralelism computation when entry was empty " in {
+
 
   }
 

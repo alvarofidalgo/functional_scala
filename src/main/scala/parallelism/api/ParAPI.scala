@@ -7,11 +7,7 @@ import parallelism.types.Types.Par
 object ParAPI {
 
   implicit class ParOperations [A](par:Par[A]) {
-
-    def asyncF[B](f:A=>B):A=>Par[B] = (a) => {
-      val res:Par[B] = (execution) => execution.submit(MyCallable(callReturn = f(a)))
-      res.fork
-    }
+    
 
     def fork: Par[A] = (execution) =>
       execution.submit(new Callable[A] {
@@ -32,14 +28,5 @@ object ParAPI {
       val secondValue = second(execution).get(1,TimeUnit.NANOSECONDS)
       execution.submit(MyCallable(callReturn = f(firstValue.get, secondValue.get)))
     }
-
-
-
-
-
-
-
   }
-
-
 }

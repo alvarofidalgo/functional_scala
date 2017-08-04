@@ -26,16 +26,6 @@ class ParApiTest extends FlatSpec with ShouldMatchers with ParallelismOpTest{
   }
 
 
-  behavior of " We want to implemet async behavior and result "
-
-
-  it should "be computation was asynchronously " in {
-    val element:Par[Int] = (execution) => execution.submit(MyCallable(callReturn = 1) )
-    val number = 1
-    val expected = MyFuture(get = s"$number")
-    execute(element.asyncF((a)=> a.toString)(number)) shouldBe   futureIsEqualTo(expected)
-  }
-
 
 
   behavior of " We want to implement map function in parAPI and result "

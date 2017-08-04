@@ -18,5 +18,12 @@ class SequenceTest extends FlatSpec with ShouldMatchers with ParallelimsOpTest{
 
   }
 
+  it should " be non empty List with Paralelism computation when entry was empty  " in  {
+    val sequence:Seq[Int] = Seq(3)
+    val f:(Int) => Boolean = (num) => num<2
+    val expected = MyFuture(get = Seq(false))
+    execute(sequence.parMap(f)) shouldBe futureIsEqualTo(expected)
+  }
+
 
 }

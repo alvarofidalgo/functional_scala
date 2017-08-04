@@ -47,11 +47,4 @@ class ParApiTest extends FlatSpec with ShouldMatchers with ParallelimsOpTest{
     execute(element map f) shouldBe futureIsEqualTo(expected)
   }
 
-
-  behavior of " We want to implement parMap function and result "
-//def parMap[A,B](ps: List[A])(f: A => B): Par[List[B]]
-  it should " be empty List with Paralelism computation when entry was empty " in {
-
-
-  }
 }

@@ -1,12 +1,12 @@
-package parallelims
+package parallelism
 
 
-import parallelims.api.MyCallable
-import parallelims.types.Types._
+import parallelism.api.MyCallable
+import parallelism.types.Types._
 
 class Calculator {
 
-  import parallelims.api.ParAPI._
+  import parallelism.api.ParAPI._
 
   //FIXME : Make tailrec
   def sum(numbers:Seq[Int]):Par[Int] = numbers match{

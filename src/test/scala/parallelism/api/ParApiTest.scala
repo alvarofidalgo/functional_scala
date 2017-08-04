@@ -1,16 +1,16 @@
-package parallelims.api
+package parallelism.api
 
 import org.scalatest.{FlatSpec, ShouldMatchers}
-import parallelims.impl.ExecutionService
-import parallelims.types.Types.Par
+import parallelism.impl.ExecutionService
+import parallelism.types.Types.Par
 import matchers.CustomMatchers._
-import parallelims.api.ParAPI._
+import parallelism.api.ParAPI._
 
 import scala.concurrent.duration.TimeUnit
 
 
 
-class ParApiTest extends FlatSpec with ShouldMatchers with ParallelimsOpTest{
+class ParApiTest extends FlatSpec with ShouldMatchers with ParallelismOpTest{
 
 
 

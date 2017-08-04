@@ -1,11 +1,11 @@
-package parallelims.api
+package parallelism.api
 
-import parallelims.impl.ExecutionService
+import parallelism.impl.ExecutionService
 
 import scala.concurrent.duration.TimeUnit
 
 
-trait ParallelimsOpTest {
+trait ParallelismOpTest {
   case class MyFuture[A](get:A) extends Future[A] {
     override def get(timeOut: Long, unit: TimeUnit): Option[A] = Option(get)
 

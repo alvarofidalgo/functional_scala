@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit
 
 import org.scalatest.matchers.BeMatcher
 import org.scalatest.matchers.MatchResult
-import parallelims.api.Future
+import parallelism.api.Future
 import streams.Empty
 import streams.InitStreams
 import streams.Streams

@@ -1,10 +1,10 @@
-package parallelims.api
+package parallelism.api
 
 import matchers.CustomMatchers._
 import org.scalatest.{FlatSpec, ShouldMatchers}
-import parallelims.api.Sequence._
+import parallelism.api.Sequence._
 
-class SequenceTest extends FlatSpec with ShouldMatchers with ParallelimsOpTest{
+class SequenceTest extends FlatSpec with ShouldMatchers with ParallelismOpTest{
 
 
   behavior of " We want to implement parMap function and result "

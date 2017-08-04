@@ -1,6 +1,6 @@
-package parallelims.api
+package parallelism.api
 
-import parallelims.types.Types.Par
+import parallelism.types.Types.Par
 
 
 object Sequence {

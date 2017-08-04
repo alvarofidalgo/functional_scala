@@ -1,7 +1,7 @@
-package parallelims.api
+package parallelism.api
 
 import java.util.concurrent.TimeUnit
-import parallelims.types.Types.Par
+import parallelism.types.Types.Par
 
 
 object ParAPI {

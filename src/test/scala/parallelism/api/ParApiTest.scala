@@ -3,7 +3,6 @@ package parallelism.api
 import org.scalatest.{FlatSpec, ShouldMatchers}
 import parallelism.types.Types.Par
 import matchers.CustomMatchers._
-import parallelism.api.ParAPI._
 
 
 class ParApiTest extends FlatSpec with ShouldMatchers {
@@ -18,7 +17,7 @@ class ParApiTest extends FlatSpec with ShouldMatchers {
     val second:Par[String] = (execution) => execution.submit(MyCallable(callReturn = "A") )
     val expected:Par[Double] =(execution) => execution.submit(MyCallable( callReturn = 1.toDouble + 1.toDouble))
     val f:(Int,String) => Double = (a,b) => a.toDouble + b.size.toDouble
-    first.map2(second)(f) shouldBe parallelismIsEqualTo(expected)
+    ParAPI(par =first).map2(second)(f) shouldBe parallelismIsEqualTo(expected)
   }
 
 
@@ -30,7 +29,7 @@ class ParApiTest extends FlatSpec with ShouldMatchers {
     val element:Par[Int] = (execution) => execution.submit(MyCallable(callReturn = 1) )
     val expected:Par[Boolean] = (execution) => execution.submit( MyCallable(callReturn = true))
     val f:(Int)=>(Boolean) = (a) => a == 1
-    element map f shouldBe parallelismIsEqualTo(expected)
+    ParAPI(par =element) map f shouldBe parallelismIsEqualTo(expected)
   }
 
   behavior of " We want to implement secuence function and result "
@@ -39,7 +38,7 @@ class ParApiTest extends FlatSpec with ShouldMatchers {
       val element:Seq[Par[Int]] = Seq.empty[Par[Int]]
       val expected:Par[Seq[Int]]  = (execution) => execution.submit( MyCallable( callReturn = Seq.empty[Int]))
       val ps:Par[Int] = (execution) => execution.submit(MyCallable(callReturn = 1) )
-      ps.sequence(element) shouldBe parallelismIsEqualTo(expected)
+      ParAPI(par =ps) sequence(element) shouldBe parallelismIsEqualTo(expected)
   }
 
 }

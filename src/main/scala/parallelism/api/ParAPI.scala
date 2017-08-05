@@ -4,9 +4,8 @@ import java.util.concurrent.TimeUnit
 import parallelism.types.Types.Par
 
 
-object ParAPI {
+case class ParAPI[A](par:Par[A]) {
 
-  implicit class ParOperations [A](par:Par[A]) {
 
 
     def fork: Par[A] = (execution) =>
@@ -17,7 +16,7 @@ object ParAPI {
     def map[B](f:(A)=>B): Par[B] = {
       val parUnit:Par[Unit]  = (execution)=> execution.submit(MyCallable(callReturn = ()))
       val transform:(A,Any) => B = (a,_)=>f(a)
-      par.map2(parUnit)(transform)
+      map2(parUnit)(transform)
     }
 
     def map2[B, C](second: Par[B])(f: (A, B) => C): Par[C] = (execution) => {
@@ -27,5 +26,5 @@ object ParAPI {
     }
 
     def sequence[A](ps: Seq[Par[A]]): Par[Seq[A]] = (execution) => execution.submit(MyCallable(callReturn = Seq.empty[A]))
-  }
+
 }

@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit
 import org.scalatest.matchers.BeMatcher
 import org.scalatest.matchers.MatchResult
 import parallelism.api.Future
+import parallelism.impl.ExecutionService
+import parallelism.types.Types.Par
 import streams.Empty
 import streams.InitStreams
 import streams.Streams
@@ -33,8 +35,13 @@ object CustomMatchers {
 
   }
 
-  implicit class futureIsEqualTo[A](future:Future[A]) extends BeMatcher[Future[A]] {
-    override def apply(left: Future[A]): MatchResult = {
+  implicit class parallelismIsEqualTo[A](par:Par[A]) extends BeMatcher[Par[A]] {
+
+
+    override def apply(leftPar: Par[A]): MatchResult = {
+      val executionService = new ExecutionService()
+      val future = par(executionService)
+      val left=par(executionService)
       val withTime = future.get(timeOut = 1,
                                 unit=  TimeUnit.NANOSECONDS).equals(left.get(timeOut = 1, unit=  TimeUnit.NANOSECONDS))
       val withoutTime = future.get.equals(left.get)

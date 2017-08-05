@@ -3,6 +3,8 @@ package parallelism.api
 import parallelism.types.Types._
 import parallelism.api.ParAPI._
 
+
+//FIXME :
 case class Async[A] (value:A){
 
   def asyncF[B](f:A=>B):Par[B] = {

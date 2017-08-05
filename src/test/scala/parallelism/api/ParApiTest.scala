@@ -1,13 +1,9 @@
 package parallelism.api
 
 import org.scalatest.{FlatSpec, ShouldMatchers}
-import parallelism.impl.ExecutionService
 import parallelism.types.Types.Par
 import matchers.CustomMatchers._
 import parallelism.api.ParAPI._
-
-import scala.concurrent.duration.TimeUnit
-
 
 
 class ParApiTest extends FlatSpec with ShouldMatchers with ParallelismOpTest{
@@ -35,6 +31,16 @@ class ParApiTest extends FlatSpec with ShouldMatchers with ParallelismOpTest{
     val f:(Int)=>(Boolean) = (a) => a == 1
     val expected = MyFuture(true)
     execute(element map f) shouldBe futureIsEqualTo(expected)
+  }
+
+  behavior of " We want to implement secuence function and result "
+
+//def sequence[A](ps: List[Par[A]]): Par[List[A]]
+  it should " be Empty Par of List when List of Par is empty " in {
+      val element:Seq[Par[Int]] = Seq.empty[Par[Int]]
+      val ps:Par[Int] = (execution) => execution.submit(MyCallable(callReturn = 1) )
+      val expected  = MyFuture(Seq.empty[Int])
+      execute(ps.sequence(element)) shouldBe futureIsEqualTo(expected)
   }
 
 }

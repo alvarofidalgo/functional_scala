@@ -47,6 +47,19 @@ object CustomMatchers {
       val withoutTime = future.get.equals(left.get)
       MatchResult(
         withTime && withoutTime,
+        s" Par $leftPar is not equals to $par",
+        " Par are equals"
+      )
+    }
+  }
+
+  implicit class futureIsEqualTo[A](future:Future[A]) extends BeMatcher[Future[A]] {
+    override def apply(left: Future[A]): MatchResult = {
+      val withTime = future.get(timeOut = 1,
+        unit=  TimeUnit.NANOSECONDS).equals(left.get(timeOut = 1, unit=  TimeUnit.NANOSECONDS))
+      val withoutTime = future.get.equals(left.get)
+      MatchResult(
+        withTime && withoutTime,
         s" Future $left is not equals to $future",
         " Futures are equals"
       )

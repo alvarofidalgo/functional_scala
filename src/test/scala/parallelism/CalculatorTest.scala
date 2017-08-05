@@ -45,7 +45,4 @@ class CalculatorTest extends FlatSpec with ShouldMatchers{
     val fSum = calulator.sum(Seq(1,1,2))
     fSum(executionService)  shouldBe futureIsEqualTo(MyFuture(get =4))
   }
-
-
-
 }

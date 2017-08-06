@@ -24,14 +24,4 @@ case class ParAPI[A](par:Par[A]) {
     execution.submit(MyCallable(callReturn = f(firstValue.get, secondValue.get)))
   }
 
-  def sequence[A](ps: Seq[Par[A]]): Par[Seq[A]] = (execution) =>{
-    val seq = ps.map {
-                  par => par(execution).get
-        }
-    execution.submit(MyCallable(callReturn = seq))
-  }
-
-
-
-
 }

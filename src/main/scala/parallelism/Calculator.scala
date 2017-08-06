@@ -1,12 +1,12 @@
-package parallelims
+package parallelism
 
 
-import parallelims.api.MyCallable
-import parallelims.types.Types._
+import parallelism.api.MyCallable
+import parallelism.types.Types._
 
 class Calculator {
 
-  import parallelims.api.ParAPI._
+  import parallelism.api.ParAPI
 
   //FIXME : Make tailrec
   def sum(numbers:Seq[Int]):Par[Int] = numbers match{
@@ -14,7 +14,9 @@ class Calculator {
     case head::Nil =>  (execution) => execution.submit(MyCallable(callReturn = head))
     case _ =>
       val (first, second) =numbers.splitAt(numbers.length / 2)
-      sum(first).fork.map2(sum(second).fork) {
+      val firstSum = ParAPI(sum(first)).fork
+      val secondSum = ParAPI(sum(second)).fork
+      ParAPI(firstSum).map2(secondSum) {
         (first,second)=> first + second
       }
 

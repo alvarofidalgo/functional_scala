@@ -1,4 +1,4 @@
-package parallelims.api
+package parallelism.api
 
 
 trait Callable [A]{

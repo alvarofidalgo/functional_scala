@@ -40,8 +40,9 @@ object CustomMatchers {
 
     override def apply(leftPar: Par[A]): MatchResult = {
       val executionService = new ExecutionService()
+
       val future = par(executionService)
-      val left=par(executionService)
+      val left=leftPar(executionService)
       val withTime = future.get(timeOut = 1,
                                 unit=  TimeUnit.NANOSECONDS).equals(left.get(timeOut = 1, unit=  TimeUnit.NANOSECONDS))
       val withoutTime = future.get.equals(left.get)
@@ -51,6 +52,7 @@ object CustomMatchers {
         " Par are equals"
       )
     }
+
   }
 
   implicit class futureIsEqualTo[A](future:Future[A]) extends BeMatcher[Future[A]] {

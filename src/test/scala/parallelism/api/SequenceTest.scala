@@ -15,7 +15,9 @@ class SequenceTest extends FlatSpec with ShouldMatchers {
       val sequence:Seq[Int] = Seq.empty[Int]
       val f:(Int) => Boolean = (num) => num<2
       val expected:Par[Seq[Boolean]] = (execution) => execution.submit(MyCallable(callReturn = Seq.empty[Boolean]))
-      sequence.parMap(f) shouldBe parallelismIsEqualTo(expected)
+
+
+    sequence.parMap(f) shouldBe parallelismIsEqualTo(expected)
 
   }
 

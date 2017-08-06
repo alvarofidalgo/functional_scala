@@ -3,6 +3,7 @@ package parallelism.api
 import parallelism.types.Types.Par
 
 
+
 object Sequence {
 
 
@@ -17,7 +18,7 @@ object Sequence {
   }
 
 
-  implicit class SequenceOperations1[A](entrySequence: Seq[Par[A]]){
+  implicit class SequenceParOperations[A](entrySequence: Seq[Par[A]]){
 
 
 

@@ -21,4 +21,6 @@ object Sequence {
     execution.submit(MyCallable(callReturn = seq))
   }
 
+  def parFilter[A](as: Seq[A])(f: A => Boolean): Par[Seq[A]] = ???
+
 }

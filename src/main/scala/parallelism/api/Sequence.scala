@@ -3,7 +3,6 @@ package parallelism.api
 import parallelism.types.Types.Par
 
 
-
 object Sequence {
 
 
@@ -21,6 +20,16 @@ object Sequence {
     execution.submit(MyCallable(callReturn = seq))
   }
 
-  def parFilter[A](as: Seq[A])(f: A => Boolean): Par[Seq[A]] = ???
+  def parFilter[A](as: Seq[A])(f: A => Boolean): Par[Seq[A]] =  {
+    import Asynchronous._
+    val list1 = as.foldLeft(Seq.empty[Par[A]]) {
+      (res,head) => f(head) match {
+        case true => res ++ Seq(head.asyncF((a)=>a))
+        case _ => res
+      }
+
+    }
+    sequence(list1)
+  }
 
 }

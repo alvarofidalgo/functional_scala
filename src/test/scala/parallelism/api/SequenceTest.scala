@@ -1,5 +1,6 @@
 package parallelism.api
 
+import matchers.CustomMatchers
 import matchers.CustomMatchers._
 import org.scalatest.{FlatSpec, ShouldMatchers}
 import parallelism.api.Sequence._
@@ -40,6 +41,32 @@ class SequenceTest extends FlatSpec with ShouldMatchers {
     val element:Seq[Par[Int]] = Seq((execution) => execution.submit( MyCallable( callReturn = 1)))
     val expected:Par[Seq[Int]]  = (execution) => execution.submit( MyCallable( callReturn = Seq(1)))
     sequence(element)  shouldBe parallelismIsEqualTo(expected)
+  }
+
+
+  behavior of " We want implement parFilter function and result "
+
+  it should " be empty PAr when Par is empty " in {
+
+    val expected:Par[Seq[Int]]  = (execution) => execution.submit( MyCallable( callReturn = Nil))
+
+    parFilter(Seq.empty[Int])({(a)=> true }) shouldBe parallelismIsEqualTo(expected)
+  }
+
+
+  it should " be Par with initial secuence when cobndition return true " in {
+    val sequence = Seq(1,2,3)
+    val expected:Par[Seq[Int]]  = (execution) => execution.submit( MyCallable( callReturn = sequence))
+
+    parFilter(sequence)({(a)=> true }) shouldBe parallelismIsEqualTo(expected)
+  }
+
+
+  it should " be PAr with elements that complain condition " in {
+    val sequence = Seq(1,2,3,4)
+    val expected:Par[Seq[Int]]  = (execution) => execution.submit( MyCallable( callReturn = Seq(2,4)))
+
+    parFilter(sequence)({(a)=> a % 2 ==0 }) shouldBe parallelismIsEqualTo(expected)
   }
 
 

@@ -6,6 +6,7 @@ import parallelism.api.Asynchronous._
 import parallelism.types.Types._
 
 
+
 class AsyncTest extends FlatSpec with ShouldMatchers{
 
 

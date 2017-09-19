@@ -31,6 +31,4 @@ class ParApiTest extends FlatSpec with ShouldMatchers {
     val f:(Int)=>(Boolean) = (a) => a == 1
     ParAPI(par =element).map(f) shouldBe parallelismIsEqualTo(expected)
   }
-
-
 }

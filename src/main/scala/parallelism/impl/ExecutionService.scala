@@ -1,6 +1,7 @@
 package parallelism.impl
 
 import parallelism.api.{Callable, Future}
+import parallelism.types.Types.NonBlockingFuture
 
 import scala.concurrent.duration.TimeUnit
 
@@ -14,5 +15,14 @@ class ExecutionService {
 
       override def get(timeOut: Long, unit: TimeUnit): Option[A] = Option(callable.call)
     }
+
+}
+
+
+class ExecutionNonBlocking[A](value:A) {
+
+
+
+  def submit(f:A=>Unit):Unit = f(value)
 
 }

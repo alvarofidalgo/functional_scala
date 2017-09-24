@@ -20,9 +20,6 @@ class RunnerTest extends FlatSpec with ShouldMatchers{
       override private[parallelism] def apply(k: (Int) => Unit): Unit = execution.submit(k)
     }
     runner.run(new ExecutionNonBlocking[Int](value = 20))(c) shouldBe 20
-
-
-
   }
 
 }

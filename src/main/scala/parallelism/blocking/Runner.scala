@@ -13,11 +13,8 @@ class Runner {
     var res = Seq.empty[A]
     val latch = new CountDownLatch(1)
     p(executionService) { (a:A) =>
-
       res = res ++ Seq(a)
       latch.countDown()
-
-
     }
     latch.await()
     res.head

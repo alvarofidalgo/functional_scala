@@ -19,10 +19,3 @@ class ExecutionService {
 }
 
 
-class ExecutionNonBlocking[A](value:A) {
-
-
-
-  def submit(f:A=>Unit):Unit = f(value)
-
-}

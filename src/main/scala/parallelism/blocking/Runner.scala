@@ -17,6 +17,7 @@ class Runner {
       res = res ++ Seq(a)
       latch.countDown()
 
+
     }
     latch.await()
     res.head

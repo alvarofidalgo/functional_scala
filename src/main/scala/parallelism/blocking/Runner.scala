@@ -9,7 +9,7 @@ import parallelism.types.Types.ParNonBlocking
 class Runner {
 
 
-  def run[A](executionService: ExecutionNonBlocking[A])(p:ParNonBlocking[A]):A = {
+  def run[A](executionService: ExecutionNonBlocking[A])( p:ParNonBlocking[A]):A = {
     var res = Seq.empty[A]
     val latch = new CountDownLatch(1)
     p(executionService) { (a:A) =>

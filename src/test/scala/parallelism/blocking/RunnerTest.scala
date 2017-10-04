@@ -4,7 +4,6 @@ import org.scalatest.FlatSpec
 import org.scalatest.ShouldMatchers
 import parallelism.impl.ExecutionNonBlocking
 import parallelism.types.Types._
-import parallelism.impl.ParNonBlockingImplements._
 
 
 class RunnerTest extends FlatSpec with ShouldMatchers{
@@ -20,12 +19,8 @@ class RunnerTest extends FlatSpec with ShouldMatchers{
 
       override private[parallelism] def apply(k: (Int) => Unit): Unit = execution.submit(k)
     }
-    runner.run(new ExecutionNonBlocking[Int](value = 20))(c) shouldBe 20
+    runner.run(new ExecutionNonBlocking[Int](value = 20,time=5))(c) shouldBe 20
   }
 
-
-  it should " be result of terminete process when other not terminate " in {
-
-  }
 
 }

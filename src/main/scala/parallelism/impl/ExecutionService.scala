@@ -1,6 +1,7 @@
 package parallelism.impl
 
 import parallelism.api.{Callable, Future}
+import parallelism.types.Types.NonBlockingFuture
 
 import scala.concurrent.duration.TimeUnit
 
@@ -16,3 +17,5 @@ class ExecutionService {
     }
 
 }
+
+

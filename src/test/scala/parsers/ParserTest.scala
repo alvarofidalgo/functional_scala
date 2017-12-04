@@ -79,7 +79,7 @@ class ParserTest extends FlatSpec with ShouldMatchers{
     val result:Either[Exception, String] =  parser.run(parser.or(parser.string(entry),parser.string(other)))(other)
     result shouldBe  eitherEqualTo(expected)
   }
-  
+
   it should " be empty list when not contains element " in new CharEntry{
     val expected:Either[Exception,List[Char]] = Right(List.empty[Char])
     val result:Either[Exception,List[Char]] = parser.run(parser.many(parser.char(entry)))("bbbb")
@@ -94,9 +94,33 @@ class ParserTest extends FlatSpec with ShouldMatchers{
 
   }
 
+  /**
+    *
+    * bbbbabbb
+    * b
+    * (a) -> (a)
+    * (ab) -> (a,b,ab)
+    * (abc) -> (a,b,c,ab,bc,abc)
+    */
+
   it should " be list with two parser when exist one coincidence " in new CharEntry{
     val expected:Either[Exception,List[Char]] = Right(List(entry,entry))
     val result:Either[Exception,List[Char]] = parser.run(parser.many(parser.char(entry)))(s"bb${entry}bb${entry}")
+    result shouldBe  eitherEqualTo(expected)
+
+  }
+
+
+  it should " be empty String list when not contains element " in new StringEntry{
+    val expected:Either[Exception,List[String]] = Right(List.empty[String])
+    val result:Either[Exception,List[String]] = parser.run(parser.many(parser.string(entry)))("bbbb")
+    result shouldBe  eitherEqualTo(expected)
+
+  }
+
+  it should " be list with one String parser when exist one coincidence " in new StringEntry{
+    val expected:Either[Exception,List[String]] = Right(List(entry))
+    val result:Either[Exception,List[String]] = parser.run(parser.many(parser.string(entry)))(s"bb${entry}bb")
     result shouldBe  eitherEqualTo(expected)
 
   }

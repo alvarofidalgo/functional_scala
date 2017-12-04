@@ -9,6 +9,7 @@ object SetsFunctions {
 
   implicit  class Sets (cad:List[String]) {
 
+
     @tailrec
     final def setsOf(elements:Int)
                     (implicit result:List[String] = List.empty[String],

@@ -34,31 +34,17 @@ class ParserImplementation extends Parsers[Exception,Parser]{
     }
   }
 
-  def many[A](p: Parser[A]): Parser[List[A]] = (sac) =>{
+  def many[A](p: Parser[A]): Parser[List[A]] = (str) =>{
+    import sets.SetsFunctions._
 
-  /*  def loop(str:List[Char])(result:List[A]= List.empty[A],partial:String):List[A] = {
-      (str,p(partial)) match {
-        case (head::tail,Right(a)) => p(head.toString)  match  {
-                        case Right(a)=>loop(tail)(result++Seq(a),partial)
-                        case Left(_) => loop(tail)(result,partial)
-                    }
-        case (Nil,null) => result
+    val allSets =str.toList.map(_.toString).adjacentSets
+    Right(allSets.foldLeft(List.empty[A]) { (result, head) =>
+      p(head.toString) match {
+        case Right(a) => result ++ Seq(a)
+        case Left(_) => result
+
       }
-    }*/
-  def loop(str:List[Char])(result:List[A]= List.empty[A],partial:String=""):List[A] = {
-    (str, p(partial)) match {
-      case (_ :: tail, Right(a)) =>
-        loop(tail)(result ++ List(a), "")
-
-      case (head :: tail, Left(a)) =>
-        loop(tail)(result, partial.concat(head.toString))
-      case (Nil, _) =>
-        result
-    }
-  }
-    val z:List[A] = loop(sac.toList)()
-    Right( z)
-
+    })
   }
 
   def map[A, B](a: Parser[A])(f: A => B) = ???

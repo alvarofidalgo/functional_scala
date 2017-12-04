@@ -58,4 +58,25 @@ class ParserTest extends FlatSpec with ShouldMatchers{
     result shouldBe  eitherEqualTo(expected)
   }
 
+  it should " be first parser when is equal to entry " in new  StringEntry{
+    val expected:Either[Exception,String] = Right(entry)
+    val result:Either[Exception, String] =  parser.run(parser.or(parser.string(entry),parser.string("other")))(entry)
+    result shouldBe  eitherEqualTo(expected)
+  }
+
+  it should " be second parser  in error when is equal to entry " in new  StringEntry{
+    val other = "other"
+    val expected:Either[Exception,String] = Left(new Exception)
+    val result:Either[Exception, String] =  parser.run(parser.or(parser.string(entry),parser.string(other)))("aaaa")
+    result shouldBe  eitherEqualTo(expected)
+  }
+
+
+  it should " be second parser   when is equal to entry " in new  StringEntry{
+    val other = "other"
+    val expected:Either[Exception,String] =  Right(other)
+    val result:Either[Exception, String] =  parser.run(parser.or(parser.string(entry),parser.string(other)))(other)
+    result shouldBe  eitherEqualTo(expected)
+  }
+
 }

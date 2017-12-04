@@ -17,18 +17,24 @@ class ParserImplementation extends Parsers[Exception,Parser]{
     }
   }
 
-  override implicit def string(str: String): Parser[String] =     (strCompare)=> {
+  implicit def string(str: String): Parser[String] =     (strCompare)=> {
     str match {
-      case  x if (x == strCompare) => Right(str)
+      case  x if x == strCompare => Right(str)
       case  _ =>  Left(new Exception())
     }
   }
 
-  override def or[A](p1: Parser[A], p2: Parser[A]) = ???
+  def or[A](p1: Parser[A], p2: Parser[A]):Parser[A] = (str)=> {
+    p1(str) match  {
+      case Right(a)=>Right(a)
+      case Left(_) => p2(str)
 
-  override def many[A](p: Parser[A]) = ???
+    }
+  }
 
-  override def map[A, B](a: Parser[A])(f: A => B) = ???
+  def many[A](p: Parser[A]) = ???
+
+  def map[A, B](a: Parser[A])(f: A => B) = ???
 }
 
 

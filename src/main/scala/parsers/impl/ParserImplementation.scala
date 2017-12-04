@@ -3,6 +3,8 @@ package parsers.impl
 import parsers.Parsers
 import parsers.model.ParserTypes._
 
+import scala.collection.immutable
+
 class ParserImplementation extends Parsers[Exception,Parser]{
 
 
@@ -32,7 +34,19 @@ class ParserImplementation extends Parsers[Exception,Parser]{
     }
   }
 
-  def many[A](p: Parser[A]) = ???
+  def many[A](p: Parser[A]): Parser[List[A]] = (sac) =>{
+    Right(
+        sac.toList.foldLeft(List.empty[A]) { (result,head) =>
+          p(head.toString) match  {
+            case Right(a)=>result++Seq(a)
+            case Left(_) => result
+
+          }
+
+        })
+
+
+  }
 
   def map[A, B](a: Parser[A])(f: A => B) = ???
 }

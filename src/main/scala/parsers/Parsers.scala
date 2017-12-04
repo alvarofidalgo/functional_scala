@@ -1,0 +1,15 @@
+package parsers
+
+
+trait Parsers[ParserErrror,Parser[+_]]{
+
+
+
+
+  def run[A](parser: Parser[A])(input:String):Either[ParserErrror,A]
+
+  def char(char:Char):Parser[Char]
+
+
+}
+

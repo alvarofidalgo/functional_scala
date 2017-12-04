@@ -2,8 +2,7 @@ package matchers
 
 import java.util.concurrent.TimeUnit
 
-import org.scalatest.matchers.BeMatcher
-import org.scalatest.matchers.MatchResult
+import org.scalatest.matchers.{BeMatcher, MatchResult, Matcher}
 import parallelism.api.Future
 import parallelism.impl.ExecutionService
 import parallelism.types.Types.Par
@@ -66,6 +65,30 @@ object CustomMatchers {
         " Futures are equals"
       )
     }
+  }
+
+
+  implicit class eitherEqualTo[A](either:Either[Exception,A]) extends BeMatcher[Either[Exception,A]] {
+
+
+    override def apply(left: Either[Exception,A]): MatchResult = {
+
+
+      MatchResult(
+        (left,either) match {
+
+          case (Right(a),Right(b))=>a==b
+          case (Left(a),Left(b))=>true
+          case (_,_)=>false
+
+        },
+        s" Either $left is not equals to $either",
+        " Eithers are equals"
+      )
+
+    }
+
+
   }
 
 

@@ -1,8 +1,8 @@
 package parsers
 
+import matchers.CustomMatchers._
 import org.scalatest.{FlatSpec, ShouldMatchers}
 import parsers.impl.ParserImplementation
-import matchers.CustomMatchers._
 
 
 //WHEN TEST BE IN GREEN REFACTORN TEST
@@ -27,7 +27,7 @@ class ParserTest extends FlatSpec with ShouldMatchers{
 
 
     val expected:Either[Exception,Char] = Left(new Exception(""))
-    val result:Either[Exception, Char] =  parser.run(parser.char(entry))('k')
+    val result:Either[Exception, Char] =  parser.run(parser.char(entry))('k'.toString)
     result shouldBe  eitherEqualTo(expected)
 
   }
@@ -36,7 +36,7 @@ class ParserTest extends FlatSpec with ShouldMatchers{
 
   it should " be new char Parase when PArser not have error " in new CharEntry{
     val expected:Either[Exception,Char] = Right(entry)
-    val result:Either[Exception, Char] =  parser.run(parser.char(entry))(entry)
+    val result:Either[Exception, Char] =  parser.run(parser.char(entry))(entry.toString)
     result shouldBe  eitherEqualTo(expected)
   }
 

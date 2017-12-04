@@ -1,28 +1,34 @@
 package parsers.impl
 
 import parsers.Parsers
-import parsers.model.ParserModel
+import parsers.model.ParserTypes._
 
-class ParserImplementation extends Parsers[Exception,ParserModel]{
+class ParserImplementation extends Parsers[Exception,Parser]{
 
 
-  def run[A](parser: ParserModel[A])(input: A):Either[Exception,A] = {
-    if (parser.isEqualTo(input))
-      Right(parser.element)
-    else
-      Left(new Exception())
+  def run[A](parser: Parser[A])(input: String):Either[Exception,A] = parser(input)
 
+
+
+  implicit def char(char: Char):Parser[Char] =  (c1)=> {
+    char.toString match {
+      case  x if (x == c1) => Right(char)
+      case  _ =>  Left(new Exception())
+    }
   }
 
-  implicit def char(char: Char) =  ParserModel[Char](char)
+  override implicit def string(str: String): Parser[String] =     (strCompare)=> {
+    str match {
+      case  x if (x == strCompare) => Right(str)
+      case  _ =>  Left(new Exception())
+    }
+  }
 
-  override def or[A](p1: ParserModel[A], p2: ParserModel[A]): ParserModel[A] = ???
+  override def or[A](p1: Parser[A], p2: Parser[A]) = ???
 
-  implicit def string(s: String): ParserModel[String] = ParserModel[String](s)
+  override def many[A](p: Parser[A]) = ???
 
-  override def many[A](p: ParserModel[A]): ParserModel[List[A]] = ???
-
-  override def map[A, B](a: ParserModel[A])(f: A => B): ParserModel[B] = ???
+  override def map[A, B](a: Parser[A])(f: A => B) = ???
 }
 
 

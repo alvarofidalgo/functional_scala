@@ -6,12 +6,22 @@ import parsers.model.ParserModel
 class ParserImplementation extends Parsers[Exception,ParserModel]{
 
 
-  def run[A](parser: ParserModel[A])(input: String):Either[Exception,A] = {
-    if (parser.isEqualTo(input.charAt(0)))
-    Left(new Exception())
+  def run[A](parser: ParserModel[A])(input: A):Either[Exception,A] = {
+    if (parser.isEqualTo(input))
+       Left(new Exception())
     else
       Right(parser.element)
   }
 
-  def char(char: Char) =  ParserModel[Char](char)
+  implicit def char(char: Char) =  ParserModel[Char](char)
+
+  override def or[A](p1: ParserModel[A], p2: ParserModel[A]): ParserModel[A] = ???
+
+  implicit def string(s: String): ParserModel[String] = ParserModel[String](s)
+
+  override def many[A](p: ParserModel[A]): ParserModel[List[A]] = ???
+
+  override def map[A, B](a: ParserModel[A])(f: A => B): ParserModel[B] = ???
 }
+
+

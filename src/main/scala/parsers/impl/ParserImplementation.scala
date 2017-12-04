@@ -8,9 +8,10 @@ class ParserImplementation extends Parsers[Exception,ParserModel]{
 
   def run[A](parser: ParserModel[A])(input: A):Either[Exception,A] = {
     if (parser.isEqualTo(input))
-       Left(new Exception())
-    else
       Right(parser.element)
+    else
+      Left(new Exception())
+
   }
 
   implicit def char(char: Char) =  ParserModel[Char](char)

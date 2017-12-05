@@ -6,7 +6,7 @@ trait Parsers[ParserErrror,Parser[+_]]{self=>
 
 
 
-  def run[A](parser: Parser[A])(input:String):Either[ParserErrror,A]
+  def runParser[A](parser: Parser[A])(input:String):Either[ParserErrror,A]
   def char(char:Char):Parser[Char]
   implicit def string(s: String): Parser[String]
   def or[A](p1:Parser[A],p2:Parser[A]):Parser[A]
@@ -19,7 +19,7 @@ trait Parsers[ParserErrror,Parser[+_]]{self=>
   case class ParserOps[A](p:Parser[A]){
     def |[B>:A](p2: Parser[B]): Parser[B] = self.or(p,p2)
     def or[B>:A](p2: => Parser[B]): Parser[B] = self.or(p,p2)
-    def map[A,B](f:A=>B):Parser[B]= self.map(p)(f)
+
   }
 
 

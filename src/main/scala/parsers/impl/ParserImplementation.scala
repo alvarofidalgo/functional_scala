@@ -3,10 +3,10 @@ package parsers.impl
 import parsers.Parsers
 import parsers.model.ParserTypes._
 
-class ParserImplementation extends Parsers[Exception,Parser]{
+object ParserImplementation extends Parsers[Exception,Parser]{
 
 
-  def run[A](parser: Parser[A])(input: String):Either[Exception,A] = parser(input)
+  def runParser[A](parser: Parser[A])(input: String):Either[Exception,A] = parser(input)
 
 
 

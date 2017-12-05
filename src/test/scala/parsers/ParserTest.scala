@@ -185,6 +185,13 @@ class ParserTest extends FlatSpec with ShouldMatchers{
     result shouldBe  eitherEqualTo(expected)
   }
 
+  it should " be list with one String parser when exist one coincidence " in new StringEntry{
+    val expected:Either[Exception,List[String]] = Right(List(entry))
+    val result:Either[Exception,List[String]] = runParser(many1(string(entry)))(s"bb${entry}bb")
+    result shouldBe  eitherEqualTo(expected)
+
+  }
+
 
 
 

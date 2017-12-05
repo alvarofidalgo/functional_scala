@@ -2,7 +2,6 @@ package parsers
 
 import matchers.CustomMatchers._
 import org.scalatest.{FlatSpec, ShouldMatchers}
-import parsers.impl.ParserImplementation
 
 class ParserTest extends FlatSpec with ShouldMatchers{
 
@@ -174,5 +173,20 @@ class ParserTest extends FlatSpec with ShouldMatchers{
     val result:Either[Exception, String] =  runParser(slice(string(entry)))(entry)
     result shouldBe  eitherEqualTo(expected)
   }
+
+
+
+  behavior of " We want to implement Parser that recognize 1 or many occurence and result "
+
+
+  it should " be Error when not contains element " in new CharEntry{
+    val expected:Either[Exception,List[Char]] = Left(new Exception)
+    val result:Either[Exception,List[Char]] = runParser(many1(char(entry)))("bbbb")
+    result shouldBe  eitherEqualTo(expected)
+  }
+
+
+
+
 
 }

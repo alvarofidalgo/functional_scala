@@ -69,7 +69,11 @@ object ParserImplementation extends Parsers[Exception,Parser]{
 
     }
 
-
+  def many1[A](p: Parser[A]):Parser[List[A]] = (str) =>
+    many(p)(str) match {
+      case Right(Nil) => Left(new Exception)
+      case Right(a) => Right(a)
+  }
 }
 
 

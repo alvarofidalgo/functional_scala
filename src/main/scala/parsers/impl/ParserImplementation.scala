@@ -10,12 +10,8 @@ object ParserImplementation extends Parsers[Exception,Parser]{
 
 
 
-  implicit def char(char: Char):Parser[Char] =  (c1)=> {
-    char.toString match {
-      case  x if (x == c1) => Right(char)
-      case  _ =>  Left(new Exception())
-    }
-  }
+  implicit def char(char: Char):Parser[Char] =  string(char.toString).map(_.charAt(0))
+
 
   implicit def string(str: String): Parser[String] =     (strCompare)=> {
     str match {

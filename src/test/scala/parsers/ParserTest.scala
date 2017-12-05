@@ -37,6 +37,9 @@ class ParserTest extends FlatSpec with ShouldMatchers{
 
   behavior of " We like implement string function"
 
+
+
+
   it should " be Error when  Srtring Parser have an error " in new StringEntry{
 
 
@@ -44,6 +47,12 @@ class ParserTest extends FlatSpec with ShouldMatchers{
     val result:Either[Exception, String] =  runParser(string(entry))("oleole")
     result shouldBe  eitherEqualTo(expected)
 
+  }
+
+  it should " be Rigth with empty cad when entry is empty " in new StringEntry{
+    val expected:Either[Exception,String] = Right("")
+    val result:Either[Exception, String] =  runParser(string(""))(entry)
+    result shouldBe  eitherEqualTo(expected)
   }
 
 
@@ -119,6 +128,8 @@ class ParserTest extends FlatSpec with ShouldMatchers{
   }
 
 
+
+
   behavior of " we like implement map function and result "
 
 
@@ -132,7 +143,7 @@ class ParserTest extends FlatSpec with ShouldMatchers{
   it should " be String parser with error when exist error " in new CharEntry {
 
     val expected:Either[Exception,String] = Left(new Exception)
-    val result:Either[Exception,String] = runParser( map(succeed(entry))((a)=> a.toString) )(s"bbbb")
+    val result:Either[Exception,String] = runParser( map(char(entry))((a)=> a.toString) )(s"bbbb")
     result shouldBe  eitherEqualTo(expected)
   }
 
@@ -143,6 +154,17 @@ class ParserTest extends FlatSpec with ShouldMatchers{
   it should " be new parser of type " in  new CharEntry{
     val expected:Either[Exception,Char] = Right(entry)
     val result:Either[Exception, Char] =  runParser(succeed(entry))(entry.toString)
+    result shouldBe  eitherEqualTo(expected)
+  }
+
+
+
+  behavior of " we like to implement slice combinator and result "
+
+
+  it should " result many in one result " in  new StringEntry{
+    val expected:Either[Exception,String] = Right(entry)
+    val result:Either[Exception,String] = runParser(slice(many(string(entry))))(s"bb${entry}bb")
     result shouldBe  eitherEqualTo(expected)
   }
 

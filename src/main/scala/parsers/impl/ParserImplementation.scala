@@ -14,9 +14,12 @@ object ParserImplementation extends Parsers[Exception,Parser]{
 
 
   implicit def string(str: String): Parser[String] =     (strCompare)=> {
+
     str match {
-      case  x if x == strCompare => Right(str)
-      case  _ =>  Left(new Exception())
+      case  x if x == strCompare || x.isEmpty =>
+        Right(str)
+      case  _ =>
+        Left(new Exception())
     }
   }
 
@@ -50,7 +53,21 @@ object ParserImplementation extends Parsers[Exception,Parser]{
 
   }
 
-  override def succeed[A](a: A):Parser[A] = string(a.toString).map(_=>a)
+  def succeed[A](a: A):Parser[A] = {
+
+    string("").map(_=>a)
+
+  }
+
+
+
+  def slice[A](parser: Parser[A]):Parser[String] =
+
+    parser.map {
+      case List(a) => a.toString
+      case a => a.toString
+
+    }
 
 
 }

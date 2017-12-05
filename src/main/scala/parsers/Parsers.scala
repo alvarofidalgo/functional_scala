@@ -15,6 +15,7 @@ trait Parsers[ParserErrror,Parser[+_]]{self=>
   def many[A](p: Parser[A]): Parser[List[A]]
   def map[A,B](a: Parser[A])(f: A => B): Parser[B]
   def succeed[A](a:A):Parser[A]
+  def slice[A](parser:Parser[A]):Parser[String]
 
   implicit class ParserOps[A](p:Parser[A]){
     def |[B>:A](p2: Parser[B]): Parser[B] = self.or(p,p2)
@@ -22,7 +23,5 @@ trait Parsers[ParserErrror,Parser[+_]]{self=>
     def map[B](f:A=>B):Parser[B] = self.map(p)(f)
 
   }
-
-
 }
 

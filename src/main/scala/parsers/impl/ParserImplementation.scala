@@ -3,8 +3,6 @@ package parsers.impl
 import parsers.Parsers
 import parsers.model.ParserTypes._
 
-import scala.collection.immutable
-
 class ParserImplementation extends Parsers[Exception,Parser]{
 
 
@@ -42,12 +40,20 @@ class ParserImplementation extends Parsers[Exception,Parser]{
       p(head.toString) match {
         case Right(a) => result ++ Seq(a)
         case Left(_) => result
-
       }
     })
   }
 
-  def map[A, B](a: Parser[A])(f: A => B) = ???
+  def map[A, B](a: Parser[A])(f: A => B):Parser[B] = (str) => {
+
+    val result:Either[Exception, A] = a(str)
+    result match {
+      case Right(a)=>Right(f(a))
+      case Left(a)=>Left(a)
+    }
+
+  }
+
 }
 
 

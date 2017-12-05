@@ -23,14 +23,14 @@ object SetsFunctions {
       case (_,_,_) => result
     }
 
+
     @tailrec
     final def adjacentSets(implicit elements:Int = cad.length,result:List[String]=List.empty[String] ):List[String] =elements match {
       case 0 =>
         result
-      case _ =>  {
-        val t= setsOf(elements)( List.empty[String],"",List.empty[String])
-        adjacentSets(elements-1,result ++ t )
-      }
+      case _ =>
+        adjacentSets(elements-1,result ++ setsOf(elements)( List.empty[String],"",List.empty[String]) )
+
     }
   }
 

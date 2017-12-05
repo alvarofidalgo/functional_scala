@@ -41,6 +41,7 @@ class ParserTest extends FlatSpec with ShouldMatchers{
     result shouldBe  eitherEqualTo(expected)
   }
 
+  behavior of " We like implement string function"
 
   it should " be Error when  Srtring Parser have an error " in new StringEntry{
 
@@ -58,6 +59,9 @@ class ParserTest extends FlatSpec with ShouldMatchers{
     val result:Either[Exception, String] =  parser.run(parser.string(entry))(entry)
     result shouldBe  eitherEqualTo(expected)
   }
+
+
+  behavior of " We like impolement or function "
 
   it should " be first parser when is equal to entry " in new  StringEntry{
     val expected:Either[Exception,String] = Right(entry)
@@ -80,6 +84,9 @@ class ParserTest extends FlatSpec with ShouldMatchers{
     result shouldBe  eitherEqualTo(expected)
   }
 
+  behavior of " we like implment many function and result "
+
+
   it should " be empty list when not contains element " in new CharEntry{
     val expected:Either[Exception,List[Char]] = Right(List.empty[Char])
     val result:Either[Exception,List[Char]] = parser.run(parser.many(parser.char(entry)))("bbbb")
@@ -94,14 +101,6 @@ class ParserTest extends FlatSpec with ShouldMatchers{
 
   }
 
-  /**
-    *
-    * bbbbabbb
-    * b
-    * (a) -> (a)
-    * (ab) -> (a,b,ab)
-    * (abc) -> (a,b,c,ab,bc,abc)
-    */
 
   it should " be list with two parser when exist one coincidence " in new CharEntry{
     val expected:Either[Exception,List[Char]] = Right(List(entry,entry))
@@ -123,6 +122,22 @@ class ParserTest extends FlatSpec with ShouldMatchers{
     val result:Either[Exception,List[String]] = parser.run(parser.many(parser.string(entry)))(s"bb${entry}bb")
     result shouldBe  eitherEqualTo(expected)
 
+  }
+
+
+  behavior of " we like implement map function and result "
+
+
+  it should " be String parser when Apply this function " in new CharEntry {
+    val expected:Either[Exception,String] = Right(entry.toString)
+    val result:Either[Exception,String] = parser.run( parser.map(parser.char(entry))((a)=> a.toString) )(entry.toString)
+    result shouldBe  eitherEqualTo(expected)
+  }
+
+  it should " be String parser with error when exist error " in new CharEntry {
+    val expected:Either[Exception,String] = Left(new Exception)
+    val result:Either[Exception,String] = parser.run( parser.map(parser.char(entry))((a)=> a.toString) )(s"bbbb")
+    result shouldBe  eitherEqualTo(expected)
   }
 
 

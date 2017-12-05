@@ -44,9 +44,6 @@ class StringSetTest extends FlatSpec with ShouldMatchers{
   }
 
 
-
-
-
   behavior of " we want to implement function of all adjacents sets and result "
 
 

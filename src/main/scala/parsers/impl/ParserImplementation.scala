@@ -50,6 +50,9 @@ object ParserImplementation extends Parsers[Exception,Parser]{
 
   }
 
+  override def succeed[A](a: A):Parser[A] = string(a.toString).map(_=>a)
+
+
 }
 
 

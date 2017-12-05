@@ -7,7 +7,7 @@ import parsers.impl.ParserImplementation
 class ParserTest extends FlatSpec with ShouldMatchers{
 
   import parsers.impl.ParserImplementation._
-  
+
   trait CharEntry {
     val entry = 'c'
   }
@@ -124,6 +124,7 @@ class ParserTest extends FlatSpec with ShouldMatchers{
 
   it should " be String parser when Apply this function " in new CharEntry {
     val expected:Either[Exception,String] = Right(entry.toString)
+
     val result:Either[Exception,String] = runParser( map(char(entry))((a)=> a.toString) )(entry.toString)
     result shouldBe  eitherEqualTo(expected)
   }
@@ -140,7 +141,6 @@ class ParserTest extends FlatSpec with ShouldMatchers{
 
 
   it should " be " in {
-
   }
 
 }

@@ -5,8 +5,6 @@ import matchers.CustomMatchers._
 import org.scalatest.{FlatSpec, ShouldMatchers}
 import parsers.impl.ParserImplementation
 
-
-//WHEN TEST BE IN GREEN REFACTORN TEST
 class ParserTest extends FlatSpec with ShouldMatchers{
 
 
@@ -135,6 +133,7 @@ class ParserTest extends FlatSpec with ShouldMatchers{
   }
 
   it should " be String parser with error when exist error " in new CharEntry {
+
     val expected:Either[Exception,String] = Left(new Exception)
     val result:Either[Exception,String] = parser.run( parser.map(parser.char(entry))((a)=> a.toString) )(s"bbbb")
     result shouldBe  eitherEqualTo(expected)

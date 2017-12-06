@@ -53,17 +53,13 @@ object ParserImplementation extends Parsers[Exception,Parser]{
 
   }
 
-  def succeed[A](a: A):Parser[A] = {
-
-    string("").map(_=>a)
-
-  }
+  def succeed[A](a: A):Parser[A] = string("").map(_=>a)
 
 
 
-  def slice[A](parser: Parser[A]):Parser[String] =
 
-    parser.map {
+
+  def slice[A](parser: Parser[A]):Parser[String] = parser.map {
       case List(a) => a.toString
       case a => a.toString
 

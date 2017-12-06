@@ -80,8 +80,12 @@ object ParserImplementation extends Parsers[Exception,Parser]{
 
     }
 
-
-
+   def map2[A, B, C](p1: Parser[A], p2: Parser[B])(f: (A, B) => C):Parser[C] = (str)=>{
+     (p1(str) ,p2(str)) match {
+       case (Right(a),Right(b))=>Right(f(a,b))
+       case (_,_)=> Left(new Exception)
+     }
+  }
 }
 
 

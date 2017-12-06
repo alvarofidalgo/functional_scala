@@ -189,7 +189,31 @@ class ParserTest extends FlatSpec with ShouldMatchers{
     val expected:Either[Exception,List[String]] = Right(List(entry))
     val result:Either[Exception,List[String]] = runParser(many1(string(entry)))(s"bb${entry}bb")
     result shouldBe  eitherEqualTo(expected)
+  }
 
+
+  behavior of " We want to implement Porduct parser and result should "
+
+
+  it should "Left when not complaint any of Parsers " in {
+    val stringEntry = "abc"
+    val stringParser = string(stringEntry)
+    val charParser = char('c')
+    val prductupsParser = product(stringParser,charParser)
+    val result:Either[Exception,(String,Char)] = runParser(prductupsParser)("abc")
+    val expected:Either[Exception,(String,Char)] = Left(new Exception)
+    result shouldBe  eitherEqualTo(expected)
+  }
+
+
+  it should " be not error when complain all" in {
+    val stringEntry = "a"
+    val stringParser = string(stringEntry)
+    val charParser = char('a')
+    val prductupsParser = product(stringParser,charParser)
+    val result:Either[Exception,(String,Char)] = runParser(prductupsParser)("a")
+    val expected:Either[Exception,(String,Char)] = Right(("a",'a'))
+    result shouldBe  eitherEqualTo(expected)
   }
 
 

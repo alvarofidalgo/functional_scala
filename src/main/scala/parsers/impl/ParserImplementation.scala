@@ -74,6 +74,18 @@ object ParserImplementation extends Parsers[Exception,Parser]{
       case Right(Nil) => Left(new Exception)
       case Right(a) => Right(a)
   }
+
+  def product[A, B](p1: Parser[A], p2: Parser[B]):Parser[(A,B)] = (str)=> {
+     (p1(str) ,p2(str)) match {
+      case (Right(a),Right(b))=>Right(a,b)
+      case (_,_)=> Left(new Exception)
+    }
+
+
+    }
+
+
+
 }
 
 

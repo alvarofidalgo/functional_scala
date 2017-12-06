@@ -1,8 +1,8 @@
 package parsers
 
 
-trait Parsers[ParserErrror,Parser[+_]]{self=>
 
+trait Parsers[ParserErrror,Parser[+_]]{self=>
 
 
 
@@ -14,6 +14,7 @@ trait Parsers[ParserErrror,Parser[+_]]{self=>
   implicit def asStringParser[A](a: A)(implicit f: A => Parser[String]): ParserOps[String] = ParserOps(f(a))
   def many[A](p: Parser[A]): Parser[List[A]]
   def map[A,B](a: Parser[A])(f: A => B): Parser[B]
+  def map2[A,B,C](p1:Parser[A],p2:Parser[B])(f:(A,B)=>C):Parser[C]
   def succeed[A](a:A):Parser[A]
   def slice[A](parser:Parser[A]):Parser[String]
   def many1[A](p: Parser[A]): Parser[List[A]]
@@ -23,6 +24,7 @@ trait Parsers[ParserErrror,Parser[+_]]{self=>
     def |[B>:A](p2: Parser[B]): Parser[B] = self.or(p,p2)
     def or[B>:A](p2: => Parser[B]): Parser[B] = self.or(p,p2)
     def map[B](f:A=>B):Parser[B] = self.map(p)(f)
+    def **[B](p2:Parser[B]):Parser[(A,B)] = self.product(p,p2)
 
   }
 }

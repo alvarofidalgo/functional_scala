@@ -217,7 +217,20 @@ class ParserTest extends FlatSpec with ShouldMatchers{
   }
 
 
+  behavior of " We like to implement map2 combinator and result "
 
 
+  it should " be new Parser that apply functions when not exist errors " in {
+    val result = map2(char('c'),string("c"))((a,b)=> 1 + b.length)("c")
+    val expected:Either[Exception,Int] = Right(2)
+    result shouldBe  eitherEqualTo(expected)
 
+  }
+
+  it should " be Left when  exist errors " in {
+    val result = map2(char('c'),string("abc"))((a,b)=> 1 + b.length)("N")
+    val expected:Either[Exception,Int] = Left(new Exception)
+    result shouldBe  eitherEqualTo(expected)
+
+  }
 }

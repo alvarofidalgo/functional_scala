@@ -34,7 +34,10 @@ trait MonoIds {
 
     override def zero = None
 
-    override def op(a: Option[_], b: Option[_]) = None
+    override def op(a: Option[_], b: Option[_]) = (a,b) match {
+      case (None,None)=>None
+      case (None,any)=>  any
+    }
 
 
   }

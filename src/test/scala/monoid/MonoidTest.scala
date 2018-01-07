@@ -69,4 +69,8 @@ class MonoidTest extends FlatSpec with ShouldMatchers with MonoIds {
     optionMonoid.op(None,None) shouldBe None
   }
 
+  it should " be value of first element when first have value and second was none " in {
+    optionMonoid.op(None,Some(1)) shouldBe Some(1)
+  }
+
 }

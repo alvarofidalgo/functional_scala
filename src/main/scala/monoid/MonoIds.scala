@@ -30,6 +30,16 @@ trait MonoIds {
   }
 
 
+  val optionMonoid:MonoId[Option[_]] = new MonoId[Option[_]] {
+
+    override def zero = None
+
+    override def op(a: Option[_], b: Option[_]) = None
+
+
+  }
+
+
 
 
 }

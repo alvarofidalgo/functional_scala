@@ -61,4 +61,12 @@ class MonoidTest extends FlatSpec with ShouldMatchers with MonoIds {
     booleanAnd.op(true,true) shouldBe true
   }
 
+
+  behavior of " We like implement an Option monoid and result "
+
+  it should " be None when two elements are NONE " in {
+    optionMonoid.zero shouldBe None
+    optionMonoid.op(None,None) shouldBe None
+  }
+
 }

@@ -30,16 +30,18 @@ trait MonoIds {
   }
 
 
-  val optionMonoid:MonoId[Option[_]] = new MonoId[Option[_]] {
+  def optionMonoid[A]:MonoId[Option[A]] = new MonoId[Option[A]]{
+
+
+
 
     override def zero = None
 
-    override def op(a: Option[_], b: Option[_]) = (a,b) match {
+    override def op(a: Option[A], b: Option[A]) = (a,b) match {
       case (None,None)=>None
       case (None,any)=>  any
+      case (Some(valueA),Some(valueB)) => Some(valueA.asInstanceOf[Int] * valueB.asInstanceOf[Int]).asInstanceOf[Option[A]]
     }
-
-
   }
 
 

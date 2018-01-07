@@ -62,19 +62,20 @@ class MonoidTest extends FlatSpec with ShouldMatchers with MonoIds {
   }
 
 
+
   behavior of " We like implement an Option monoid and result "
 
   it should " be None when two elements are NONE " in {
-    optionMonoid.zero shouldBe None
-    optionMonoid.op(None,None) shouldBe None
+    optionMonoid.optionMonoid.zero shouldBe None
+    optionMonoid.optionMonoid.op(None,None) shouldBe None
   }
 
   it should " be value of first element when first have value and second was none " in {
-    optionMonoid.op(None,Some(1)) shouldBe Some(1)
+    optionMonoid.optionMonoid.op(None,Some(1)) shouldBe Some(1)
   }
 
 
   it should " be combine first value and second when both have values  " in {
-    optionMonoid.op(Some(2),Some(3)) shouldBe Some(6)
+    optionMonoid.optionMonoid.op(Some(2),Some(3)) shouldBe Some(6)
   }
 }

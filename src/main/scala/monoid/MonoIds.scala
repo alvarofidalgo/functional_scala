@@ -1,5 +1,26 @@
 package monoid
 
+
+
+trait OptionMonoid[A] {
+
+     def combiner(first:A,second:A):A
+
+
+     def optionMonoid:MonoId[Option[A]] = new MonoId[Option[A]] {
+
+          override def zero = None
+
+          override def op(a: Option[A], b: Option[A]) = (a,b) match {
+            case (None,None)=>None
+            case (None,any)=>  any
+            case (Some(valueA),Some(valueB)) => Some(combiner(valueA,valueB))
+          }
+  }
+
+
+}
+
 trait MonoIds {
 
 
@@ -30,20 +51,9 @@ trait MonoIds {
   }
 
 
-  def optionMonoid[A]:MonoId[Option[A]] = new MonoId[Option[A]]{
-
-
-
-
-    override def zero = None
-
-    override def op(a: Option[A], b: Option[A]) = (a,b) match {
-      case (None,None)=>None
-      case (None,any)=>  any
-      case (Some(valueA),Some(valueB)) => Some(valueA.asInstanceOf[Int] * valueB.asInstanceOf[Int]).asInstanceOf[Option[A]]
-    }
+  val optionMonoid = new OptionMonoid[Int] {
+    override def combiner(first: Int, second: Int):Int = first * second
   }
-
 
 
 

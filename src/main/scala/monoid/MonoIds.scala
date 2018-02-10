@@ -6,7 +6,6 @@ trait OptionMonoid[A] {
 
      def combiner(first:A,second:A):A
 
-
      def optionMonoid:MonoId[Option[A]] = new MonoId[Option[A]] {
 
           override def zero = None
@@ -17,8 +16,6 @@ trait OptionMonoid[A] {
             case (Some(valueA),Some(valueB)) => Some(combiner(valueA,valueB))
           }
   }
-
-
 }
 
 trait MonoIds {

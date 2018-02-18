@@ -32,4 +32,18 @@ class FoldableTest extends FlatSpec with ShouldMatchers{
 
   }
 
+
+
+  behavior of " We want to implement folLeft function and result "
+
+
+  it should "Be initial value when list no have data " in new Foldable {
+     val entry = Seq.empty[Int]
+     val result =foldLeft[Int,String](entry,"") {
+       (result,head) => result ++ head.toString
+     }
+     result shouldBe ""
+
+  }
+
 }

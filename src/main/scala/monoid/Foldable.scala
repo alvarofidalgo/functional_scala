@@ -4,16 +4,19 @@ import scala.annotation.tailrec
 
 trait Foldable {
 
-  def foldMap[A,B](list: Seq[A], monoid: MonoId[B])(f: A => B): B =
-    list.foldLeft(monoid.zero) {
-      (res,head) => monoid.op(res,f(head))
-  }
 
   @tailrec
-  final def foldLeft[A,B](list: Seq[A],initialValue:B)(fCombiner:(B,A)=>B):B = list match  {
-    case Nil => initialValue
-    case  head::tail => foldLeft(tail,fCombiner(initialValue,head))(fCombiner)
-  }
+  final def foldMap[A,B](list: Seq[A], monoid: MonoId[B])(f: A => B)(implicit result:B = monoid.zero): B =
+    list match  {
+      case Nil => result
+      case  head::tail => foldMap(tail,monoid)(f)( monoid.op(result,f(head)))
+    }
 
+
+
+  def foldLeft[A,B](list: Seq[A],result:B)(fCombiner:(B,A)=>B)(implicit  monoid: MonoId[B]):B = {
+    foldMap(list,monoid){(elem) =>fCombiner(result,elem)}
+
+  }
 
 }

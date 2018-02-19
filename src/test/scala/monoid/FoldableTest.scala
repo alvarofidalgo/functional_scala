@@ -17,18 +17,18 @@ class FoldableTest extends FlatSpec with ShouldMatchers{
 
 
 
-  it should " be empty Striung cad when no have elements  " in new Foldable with EntryData{
+  it should " be empty Striung cad when no have elements  " in  new EntryData{
 
-    val entry = Seq.empty[Int]
-    foldMap[Int,String](entry,monoId)(fTransform) shouldBe ""
+    val foldableSeq = FoldableSeq(Seq.empty[Int])
+    foldableSeq.foldMap[String](monoId)(fTransform) shouldBe ""
 
   }
 
 
-  it should " be numbers concatanation when exist elements "  in new Foldable with EntryData{
+  it should " be numbers concatanation when exist elements "  in new   EntryData{
 
-    val entry = Seq(1,23,45)
-    foldMap[Int,String](entry,monoId)(fTransform) shouldBe "12345"
+    val foldableSeq = FoldableSeq(Seq(1,23,45))
+    foldableSeq.foldMap[String](monoId)(fTransform) shouldBe "12345"
 
   }
 
@@ -37,26 +37,26 @@ class FoldableTest extends FlatSpec with ShouldMatchers{
   behavior of " We want to implement folLeft function and result "
 
 
-  it should "Be initial value when list no have data " in new Foldable with EntryData{
-     val entry = Seq.empty[Int]
-     val result =foldLeft[Int,String](entry,"") {
+  it should "Be initial value when list no have data " in new  EntryData{
+     val foldableSeq = FoldableSeq(Seq.empty[Int])
+     val result =foldableSeq.foldLeft[String]("") {
        (result,head) => result ++ head.toString
      }
      result shouldBe ""
 
   }
 
-  it should " be combinel value when list have one data " in new Foldable with EntryData{
-    val entry = Seq(1)
-    val result =foldLeft[Int,String](entry,"") {
+  it should " be combinel value when list have one data " in new EntryData{
+    val foldableSeq = Seq(1)
+    val result =foldableSeq.foldLeft[String]("") {
       (result,head) => result ++ head.toString
     }
     result shouldBe "1"
   }
 
-  it should " be combine value when list have two data " in new Foldable with EntryData{
-    val entry = Seq(1,20)
-    val result =foldLeft[Int,String](entry,"") {
+  it should " be combine value when list have two data " in new  EntryData{
+    val foldableSeq = FoldableSeq(Seq(1,20))
+    val result =foldableSeq.foldLeft[String]("") {
       (result,head) => result ++ head.toString
     }
     result shouldBe "120"

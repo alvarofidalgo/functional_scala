@@ -2,21 +2,28 @@ package monoid
 
 import scala.annotation.tailrec
 
-trait Foldable {
+sealed trait Foldable[A] {
 
+
+  def foldMap[B]( monoid: MonoId[B])(f: A => B)(implicit result:B = monoid.zero): B
+  def foldLeft[B](result:B)(fCombiner:(B,A)=>B)(implicit  monoid: MonoId[B]):B
+
+}
+
+
+case class FoldableSeq[A] (seq:Seq[A]) extends Foldable[A] {
 
   @tailrec
-  final def foldMap[A,B](list: Seq[A], monoid: MonoId[B])(f: A => B)(implicit result:B = monoid.zero): B =
-    list match  {
+  override final def foldMap[B]( monoid: MonoId[B])(f: A => B)(implicit result:B = monoid.zero): B =
+    seq match  {
       case Nil => result
-      case  head::tail => foldMap(tail,monoid)(f)( monoid.op(result,f(head)))
+      case  head::tail => FoldableSeq(tail).foldMap(monoid)(f)( monoid.op(result,f(head)))
     }
 
 
+  def foldLeft[B](result:B)(fCombiner:(B,A)=>B)(implicit  monoid: MonoId[B]):B = {
 
-  def foldLeft[A,B](list: Seq[A],result:B)(fCombiner:(B,A)=>B)(implicit  monoid: MonoId[B]):B = {
-    foldMap(list,monoid){(elem) =>fCombiner(result,elem)}
+    foldMap(monoid){(elem) =>fCombiner(result,elem)}
 
   }
-
 }

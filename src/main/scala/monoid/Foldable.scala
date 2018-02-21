@@ -17,6 +17,15 @@ sealed trait Foldable[A] {
 
     foldMap(monoid){(elem) =>fCombiner(result,elem)}
 
+
+  def foldRight[B](result:B)(fCombiner:(A,B)=>B)(implicit  monoid: MonoId[B]):B = {
+    val copySeq = seq
+    new  Foldable[A] {
+       def seq = copySeq.reverse
+    }.
+    foldMap(monoid){(elem) =>fCombiner(elem,result)}
+  }
+
 }
 
 

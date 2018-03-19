@@ -25,7 +25,6 @@ sealed trait Foldable[A] {
     }.
     foldMap(monoid){(elem) =>fCombiner(elem,result)}
   }
-
 }
 
 

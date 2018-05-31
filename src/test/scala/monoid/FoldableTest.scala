@@ -14,9 +14,10 @@ class FoldableTest extends FlatSpec with ShouldMatchers{
   }
 
   trait EntrySeqData {
+    implicit val acc = ""
     val fTransform:(Int)=>String = (entry) => entry.toString
     implicit val monoId = new MonoId[String] {
-      override def op(a: String, b: String): String = ??? //s"$a$b"
+      override def op(a: String, b: String): String = s"$a$b"
 
       override def zero: String = ""
     }
@@ -109,7 +110,7 @@ class FoldableTest extends FlatSpec with ShouldMatchers{
   }
 
 
-  it should " be numbers concatanation when exist elements "  in new   EntrySeqData{
+  it should " be number string when exit one element when exist elements "  in new   EntrySeqData{
 
     val foldableSeq = FoldableSeq(Seq(1))
     foldableSeq.foldMapV[String](monoId)(fTransform) shouldBe "1"

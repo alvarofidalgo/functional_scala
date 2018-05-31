@@ -1,7 +1,7 @@
 package monoid
 
 import scala.annotation.tailrec
-
+//TODO : LAS EXERCICES WAS 10.6 , NEXT CHAPTER SHOULD BE 10.3
 sealed trait Foldable[A] {
 
   def seq:Seq[A]
@@ -25,6 +25,10 @@ sealed trait Foldable[A] {
     }.
     foldMap(monoid){(elem) =>fCombiner(elem,result)}
   }
+
+
+  def foldMapV[B]( monoid: MonoId[B])(f: A => B):B = monoid.zero
+
 }
 
 

@@ -32,6 +32,8 @@ sealed trait Foldable[A] {
     case head::Nil => monoid.op(f(head),acum)
   }
 
+
+
 }
 
 

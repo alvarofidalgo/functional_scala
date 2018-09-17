@@ -13,15 +13,6 @@ class FoldableTest extends FlatSpec with ShouldMatchers{
     }
   }
 
-  trait EntrySeqData {
-    implicit val acc = ""
-    val fTransform:(Int)=>String = (entry) => entry.toString
-    implicit val monoId = new MonoId[String] {
-      override def op(a: String, b: String): String = s"$a$b"
-
-      override def zero: String = ""
-    }
-  }
 
   behavior of " We want to implement foldmap funtion and result "
 
@@ -102,7 +93,8 @@ class FoldableTest extends FlatSpec with ShouldMatchers{
 
   behavior of " We want to implement foldMapV and result  "
 
-  it should " be empty Striung cad when no have elements  " in  new EntrySeqData{
+  implicit val acc = ""
+  it should " be empty Striung cad when no have elements  " in  new EntryData{
 
     val foldableSeq = FoldableSeq(Seq.empty[Int])
     foldableSeq.foldMapV[String](monoId)(fTransform) shouldBe ""
@@ -110,11 +102,17 @@ class FoldableTest extends FlatSpec with ShouldMatchers{
   }
 
 
-  it should " be number string when exit one element when exist elements "  in new   EntrySeqData{
+  it should " be number string when exit one element when exist elements "  in new   EntryData{
 
     val foldableSeq = FoldableSeq(Seq(1))
     foldableSeq.foldMapV[String](monoId)(fTransform) shouldBe "1"
 
+  }
+
+
+  it should " be concatenation of two numbers when exist two elements " in new EntryData {
+    val foldableSeq = FoldableSeq(Seq(1,2))
+    foldableSeq.foldMapV[String](monoId)(fTransform) shouldBe "12"
   }
 
 

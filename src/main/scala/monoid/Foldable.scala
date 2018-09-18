@@ -27,9 +27,9 @@ sealed trait Foldable[A] {
   }
 
 
-  def foldMapV[B]( monoid: MonoId[B])(f: A => B):B = seq match {
-    case Nil => monoid.zero
-    case head::Nil => monoid.op(f(head),monoid.zero)
+  def foldMapV[B]( monoid: MonoId[Seq[B]])(f: A => Seq[B]):B = seq match {
+    case Nil => monoid.zero.head
+    case head::Nil => monoid.op(f(head),monoid.zero).head
   }
 
 

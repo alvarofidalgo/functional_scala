@@ -108,7 +108,7 @@ class FoldableTest extends FlatSpec with ShouldMatchers{
   it should " be empty Striung cad when no have elements  " in  new MonoidV{
 
     val foldableSeq = FoldableSeq(Seq.empty[Int])
-    foldableSeq.foldMapV[String](monoId)(fTransform) shouldBe ""
+    foldableSeq.foldMapV[String](monoId)(fTransform).head shouldBe ""
 
   }
 
@@ -116,14 +116,14 @@ class FoldableTest extends FlatSpec with ShouldMatchers{
   it should " be number string when exit one element when exist elements "  in new   MonoidV{
 
     val foldableSeq = FoldableSeq(Seq(1))
-    foldableSeq.foldMapV[String](monoId)(fTransform) shouldBe "1"
+    foldableSeq.foldMapV[String](monoId)(fTransform).head shouldBe "1"
 
   }
 
 
   it should " be concatenation of two numbers when exist two elements " in new MonoidV {
     val foldableSeq = FoldableSeq(Seq(1,2))
-    foldableSeq.foldMapV[String](monoId)(fTransform) shouldBe "12"
+    foldableSeq.foldMapV[String](monoId)(fTransform).mkString("") shouldBe "12"
   }
 
 

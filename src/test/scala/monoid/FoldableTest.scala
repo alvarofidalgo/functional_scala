@@ -2,6 +2,9 @@ package monoid
 
 import org.scalatest.{FlatSpec, ShouldMatchers}
 
+
+// EXERCISE 10.8
+// exercise 10.9
 class FoldableTest extends FlatSpec with ShouldMatchers{
 
   trait EntryData {
@@ -113,6 +116,11 @@ class FoldableTest extends FlatSpec with ShouldMatchers{
     val foldableSeq = FoldableSeq(Seq(1,2))
     foldableSeq.foldMapV[String](monoId)(fTransform) shouldBe "12"
   }
+
+
+  behavior of " We want to implement parallelisms transformand result "
+
+  it should " be "
 
 
 }

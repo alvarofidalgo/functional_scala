@@ -4,7 +4,7 @@ import scala.annotation.tailrec
 //TODO : LAS EXERCICES WAS 10.6 , NEXT CHAPTER SHOULD BE 10.3
 sealed trait Foldable[A] {
 
-  def seq:Seq[A]
+  def +:Seq[A]
 
   @tailrec
   final def foldMap[B]( monoid: MonoId[B])(f: A => B)(implicit result:B = monoid.zero,s:Seq[A] = seq): B =
@@ -35,8 +35,6 @@ sealed trait Foldable[A] {
         val (first,second) =list.splitAt(list.size / 2)
         monoid.op(FoldableSeq(first).foldMapV(monoid)(f),FoldableSeq(second).foldMapV(monoid)(f))
   }
-
-
 
 }
 
